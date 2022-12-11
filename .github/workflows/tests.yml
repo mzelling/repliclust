@@ -35,7 +35,7 @@ jobs:
           coverage run --source repliclust -m pytest
           coverage report > coverage.txt
           cov=$(awk '$1 == "TOTAL" {print $NF+0}' coverage.txt)
-          echo "COVERAGE=$(cov)" >> $GITHUB_ENV
+          echo "COVERAGE=${cov}" >> $GITHUB_ENV
 
           REF=${{ github.ref }}
           echo "github.ref: $REF"
