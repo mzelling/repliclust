@@ -46,7 +46,7 @@ jobs:
       
       - if: ${{ matrix.python-version == '3.10' }}
         name: Create coverage badge
-        uses: schneegans/dynamic-badges-action@v1.0.0
+        uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 7c9e8b5cc4b5124352fb58b0c753f79f
