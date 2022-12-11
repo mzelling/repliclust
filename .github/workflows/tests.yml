@@ -35,7 +35,7 @@ jobs:
           coverage run --source repliclust -m pytest
           coverage report > coverage.txt
           cov=$(awk '$1 == "TOTAL" {print $NF+0}' coverage.txt)
-          echo "COVERAGE=${cov}%" >> $GITHUB_ENV
+          echo "COVERAGE=${cov}" >> $GITHUB_ENV
 
           REF=${{ github.ref }}
           echo "github.ref: $REF"
@@ -52,7 +52,9 @@ jobs:
           gistID: 7c9e8b5cc4b5124352fb58b0c753f79f
           filename: repliclust__${{ env.BRANCH }}.json
           label: Test Coverage
-          message: ${{ env.COVERAGE }}
-          color: green
+          message: ${{ env.COVERAGE }}%
+          valColorRange: ${{ env.COVERAGE }}
+          maxColorRange: 90
+          minColorRange: 50
 
 
