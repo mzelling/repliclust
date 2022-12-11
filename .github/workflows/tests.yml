@@ -54,6 +54,6 @@ jobs:
           label: Test Coverage
           message: ${{ env.COVERAGE }}
           color: green
-          namedLogo: jest
+          namedLogo: github
 
 
