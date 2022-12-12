@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>repliclust.maxmin.blueprint.MaxMinBlueprint &#8212; repliclust 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="repliclust.maxmin.covariance" href="repliclust.maxmin.covariance.html" />
+    <link rel="prev" title="repliclust.maxmin.blueprint.validate_reference_quantity" href="repliclust.maxmin.blueprint.validate_reference_quantity.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="repliclust-maxmin-blueprint-maxminblueprint">
+<h1>repliclust.maxmin.blueprint.MaxMinBlueprint<a class="headerlink" href="#repliclust-maxmin-blueprint-maxminblueprint" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.maxmin.blueprint.MaxMinBlueprint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.blueprint.</span></span><span class="sig-name descname"><span class="pre">MaxMinBlueprint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imbalance_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distributions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['normal',</span> <span class="pre">'exponential',</span> <span class="pre">('standard_t',</span> <span class="pre">{'df':</span> <span class="pre">2})]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_proportions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.blueprint.MaxMinBlueprint" title="Permalink to this definition">¶</a></dt>
+<dd><p>A blueprint for mixture models. The user chooses a desired
+geometry by setting the ratios between largest and smallest values 
+of various geometric parameters.</p>
+<dl class="simple">
+<dt>Cluster radius<span class="classifier">float, &gt;0</span></dt><dd><p>Geometric mean of the standard deviations along a cluster’s 
+principal axes (eigenvectors of covariance matrix)</p>
+</dd>
+<dt>Cluster aspect ratio<span class="classifier">float, &gt;=1</span></dt><dd><p>Ratio between the lengths of a cluster’s longest and shortest
+principal axes (eigenvectors of covariance matrix). 
+This value equals 1 for a spherical cluster and exceeds 1 for 
+an oblong cluster.</p>
+</dd>
+<dt>Group size<span class="classifier">int</span></dt><dd><p>The number of data points in a cluster.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>radius_maxmin<span class="classifier">float, &gt;=1</span></dt><dd><p>Ratio between the maximum and minimum radii among all clusters
+in a mixture model.</p>
+</dd>
+<dt>aspect_maxmin<span class="classifier">float, &gt;=1</span></dt><dd><p>Ratio between the maximum and minimum aspect ratios among all 
+clusters in a mixture model.</p>
+</dd>
+<dt>aspect_ref<span class="classifier">float, &gt;=1</span></dt><dd><p>Typical aspect ratio for the clusters in a mixture model.
+For example, if aspect_ref = 10, we expect that all clusters
+in the mixture model are strongly elongated.</p>
+</dd>
+<dt>imbalance_ratio<span class="classifier">float, &gt;=1</span></dt><dd><p>Ratio between the greatest and smallest group sizes among all
+clusters in the mixture model.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>n_clusters<span class="classifier">int</span></dt><dd><p>The desired number of clusters.</p>
+</dd>
+<dt>dim<span class="classifier">int</span></dt><dd><p>The desired number of dimensions.</p>
+</dd>
+<dt>radius_maxmin<span class="classifier">float, &gt;=1</span></dt><dd><p>Ratio between the maximum and minimum cluster radii</p>
+</dd>
+<dt>aspect_maxmin<span class="classifier">float, &gt;=1</span></dt><dd><p>Ratio between maximum and minimum cluster aspect ratios</p>
+</dd>
+<dt>aspect_ref<span class="classifier">float, &gt;=1</span></dt><dd><p>Reference (typical) aspect ratio for clusters</p>
+</dd>
+<dt>imbalance_maxmin<span class="classifier">float, &gt;=1</span></dt><dd><p>Ratio between highest and lowest class sizes across clusters</p>
+</dd>
+<dt>min_overlap<span class="classifier">float in (0,1)</span></dt><dd><p>The minimum required overlap between a cluster and ANY other
+cluster. This minimum overlap allows you to guarantee that no
+cluster will be isolated from all other clusters.</p>
+</dd>
+<dt>max_overlap<span class="classifier">float in (0,1)</span></dt><dd><p>The maximum allowed level of overlap between any two clusters. 
+Measured as the fraction of cluster volume that overlaps.</p>
+</dd>
+<dt>scale<span class="classifier">float</span></dt><dd><p>Reference length scale for generated data</p>
+</dd>
+<dt>distributions<span class="classifier">list of [str | tuple[str, dict]]</span></dt><dd><p>Selection of probability distributions that should appear in
+each mixture model. Format is a list in which each element is 
+either the name of the probability distribution OR a tuple whose
+first entry is the name and the second entry is a dictionary of 
+distributional parameters. To print the names of all supported
+distributions and their parameters (along with default values), 
+print the output of repliclust.get_supported_distributions().</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.blueprint.MaxMinBlueprint.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imbalance_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distributions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['normal',</span> <span class="pre">'exponential',</span> <span class="pre">('standard_t',</span> <span class="pre">{'df':</span> <span class="pre">2})]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_proportions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.blueprint.MaxMinBlueprint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate a MaxMinBlueprint object.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#repliclust.maxmin.blueprint.MaxMinBlueprint.__init__" title="repliclust.maxmin.blueprint.MaxMinBlueprint.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([n_clusters, dim, n_samples, ...])</p></td>
+<td><p>Instantiate a MaxMinBlueprint object.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample_mixture_model</span></code>()</p></td>
+<td><p>Sample a probabilistic mixture model according to this  blueprint.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">repliclust</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="repliclust.html">repliclust</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="repliclust.html#synthetic-data-generator-for-cluster-analysis">Synthetic Data Generator for Cluster Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repliclust.base.html">repliclust.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repliclust.config.html">repliclust.config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repliclust.constrained_overlap.html">repliclust.constrained_overlap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repliclust.distributions.html">repliclust.distributions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="repliclust.maxmin.html">repliclust.maxmin</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="repliclust.maxmin.blueprint.html">repliclust.maxmin.blueprint</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="repliclust.maxmin.blueprint.parse_distribution_selection.html">repliclust.maxmin.blueprint.parse_distribution_selection</a></li>
+<li class="toctree-l5"><a class="reference internal" href="repliclust.maxmin.blueprint.validate_blueprint_args.html">repliclust.maxmin.blueprint.validate_blueprint_args</a></li>
+<li class="toctree-l5"><a class="reference internal" href="repliclust.maxmin.blueprint.validate_maxmin_ratios.html">repliclust.maxmin.blueprint.validate_maxmin_ratios</a></li>
+<li class="toctree-l5"><a class="reference internal" href="repliclust.maxmin.blueprint.validate_overlaps.html">repliclust.maxmin.blueprint.validate_overlaps</a></li>
+<li class="toctree-l5"><a class="reference internal" href="repliclust.maxmin.blueprint.validate_reference_quantity.html">repliclust.maxmin.blueprint.validate_reference_quantity</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">repliclust.maxmin.blueprint.MaxMinBlueprint</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="repliclust.maxmin.covariance.html">repliclust.maxmin.covariance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="repliclust.maxmin.groupsizes.html">repliclust.maxmin.groupsizes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="repliclust.maxmin.utils.html">repliclust.maxmin.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="repliclust.random_centers.html">repliclust.random_centers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repliclust.utils.html">repliclust.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="repliclust.html">repliclust</a><ul>
+  <li><a href="repliclust.maxmin.html">repliclust.maxmin</a><ul>
+  <li><a href="repliclust.maxmin.blueprint.html">repliclust.maxmin.blueprint</a><ul>
+      <li>Previous: <a href="repliclust.maxmin.blueprint.validate_reference_quantity.html" title="previous chapter">repliclust.maxmin.blueprint.validate_reference_quantity</a></li>
+      <li>Next: <a href="repliclust.maxmin.covariance.html" title="next chapter">repliclust.maxmin.covariance</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Mike Zellinger.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_autosummary/repliclust.maxmin.blueprint.MaxMinBlueprint.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
