@@ -24,6 +24,8 @@ config.init_rng()
 # indicates public API, specifies which submodules to import when
 # running "from repliclust import *"
 __all__ = [
+    'base',
+    'overlap'
     'maxmin',
-    'constrained_overlap',
+    'distributions',
 ]
