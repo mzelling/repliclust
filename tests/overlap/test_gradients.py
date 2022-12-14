@@ -2,8 +2,8 @@ import pytest
 import numpy as np
 from scipy.stats import chi2
 
-from repliclust.constrained_overlap import gradients
-from repliclust.maxmin.blueprint import MaxMinBlueprint
+from repliclust.overlap import gradients
+from repliclust.maxmin.archetype import MaxMinArchetype
 
 @pytest.fixture
 def raw_cluster_input():
@@ -24,8 +24,8 @@ def raw_cluster_input():
 
 
 @pytest.fixture
-def blueprint():
-    bp = MaxMinBlueprint()
+def archetype():
+    bp = MaxMinArchetype()
     return bp
 
 
@@ -143,10 +143,10 @@ def test_make_gradient_arguments(raw_cluster_input):
         )
 
 
-def test_gradient_vectorized(blueprint):
+def test_gradient_vectorized(archetype):
     # extract the cluster centers and covariance structures
-    p = blueprint.dim
-    k = blueprint.n_clusters
+    p = archetype.dim
+    k = archetype.n_clusters
 
     # test if gradient produces output in right format
     centers = np.random.multivariate_normal(

@@ -1,4 +1,4 @@
 """
-This module provides functionality for implementing blueprints based
-on max-min sampling.
+This module provides functionality for implementing data set archetypes
+based on max-min sampling.
 """

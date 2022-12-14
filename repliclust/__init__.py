@@ -5,10 +5,10 @@ Synthetic Data Generator for Cluster Analysis
 repliclust is a Python module allowing reproducible synthetic data
 generation for cluster analysis. 
 
-The module is based on data blueprints, which allow constrained sampling
-of synthetic data sets with similar geometries. For example, the user
-may wish to sample many different data sets that each contain 22 
-slightly oblong clusters that are barely touching.
+The module is based on data set archetypes, which allow constrained 
+sampling of synthetic data sets with similar geometries. For example, 
+the user may wish to sample many different data sets that each contain 
+22 slightly oblong clusters that slightly overlap.
 
 See http://github.com/mzelling/repliclust for the project webpage.
 

@@ -1,5 +1,5 @@
 """
-Base classes for data generators, blueprints, mixture models, and 
+Base classes for data generators, archetypes, mixture models, and 
 related objects.
 """
 
@@ -47,7 +47,7 @@ class CovarianceSampler():
 
     Methods
     -------
-    sample_covariances(blueprint)
+    sample_covariances(archetype)
 
     """
     def __init__(self):
@@ -55,7 +55,7 @@ class CovarianceSampler():
                 ' objects from subclasses of CovarianceSampler, such' +
                 ' as MaxMinCovarianceSampler.')
 
-    def sample_covariances(self, blueprint):
+    def sample_covariances(self, archetype):
         raise NotImplementedError('this method is abstract. To sample'
                 + ' covariances, call this method from an instance of a'
                 + ' subclass of CovarianceSampler, such as' 
@@ -69,7 +69,7 @@ class ClusterCenterSampler():
 
     Methods
     -------
-    sample_cluster_centers(blueprint)
+    sample_cluster_centers(archetype)
     
     """
     def __init__(self):
@@ -77,7 +77,7 @@ class ClusterCenterSampler():
                 + ' objects from subclasses of ClusterCenterSampler,'
                 + ' such as ConstrainedOverlapCenters.')
 
-    def sample_cluster_centers(self, blueprint):
+    def sample_cluster_centers(self, archetype):
         raise NotImplementedError('this method is abstract. To sample'
                 + ' cluster centers, call this method from an instance '
                 + ' of a subclass of ClusterCenterSampler, such as ' 
@@ -90,7 +90,7 @@ class GroupSizeSampler():
 
     Methods
     -------
-    sample_group_sizes(blueprint)
+    sample_group_sizes(archetype)
 
     """
     def __init__(self):
@@ -98,7 +98,7 @@ class GroupSizeSampler():
             + ' objects from subclasses of GroupSizeSampler, such as'
             + " MaxMinGroupSizeSampler.")
 
-    def sample_group_sizes(self, blueprint, total):
+    def sample_group_sizes(self, archetype, total):
         raise NotImplementedError('this method is abstract. To sample' 
             + ' group sizes, run this method from a subclass of' +
             + ' GroupSizeSampler, such as MaxMinGroupSizeSampler.')
@@ -279,9 +279,9 @@ class MixtureModel():
 
         return (X, y)
 
-class Blueprint():
+class Archetype():
     """
-    Base class for a blueprint. Instances of this class
+    Base class for a data set archetype. Instances of this class
     sample probabilistic mixture models with specified geometry.
 
     Parameters
@@ -342,13 +342,13 @@ class Blueprint():
     def sample_mixture_model(self):
         """
         Sample a probabilistic mixture model according to this 
-        blueprint.
+        archetype.
 
         Returns
         -------
         out : MixtureModel
             A probabilistic mixture model satisfying the geometric
-            constraints imposed by this blueprint.
+            constraints imposed by this archetype.
         """
         self._axes, self._lengths = \
             self.covariance_sampler.sample_covariances(self)
@@ -370,7 +370,7 @@ class Blueprint():
                             self._axes, self._lengths, 
                             self._distributions
                             )
-        # # delete the mixture model data from this blueprint object 
+        # # delete the mixture model data from this archetype object 
         # self._axes = None
         # self._lengths = None
         # self._centers = None
@@ -381,7 +381,7 @@ class Blueprint():
 class DataGenerator():
     """
     Base class for a data generator. Instances of this class generate
-    synthetic data sets based on blueprints indicating their desired
+    synthetic data sets based on archetypes indicating their desired
     geometries.
 
 
@@ -391,35 +391,35 @@ class DataGenerator():
     DataGenerator. After constructing a DataGenerator dg, you can 
     write...
         ___________________________________________________
-    1) | X, y, blueprint_name = dg.synthesize(?n_samples)  |
+    1) | X, y, archetype_name = dg.synthesize(?n_samples)  |
         `-------------------------------------------------'
         Generate a single data set with the desired number of samples.
         ______________________________________
-    2) | for X, y, blueprint_name in dg: ...  |                         
+    2) | for X, y, archetype_name in dg: ...  |                         
         `------------------------------------'
         Iterate over dg and generate dg.n_datasets datasets, each with
-        the number of samples specified by the corresponding blueprint.
+        the number of samples specified by the corresponding archetype.
         _______________________________________________________________
-    3) | for X, y, blueprint_name in dg(?n_datasets, ?n_samples): ...  |
+    3) | for X, y, archetype_name in dg(?n_datasets, ?n_samples): ...  |
         `-------------------------------------------------------------'
         Iterate over dg and generate n_datasets datasets, each with
         n_samples data points if n_samples is a number; if n_samples
         is a list of n_datasets numbers, the i-th dataset will have
         n_samples[i] data points. If either n_datasets or n_samples
         are not specified, use n_datasets=dg.n_datasets and the number
-        of data points specified by each blueprint.
+        of data points specified by each archetype.
 
     In each case, the output format is as follows: X is a matrix-shaped
     NumPy array containing the data points (samples by variables) and
     y is a vector-shaped NumPy array containing the cluster labels. 
-    Finally, blueprint_name is the name of the blueprint that was used
+    Finally, archetype_name is the name of the archetype that was used
     to construct the dataset.
 
 
     Parameters
     ----------
-    blueprint : Blueprint
-        A blueprint for generating synthetic data sets.
+    archetype : Archetype
+        A archetype for generating synthetic data sets.
 
     Methods
     -------
@@ -427,35 +427,35 @@ class DataGenerator():
 
     """
 
-    def __init__(self, blueprint, n_datasets=10, 
-                 prefix='blueprint'):
+    def __init__(self, archetype, n_datasets=10, 
+                 prefix='archetype'):
         """
         Instantiate a DataGenerator object.
         """
-        if isinstance(blueprint, Blueprint):
-            bp_name = (blueprint.name if blueprint.name 
+        if isinstance(archetype, Archetype):
+            bp_name = (archetype.name if archetype.name 
                             else prefix+str(0))
-            self._blueprints = [(bp_name, blueprint)]
-        elif isinstance(blueprint, list):
-            bp_name = (blueprint.name if blueprint.name 
+            self._archetypes = [(bp_name, archetype)]
+        elif isinstance(archetype, list):
+            bp_name = (archetype.name if archetype.name 
                 else prefix+str(0))
-            self._blueprints = [(bp.name if bp.name else prefix+str(0),
+            self._archetypes = [(bp.name if bp.name else prefix+str(0),
                                     bp) 
-                                 for i, bp in enumerate(blueprint)]
-        elif isinstance(blueprint, dict):
-            self._blueprints = [(bp_name, bp) for bp_name, bp 
-                                    in blueprint.items()]
+                                 for i, bp in enumerate(archetype)]
+        elif isinstance(archetype, dict):
+            self._archetypes = [(bp_name, bp) for bp_name, bp 
+                                    in archetype.items()]
         else:
-            raise ValueError('blueprints should be a Blueprint, list of'
-                                + ' blueprints, or a dictionary whose'
-                                + ' values are blueprints.')
-        self._next_blueprint_idx = 0
+            raise ValueError('archetypes should be a Archetype, list of'
+                                + ' archetypes, or a dictionary whose'
+                                + ' values are archetypes.')
+        self._next_archetype_idx = 0
         self._n_datasets = n_datasets
 
 
     def __iter__(self):
-        # reliably start with the first blueprint in the list
-        self._next_blueprint_idx = 0
+        # reliably start with the first archetype in the list
+        self._next_archetype_idx = 0
         self._iter_count = 0
         return self
 
@@ -467,13 +467,13 @@ class DataGenerator():
         if self._iter_count >= self._n_datasets:
             raise StopIteration
 
-        bp_name, bp = self._blueprints[self._next_blueprint_idx]
+        bp_name, bp = self._archetypes[self._next_archetype_idx]
         group_sizes = (bp.groupsize_sampler
                          .sample_group_sizes(bp, bp.n_samples))
         X, y = bp.sample_mixture_model().sample_data(group_sizes) 
 
-        self._next_blueprint_idx = ((self._next_blueprint_idx + 1) %
-                                        len(self._blueprints))
+        self._next_archetype_idx = ((self._next_archetype_idx + 1) %
+                                        len(self._archetypes))
         self._iter_count += 1
         return (X, y, bp_name)
 
@@ -494,12 +494,12 @@ class DataGenerator():
             If n_samples is a list of n_dataset integers, the i-th
             dataset will consist of n_samples[i] data points. If
             n_samples is not specified, use the value specified by
-            each blueprint instead.
+            each archetype instead.
 
         Yields
         ------
-        (X, y, blueprint_name) : tuple[ndarray, ndarray, str]
-            Data set X, cluster labels y, and name of the blueprint
+        (X, y, archetype_name) : tuple[ndarray, ndarray, str]
+            Data set X, cluster labels y, and name of the archetype
             according to which X, y were generated. The data X is a
             matrix (samples by coordinates) and the cluster labels y are
             a vector.
@@ -508,7 +508,7 @@ class DataGenerator():
         if not n_datasets:
             n_datasets = self._n_datasets
         if not n_samples:
-            _n_samples = [bp.n_samples for _, bp in self._blueprints]
+            _n_samples = [bp.n_samples for _, bp in self._archetypes]
         elif isinstance(n_samples, (int, float)):
             _n_samples = [n_samples]
         elif (isinstance(n_samples, list) and 
@@ -517,13 +517,13 @@ class DataGenerator():
         else:
             raise ValueError('if you wish to override the number of'
                                 + ' samples specified by the'
-                                + ' blueprint(s), n_samples should be'
+                                + ' archetype(s), n_samples should be'
                                 + ' a number or a list of n_datasets'
                                 + ' numbers.')
 
 
         for i in range(n_datasets):
-            bp_name, bp = self._blueprints[i % len(self._blueprints)]
+            bp_name, bp = self._archetypes[i % len(self._archetypes)]
             group_sizes = (bp.groupsize_sampler
                              .sample_group_sizes(
                                 bp, 
@@ -534,32 +534,32 @@ class DataGenerator():
 
     def synthesize(self, n_samples=None):
         """
-        Synthesize a data set according to the specified blueprint(s).
-        If this data generator consists of more than one blueprint, this
-        function cycles through the given blueprints.
+        Synthesize a data set according to the specified archetype(s).
+        If this data generator consists of more than one archetype, this
+        function cycles through the given archetypes.
 
         Parameters
         ----------
         n_samples : int
             Desired total number of data points to sample. Optional.
             If specified, overrides the number of samples specified
-            by the blueprint object.
+            by the archetype object.
 
         Returns
         -------
         (X, y, bp_name) : tuple[ ndarray(matrix), ndarray(vector), str ]
             The new data set, the cluster labels, and name of the 
-            blueprint.
+            archetype.
         """
-        bp_name, bp = self._blueprints[self._next_blueprint_idx]
+        bp_name, bp = self._archetypes[self._next_archetype_idx]
         group_sizes = (bp.groupsize_sampler
                          .sample_group_sizes(
                             bp, 
                             n_samples if n_samples else bp.n_samples))
         X, y = bp.sample_mixture_model().sample_data(group_sizes)
-        # increment the index for the next blueprint
-        self._next_blueprint_idx = ((self._next_blueprint_idx + 1) %
-                                        len(self._blueprints))
+        # increment the index for the next archetype
+        self._next_archetype_idx = ((self._next_archetype_idx + 1) %
+                                        len(self._archetypes))
         return (X, y, bp_name)
 
     def __repr__(self):
@@ -567,5 +567,5 @@ class DataGenerator():
         Construct string representation of this DataGenerator.
         """
         return ("DataGenerator" 
-                    + "\n\t- blueprint(s) : " + str(1)
+                    + "\n\t- archetype(s) : " + str(1)
                     + "\n\t- n_datasets (default) : " + str(2))

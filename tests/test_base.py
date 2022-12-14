@@ -6,14 +6,14 @@ from repliclust.config import _rng
 from repliclust import base, distributions
 from repliclust.maxmin.covariance import MaxMinCovarianceSampler
 from repliclust.maxmin.groupsizes import MaxMinGroupSizeSampler
-from repliclust.maxmin.blueprint import MaxMinBlueprint
+from repliclust.maxmin.archetype import MaxMinArchetype
 from repliclust.distributions import FixedProportionMix
-from repliclust.constrained_overlap.centers import \
+from repliclust.overlap.centers import \
     ConstrainedOverlapCenters
 
 
 def test_set_seed():
-    bp = base.Blueprint(n_clusters=40, dim=13, scale=2)
+    arch = base.Archetype(n_clusters=40, dim=13, scale=2)
     cov_sampler = MaxMinCovarianceSampler(aspect_ref=1.5, aspect_maxmin=3, 
                                           radius_maxmin=5)
     center_sampler = ConstrainedOverlapCenters(max_overlap=0.2, 
@@ -21,23 +21,23 @@ def test_set_seed():
                                                packing=0.1)
     base.set_seed(123)
     # First sample
-    cov_out_1 = cov_sampler.sample_covariances(bp)
-    bp._axes = cov_out_1[0]; bp._lengths = cov_out_1[1]
-    centers_out_1 = center_sampler.sample_cluster_centers(bp)
+    cov_out_1 = cov_sampler.sample_covariances(arch)
+    arch._axes = cov_out_1[0]; arch._lengths = cov_out_1[1]
+    centers_out_1 = center_sampler.sample_cluster_centers(arch)
     # Second sample
-    cov_out_2 = cov_sampler.sample_covariances(bp)
-    bp._axes = cov_out_2[0]; bp._lengths = cov_out_2[1]
-    centers_out_2 = center_sampler.sample_cluster_centers(bp)
+    cov_out_2 = cov_sampler.sample_covariances(arch)
+    arch._axes = cov_out_2[0]; arch._lengths = cov_out_2[1]
+    centers_out_2 = center_sampler.sample_cluster_centers(arch)
     base.set_seed(123)
     # Third sample
-    cov_out_3 = cov_sampler.sample_covariances(bp)
-    bp._axes = cov_out_3[0]; bp._lengths = cov_out_3[1]
-    centers_out_3 = center_sampler.sample_cluster_centers(bp)
+    cov_out_3 = cov_sampler.sample_covariances(arch)
+    arch._axes = cov_out_3[0]; arch._lengths = cov_out_3[1]
+    centers_out_3 = center_sampler.sample_cluster_centers(arch)
 
     assert not np.any(centers_out_1 == centers_out_2)
     assert np.all(centers_out_1 == centers_out_3)
 
-    for i in range(bp.n_clusters):
+    for i in range(arch.n_clusters):
         assert not np.any(cov_out_1[0][i] == cov_out_2[0][i])
         assert np.all(cov_out_1[1][i] == cov_out_3[1][i])
 
@@ -135,69 +135,69 @@ def test_MixtureModel():
                         np.repeat(np.arange(k), repeats=group_sizes))
 
 
-def test_Blueprint():
-    # test making blueprint with 1 cluster
-    bp = base.Blueprint(n_clusters=1,dim=10,scale=1,
+def test_Archetype():
+    # test making archetype with 1 cluster
+    arch = base.Archetype(n_clusters=1,dim=10,scale=1,
                         covariance_sampler=MaxMinCovarianceSampler(),
                         center_sampler=ConstrainedOverlapCenters(),
                         groupsize_sampler=MaxMinGroupSizeSampler(),
                         distribution_mix=FixedProportionMix())
-    mixture_model = bp.sample_mixture_model()
+    mixture_model = arch.sample_mixture_model()
 
-    # test making blueprint with more clusters
-    bp = base.Blueprint(n_clusters=17,dim=241,scale=2,
+    # test making archetype with more clusters
+    arch = base.Archetype(n_clusters=17,dim=241,scale=2,
                         covariance_sampler=MaxMinCovarianceSampler(),
                         center_sampler=ConstrainedOverlapCenters(),
                         groupsize_sampler=MaxMinGroupSizeSampler(),
                         distribution_mix=FixedProportionMix())
-    mixture_model = bp.sample_mixture_model()
+    mixture_model = arch.sample_mixture_model()
 
-    # test that blueprint properly adds custom attributes from children
-    bp = base.Blueprint(n_clusters=2,dim=3,scale=1,my_special_arg=1337)
-    assert hasattr(bp, 'my_special_arg')
-    assert bp.my_special_arg == 1337
+    # test that archetype properly adds custom attributes from children
+    arch = base.Archetype(n_clusters=2,dim=3,scale=1,my_special_arg=1337)
+    assert hasattr(arch, 'my_special_arg')
+    assert arch.my_special_arg == 1337
 
 
 def test_DataGenerator():
     # construct a data generator
-    dg = base.DataGenerator(blueprint = MaxMinBlueprint())
-    assert hasattr(dg, '_blueprints')
-    assert isinstance(dg._blueprints, list)
+    dg = base.DataGenerator(archetype = MaxMinArchetype())
+    assert hasattr(dg, '_archetypes')
+    assert isinstance(dg._archetypes, list)
 
     # test for catching invalid arguments
 
 
-    # test the .synthesize interface for one blueprint
+    # test the .synthesize interface for one archetype
 
     X, y, dg_name = dg.synthesize()
-    assert X.shape[0] == MaxMinBlueprint().n_samples
+    assert X.shape[0] == MaxMinArchetype().n_samples
     assert X.shape[0] == y.shape[0]
     assert (len(X.shape) == 2) and (len(y.shape) == 1)
-    assert dg_name == 'blueprint0'
+    assert dg_name == 'archetype0'
 
     X, y, dg_name = dg.synthesize(n_samples=101)
     assert X.shape[0] == 101
     assert X.shape[0] == y.shape[0]
     assert (len(X.shape) == 2) and (len(y.shape) == 1)
-    assert dg_name == 'blueprint0'
+    assert dg_name == 'archetype0'
 
 
-    # test the callable generator interface for one blueprint
+    # test the callable generator interface for one archetype
     count = dg._n_datasets
     for X, y, dg_name in dg():
-        assert X.shape[0] == MaxMinBlueprint().n_samples
+        assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert dg_name == 'blueprint0'
+        assert dg_name == 'archetype0'
         count -= 1
     assert count == 0
 
     count = 5
     for X, y, dg_name in dg(n_datasets=5):
-        assert X.shape[0] == MaxMinBlueprint().n_samples
+        assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert dg_name == 'blueprint0'
+        assert dg_name == 'archetype0'
         count -= 1
     assert count == 0
 
@@ -206,34 +206,34 @@ def test_DataGenerator():
         assert X.shape[0] == 77
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert dg_name == 'blueprint0'
+        assert dg_name == 'archetype0'
         count -= 1
     assert count == 0
 
-    # test the iterator interface for a single blueprint
+    # test the iterator interface for a single archetype
     count = dg._n_datasets
     for X, y, dg_name in dg:
-        assert X.shape[0] == MaxMinBlueprint().n_samples
+        assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert dg_name == 'blueprint0'
+        assert dg_name == 'archetype0'
         count -= 1
     assert count == 0
 
     dg._n_datasets = 33
     count = 33
     for X, y, dg_name in dg:
-        assert X.shape[0] == MaxMinBlueprint().n_samples
+        assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert dg_name == 'blueprint0'
+        assert dg_name == 'archetype0'
         count -= 1
     assert count == 0
     
 
 
-    # test the .synthesize interface for multiple blueprints
+    # test the .synthesize interface for multiple archetypes
 
-    # test the callable generator interface for multiple blueprints
+    # test the callable generator interface for multiple archetypes
 
-    # test the iterator interface for multiple blueprints
+    # test the iterator interface for multiple archetypes

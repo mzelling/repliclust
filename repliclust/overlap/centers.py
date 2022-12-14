@@ -10,7 +10,7 @@ from repliclust import config
 from repliclust.base import ClusterCenterSampler
 from repliclust.utils import assemble_covariance_matrix
 from repliclust.random_centers import RandomCenters
-from repliclust.constrained_overlap import gradients
+from repliclust.overlap import gradients
 
 class ConstrainedOverlapCenters(ClusterCenterSampler):
     """
@@ -44,7 +44,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
 
     Methods
     -------
-    sample_cluster_centers(blueprint, print_progress=True)
+    sample_cluster_centers(archetype, print_progress=True)
     """
     def __init__(self, max_overlap=0.1, min_overlap=0.09, packing=0.1, 
                     **optimization_args):
@@ -144,7 +144,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         return centers
         
 
-    def sample_cluster_centers(self, blueprint, print_progress=False):
+    def sample_cluster_centers(self, archetype, print_progress=False):
         """
         Sample cluster centers at random and iteratively adjust them
         until the desired degrees of overlap between clusters are
@@ -152,8 +152,8 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
 
         Parameters
         ----------
-        blueprint : Blueprint
-            Blueprint conveying the desired number of clusters and other
+        archetype : Archetype
+            Archetype conveying the desired number of clusters and other
             attributes.
 
         print_progress : bool
@@ -164,15 +164,15 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         centers : ndarray
             The optimized cluster centers.
         """
-        if (blueprint.n_clusters == 1):
-            return np.zeros(blueprint.dim)[np.newaxis,:]
+        if (archetype.n_clusters == 1):
+            return np.zeros(archetype.dim)[np.newaxis,:]
 
         cov_inv = [assemble_covariance_matrix(
-                        blueprint._axes[i], blueprint._lengths[i],
+                        archetype._axes[i], archetype._lengths[i],
                             inverse=True)
-                        for i in range(blueprint.n_clusters)]
+                        for i in range(archetype.n_clusters)]
         init_centers = (RandomCenters(packing=self.packing)
-                            .sample_cluster_centers(blueprint))
+                            .sample_cluster_centers(archetype))
         centers = self._optimize_centers(init_centers, cov_inv,
                                          verbose=print_progress, 
                                          **self.optimization_args)

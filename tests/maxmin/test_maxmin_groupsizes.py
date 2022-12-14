@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 
-from repliclust.base import Blueprint
+from repliclust.base import Archetype
 from repliclust.maxmin.groupsizes import MaxMinGroupSizeSampler
 from repliclust.maxmin.groupsizes import _float_to_int
 
@@ -80,9 +80,9 @@ def test__float_to_int_2():
 
 
 def test_sample_group_sizes():
-    blueprint_sm = Blueprint(n_clusters=2, dim=10)
-    blueprint_lg = Blueprint(n_clusters=111, dim=4)
-    blueprints = [blueprint_sm, blueprint_lg]
+    archetype_sm = Archetype(n_clusters=2, dim=10)
+    archetype_lg = Archetype(n_clusters=111, dim=4)
+    archetypes = [archetype_sm, archetype_lg]
 
     groupsize_sampler = MaxMinGroupSizeSampler(imbalance_ratio=1.5)
 
@@ -92,7 +92,7 @@ def test_sample_group_sizes():
     args_appropriate = [{'total': z[0], 'n_clusters': z[1]} 
                             for z in Z_appropriate]
     for args in args_appropriate:
-        for bp in blueprints:
+        for bp in archetypes:
             bp.n_clusters = args['n_clusters']
             out = groupsize_sampler.sample_group_sizes(bp, 
                                                         args['total'])
@@ -105,7 +105,7 @@ def test_sample_group_sizes():
     args_inappropriate = [{'total': z[0], 'n_clusters': z[1]} 
                             for z in Z_inappropriate]
     for args in args_inappropriate:
-        for bp in blueprints:
+        for bp in archetypes:
             with pytest.raises(ValueError):
                 bp.n_clusters = args['n_clusters']
                 groupsize_sampler.sample_group_sizes(bp, args['total'])

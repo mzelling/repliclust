@@ -3,7 +3,7 @@ import pytest
 import numpy as np
 
 import repliclust
-from repliclust.base import Blueprint
+from repliclust.base import Archetype
 from repliclust.maxmin.covariance import MaxMinCovarianceSampler
 
 def test_init_MaxMinCovarianceSampler():
@@ -188,14 +188,14 @@ def test_sample_covariances(setup_cov_sampler):
     Make sure the principal axes are orthogonal.
     """
     cov_sampler = setup_cov_sampler
-    blueprint = Blueprint(n_clusters=52, dim=10)
+    archetype = Archetype(n_clusters=52, dim=10)
 
     # Ensure output makes mathematical sense.
     for i in range(10):
         (axes_list, axis_lengths_list) = (cov_sampler
-                                         .sample_covariances(blueprint))
+                                         .sample_covariances(archetype))
 
-        for cluster_idx in range(blueprint.n_clusters):
+        for cluster_idx in range(archetype.n_clusters):
             # Test orthogonality of cluster axes
             assert np.all(
                 np.allclose(axes_list[cluster_idx] 
@@ -206,9 +206,9 @@ def test_sample_covariances(setup_cov_sampler):
     seed = 123
     for i in range(10):
         repliclust.set_seed(seed)
-        cov_structure_new = cov_sampler.sample_covariances(blueprint)
+        cov_structure_new = cov_sampler.sample_covariances(archetype)
         if (i >= 1):
-            for cluster_idx in range(blueprint.n_clusters):
+            for cluster_idx in range(archetype.n_clusters):
                 # Iterate through axes_list and axis_lengths_list
                 for j in range(2): 
                     assert np.all(

@@ -1,13 +1,13 @@
 """
-This module implements a blueprint for mixture models. The user chooses
+This module implements a archetype for mixture models. The user chooses
 the desired geometry by setting the ratios between largest and smallest
 values of various geometric parameters.
 """
 
 import numpy as np
 
-from repliclust.base import Blueprint
-from repliclust.constrained_overlap.centers import \
+from repliclust.base import Archetype
+from repliclust.overlap.centers import \
     ConstrainedOverlapCenters
 
 from repliclust.maxmin.covariance import MaxMinCovarianceSampler
@@ -55,8 +55,8 @@ def validate_reference_quantity(ref_qty=1.5, min_allowed_value=1,
                             + str(min_allowed_value))
     
 
-def validate_blueprint_args(**args):
-    """ Validate all provided arguments for a MaxMinBlueprint. """
+def validate_archetype_args(**args):
+    """ Validate all provided arguments for a MaxMinArchetype. """
     validate_overlaps(args['max_overlap'], args['min_overlap'])
 
     maxmin_args = [
@@ -126,9 +126,9 @@ def parse_distribution_selection(distributions: list, proportions=None):
 
 
 
-class MaxMinBlueprint(Blueprint):
+class MaxMinArchetype(Archetype):
     """
-    A blueprint for mixture models. The user chooses a desired
+    A archetype for mixture models. The user chooses a desired
     geometry by setting the ratios between largest and smallest values 
     of various geometric parameters.
 
@@ -207,7 +207,7 @@ class MaxMinBlueprint(Blueprint):
                                 ('standard_t', {'df': 2})],
             distribution_proportions=None,
             ):
-        """ Instantiate a MaxMinBlueprint object. """
+        """ Instantiate a MaxMinArchetype object. """
         covariance_args = {'aspect_ref': aspect_ref,
                            'aspect_maxmin': aspect_maxmin,
                            'radius_maxmin': radius_maxmin}
@@ -219,7 +219,7 @@ class MaxMinBlueprint(Blueprint):
                                     distributions, 
                                     distribution_proportions)
 
-        validate_blueprint_args(**(covariance_args | groupsize_args 
+        validate_archetype_args(**(covariance_args | groupsize_args 
                                                 | center_args))
 
         covariance_sampler = MaxMinCovarianceSampler(**covariance_args)
@@ -227,7 +227,7 @@ class MaxMinBlueprint(Blueprint):
         center_sampler = ConstrainedOverlapCenters(**center_args)
         distribution_sampler = FixedProportionMix(distributions_parsed)
 
-        Blueprint.__init__(
+        Archetype.__init__(
             self, n_clusters, dim, n_samples, name, scale,
             MaxMinCovarianceSampler(**covariance_args),
             ConstrainedOverlapCenters(**center_args),

@@ -15,7 +15,7 @@ class MaxMinCovarianceSampler():
     Sample covariances for the clusters in a mixture model by specifying
     the max-min ratios for various geometric parameters.
 
-    See documentation of class MaxMinBlueprint for more information.
+    See documentation of class MaxMinArchetype for more information.
 
     Attributes
     ----------
@@ -155,15 +155,15 @@ class MaxMinCovarianceSampler():
                     )
         
 
-    def sample_covariances(self, blueprint):
+    def sample_covariances(self, archetype):
         """
         Compute the principal axes and their lengths for each cluster
         in a mixture model.
 
         Parameters
         ----------
-        blueprint : Blueprint
-            Blueprint for a mixture model.
+        archetype : Archetype
+            Archetype for a mixture model.
 
         Returns
         -------
@@ -178,9 +178,9 @@ class MaxMinCovarianceSampler():
         axes_list = list()
         axis_lengths_list = list()
 
-        n_clusters = blueprint.n_clusters
-        dim = blueprint.dim
-        scale = blueprint.scale
+        n_clusters = archetype.n_clusters
+        dim = archetype.dim
+        scale = archetype.scale
         
         cluster_radii = self.make_cluster_radii(n_clusters, scale, dim)
         cluster_aspects = self.make_cluster_aspect_ratios(n_clusters)

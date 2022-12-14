@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 
 import repliclust
-from repliclust.base import Blueprint
+from repliclust.base import Archetype
 from repliclust.random_centers import adjusted_log_packing
 from repliclust.random_centers import RandomCenters
 
@@ -29,29 +29,29 @@ def test_RandomCenters():
     rnd_centers = RandomCenters(packing=2)
     # Try scale = 0 -> clusters have zero volume, and
     # sampling box will also have zero volume.
-    bp = Blueprint(n_clusters=100, dim=3, scale=0)
-    centers = rnd_centers.sample_cluster_centers(bp)
+    arch = Archetype(n_clusters=100, dim=3, scale=0)
+    centers = rnd_centers.sample_cluster_centers(arch)
     assert np.allclose(centers, 0)
     assert centers.shape == (100, 3)
 
     # Test with packing=1 in 100 dim
     rnd_centers = RandomCenters(packing=1)
-    bp = Blueprint(n_clusters=1, dim=100, scale=0.1)
-    centers = rnd_centers.sample_cluster_centers(bp)
+    arch = Archetype(n_clusters=1, dim=100, scale=0.1)
+    centers = rnd_centers.sample_cluster_centers(arch)
     assert centers.shape == (1, 100)
 
     # Test with packing=0.5 in 2D
     rnd_centers = RandomCenters(packing=0.5)
-    bp = Blueprint(n_clusters=7, dim=2, scale=1)
-    centers = rnd_centers.sample_cluster_centers(bp)
+    arch = Archetype(n_clusters=7, dim=2, scale=1)
+    centers = rnd_centers.sample_cluster_centers(arch)
     print(centers)
     assert centers.shape == (7, 2)
 
     # Test random seed
     repliclust.set_seed(11)
-    centers1 = rnd_centers.sample_cluster_centers(bp)
-    centers2 = rnd_centers.sample_cluster_centers(bp)
+    centers1 = rnd_centers.sample_cluster_centers(arch)
+    centers2 = rnd_centers.sample_cluster_centers(arch)
     repliclust.set_seed(11)
-    centers3 = rnd_centers.sample_cluster_centers(bp)
+    centers3 = rnd_centers.sample_cluster_centers(arch)
     assert (not np.allclose(centers1,centers2))
     assert np.allclose(centers1, centers3)

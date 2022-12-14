@@ -59,7 +59,7 @@ class RandomCenters(ClusterCenterSampler):
     
     Methods
     -------
-    sample_cluster_centers(blueprint)
+    sample_cluster_centers(archetype)
     """
 
     def __init__(self, packing=0.1):
@@ -69,7 +69,7 @@ class RandomCenters(ClusterCenterSampler):
         self.packing = validate_packing(packing)
 
     def sample_cluster_centers(
-            self, blueprint
+            self, archetype
         ):
         """
         Sample cluster centers uniformly at random within a bounded
@@ -77,19 +77,19 @@ class RandomCenters(ClusterCenterSampler):
 
         Parameters
         ----------
-        blueprint : Blueprint
-            A blueprint for a mixture model.
+        archetype : Archetype
+            A archetype for a mixture model.
 
         Returns
         -------
         centers : ndarray
             Cluster centers arranged as a matrix. Each row is a center.
         """
-        k = blueprint.n_clusters
-        p = blueprint.dim
+        k = archetype.n_clusters
+        p = archetype.dim
         
         log_sampling_volume = (
-            log_volume(blueprint.scale, p)  # volume of single cluster
+            log_volume(archetype.scale, p)  # volume of single cluster
                 + np.log(k)  # multiply by number of clusters
                 - adjusted_log_packing(self.packing, p) # div by density
             )

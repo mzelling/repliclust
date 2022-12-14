@@ -78,14 +78,14 @@ class MaxMinGroupSizeSampler(GroupSizeSampler):
         self.imbalance_ratio = imbalance_ratio
 
 
-    def sample_group_sizes(self, blueprint, total):
+    def sample_group_sizes(self, archetype, total):
         """
         Sample the number of data points for each cluster using 
         pairwise max-min sampling. 
 
         Parameters
         ----------
-        blueprint : Blueprint
+        archetype : Blueprint
             Blueprint for a mixture model.
         total : int
             The total number of data points (sum of group sizes).
@@ -96,7 +96,7 @@ class MaxMinGroupSizeSampler(GroupSizeSampler):
             The number of data points for each cluster.
 
         """
-        n_clusters = blueprint.n_clusters
+        n_clusters = archetype.n_clusters
 
         if ((not isinstance(total, int)) 
                 or (not isinstance(total, int))

@@ -3,12 +3,12 @@ import numpy as np
 
 
 from repliclust import set_seed
-from repliclust.base import Blueprint
+from repliclust.base import Archetype
 from repliclust.utils import assemble_covariance_matrix
 from repliclust.random_centers import RandomCenters
-from repliclust.maxmin.blueprint import MaxMinBlueprint
-from repliclust.constrained_overlap.gradients import assess_obs_overlap
-from repliclust.constrained_overlap.centers import \
+from repliclust.maxmin.archetype import MaxMinArchetype
+from repliclust.overlap.gradients import assess_obs_overlap
+from repliclust.overlap.centers import \
     ConstrainedOverlapCenters
 
 RTOL = 0.05
@@ -26,15 +26,15 @@ class TestConstrainedOverlapCenters:
                 [(6,2,0.01,0.005, 0.1), 
                 (2,10,0.05,0.04,0.5), 
                 (4,100,0.1,0.09,0.2)]:
-            blueprint = MaxMinBlueprint(n_clusters=n_clusters, dim=dim,
+            archetype = MaxMinArchetype(n_clusters=n_clusters, dim=dim,
                                         max_overlap=max_overlap, 
                                         min_overlap=min_overlap)
-            cov_inv = [np.eye(blueprint.dim) for 
-                             i in range(blueprint.n_clusters)]
+            cov_inv = [np.eye(archetype.dim) for 
+                             i in range(archetype.n_clusters)]
             centers = np.random.multivariate_normal(
-                            mean=np.zeros(blueprint.dim),
-                            cov=np.eye(blueprint.dim),
-                            size = blueprint.n_clusters
+                            mean=np.zeros(archetype.dim),
+                            cov=np.eye(archetype.dim),
+                            size = archetype.n_clusters
                             )
             centers_sampler = ConstrainedOverlapCenters(max_overlap,
                                                         min_overlap,
@@ -48,7 +48,7 @@ class TestConstrainedOverlapCenters:
             assert overlap_obs['max'] <= (1+RTOL)*max_overlap
 
         # TEST ROBUSTNESS AGAINST DIFFERENT INIT CENTERS
-        bp = MaxMinBlueprint(n_clusters=13, dim=100,
+        bp = MaxMinArchetype(n_clusters=13, dim=100,
                                         max_overlap=0.15,
                                         min_overlap=0.1,
                                         packing=0.1)
@@ -91,9 +91,9 @@ class TestConstrainedOverlapCenters:
 
         # TEST THAT SETTING A SEED WORKS
         centers = np.random.multivariate_normal(
-                                mean=np.zeros(blueprint.dim),
-                                cov=np.eye(blueprint.dim),
-                                size = blueprint.n_clusters
+                                mean=np.zeros(archetype.dim),
+                                cov=np.eye(archetype.dim),
+                                size = archetype.n_clusters
                                 )
         set_seed(2)
         centers_opt_1 = centers_sampler._optimize_centers(
@@ -120,47 +120,47 @@ class TestConstrainedOverlapCenters:
                  (3,10,0.50,0.49,0.9), 
                  (4,200,0.1,0.09,0.2),
                  (2,500,0.1,0.09,0.01)]:
-            blueprint = MaxMinBlueprint(n_clusters=n_clusters, dim=dim,
+            archetype = MaxMinArchetype(n_clusters=n_clusters, dim=dim,
                                         max_overlap=max_overlap,
                                         min_overlap=min_overlap,
                                         packing=packing)
-            blueprint.sample_mixture_model() # load covariance axes
+            archetype.sample_mixture_model() # load covariance axes
             center_sampler = ConstrainedOverlapCenters(
                                 max_overlap=max_overlap, 
                                 min_overlap=min_overlap, 
                                 packing=packing)
-            centers = center_sampler.sample_cluster_centers(blueprint,
+            centers = center_sampler.sample_cluster_centers(archetype,
                                         print_progress=False)
-            cov_inv = [assemble_covariance_matrix(blueprint._axes[i],
-                                                  blueprint._lengths[i],
+            cov_inv = [assemble_covariance_matrix(archetype._axes[i],
+                                                  archetype._lengths[i],
                                                   inverse=True)
-                            for i in range(blueprint.n_clusters)]
+                            for i in range(archetype.n_clusters)]
             obs_overlap = assess_obs_overlap(centers, cov_inv)
             assert obs_overlap['max'] <= (1+RTOL)*max_overlap
             assert obs_overlap['min'] >= (1-RTOL)*min_overlap
 
         # test that setting a seed works
         set_seed(787)
-        centers_1 = center_sampler.sample_cluster_centers(blueprint,
+        centers_1 = center_sampler.sample_cluster_centers(archetype,
                                         print_progress=False)
-        centers_2 = center_sampler.sample_cluster_centers(blueprint,
+        centers_2 = center_sampler.sample_cluster_centers(archetype,
                                         print_progress=False)
         set_seed(787)
-        centers_3 = center_sampler.sample_cluster_centers(blueprint,
+        centers_3 = center_sampler.sample_cluster_centers(archetype,
                                         print_progress=False)
 
-        for i in range(blueprint.n_clusters):
+        for i in range(archetype.n_clusters):
             assert (np.allclose(centers_1, centers_3) and 
                         not np.any(centers_1[i] == centers_2[i]))
 
         # test sampling a single cluster
-        blueprint_single_cluster = Blueprint(n_clusters=1, dim=1000)
+        archetype_single_cluster = Archetype(n_clusters=1, dim=1000)
         center_sampler = ConstrainedOverlapCenters(
                                 max_overlap=max_overlap, 
                                 min_overlap=min_overlap, 
                                 packing=packing)
         centers = center_sampler.sample_cluster_centers(
-                                    blueprint_single_cluster,
+                                    archetype_single_cluster,
                                     print_progress=False)
         assert centers.shape == (1,1000)
         assert np.allclose(centers, np.zeros(1000)[np.newaxis,:])
