@@ -89,8 +89,9 @@ class StandardT(SingleClusterDistribution):
 
 def parse_distribution(distr_name: str, params: dict = {}):
     """
-    Return the SingleClusterDistribution object corresponding to the
-    probability distribution with name distr_name.
+    Return the :py:class:`SingleClusterDistribution` object 
+    corresponding to the probability distribution with name 
+    `distr_name`.
     """
     if distr_name not in SUPPORTED_DISTRIBUTION_NAMES:
         raise ValueError("distribution '" + distr_name + "' is" 
@@ -135,7 +136,7 @@ class FixedProportionMix(DistributionMix):
     ----------
     _distributions : list
         List of probability distributions.
-    _proportions : ndarray
+    _proportions : :py:class:`ndarray <numpy.ndarray>`
         Desired proportion of clusters having the corresponding
         distribution. The i-th entry corresponds to the i-th element
         in _distribution.
@@ -160,15 +161,13 @@ class FixedProportionMix(DistributionMix):
 
         Parameters
         ----------
-        self : FixedProportionMix
-            This instance of FixedProportionMix.
         n_clusters : int
             The number of clusters for which to assign probability
             distributions.
 
         Returns
         -------
-        distributions : list of SingleClusterDistribution
+        distributions : list of :py:class:`SingleClusterDistribution`
             Probability distributions for the clusters of a 
             probabilistic mixture model.
         """

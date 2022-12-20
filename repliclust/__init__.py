@@ -1,17 +1,25 @@
 """
-Synthetic Data Generator for Cluster Analysis
-=============================================
+repliclust
+==========
 
-repliclust is a Python module allowing reproducible synthetic data
-generation for cluster analysis. 
+`repliclust` is a Python package for generating synthetic data sets 
+with clusters. 
 
-The module is based on data set archetypes, which allow constrained 
-sampling of synthetic data sets with similar geometries. For example, 
-the user may wish to sample many different data sets that each contain 
-22 slightly oblong clusters that slightly overlap.
+The package is based on data set archetypes, high-level geometric 
+blueprints that allow you to sample many data sets with the same overall
+geometric structure. The following modules and subpackages are available.
 
-See http://github.com/mzelling/repliclust for the project webpage.
+**Modules**:
+    `repliclust.base`
+        Provides the core framework of `repliclust`.
+    `repliclust.distributions`
+        Implements probability distributions and related functionality.
 
+**Subpackages**:
+    `repliclust.maxmin`
+        Implements a data set archetype based on max-min ratios.
+    `repliclust.overlap`
+        Helps locate cluster centers with the desired overlap.
 """
 
 import numpy as np

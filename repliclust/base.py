@@ -1,6 +1,39 @@
 """
-Base classes for data generators, archetypes, mixture models, and 
-related objects.
+Provides the core framework of `repliclust`.
+
+An Archetype defines the overall geometry of a synthetic data set.
+Feeding one or several Archetypes into a DataGenerator allows you to 
+sample synthetic data sets with the desired geometries.
+
+**Functions**:
+    :py:func:`set_seed`
+        Set a random seed for reproducibility.
+    :py:func:`get_supported_distributions`
+        Obtain a dictionary of supported probability distributions.
+
+**Classes**:
+    :py:class:`DataGenerator`
+        Sample synthetic data sets based on data set archetypes.
+    :py:class:`Archetype`
+        Sample probabilistic mixture models with a desired overall
+        geometric structure.
+    :py:class:`MixtureModel`
+        Probabilistic mixture model with defined cluster shapes, 
+        locations, and probability distributions.
+    :py:class:`DistributionMix`
+        Mechanism for assigning probability distributions to clusters
+        when sampling a :py:class:`MixtureModel` via an \
+        :py:class:`Archetype`.
+    :py:class:`SingleClusterDistribution`
+        Define the probability distribution for a single cluster in 
+        a `MixtureModel`.
+    :py:class:`GroupSizeSampler`
+        Sample the number of data points for each cluster.
+    :py:class:`ClusterCenterSampler`
+        Sample the locations of cluster centers for a \
+        :py:class:`MixtureModel`.
+    :py:class:`CovarianceSampler`
+        Sample cluster shapes for a :py:class:`MixtureModel`.
 """
 
 import numpy as np
@@ -26,36 +59,73 @@ SUPPORTED_DISTRIBUTIONS = {
 
 def set_seed(seed):
     """
-    Set a programwide seed for repliclust.
+    Set a program-wide seed for `repliclust`.
+
+    Parameters
+    ----------
+    seed : int
+        Random seed.
     """
     config._rng = np.random.default_rng(seed)
 
 
 def get_supported_distributions():
     """
-    Print the names of currently supported probability distributions,
-    as well as their default parameters. These distribution names are
-    adopted from the numpy.random module.
+    Get a dictionary of the currently supported probability 
+    distributions, as well as their default parameters. The names
+    agree with the class names in the :py:class:`numpy.random.Generator`
+    module.
     """
     return SUPPORTED_DISTRIBUTIONS
 
 
 class CovarianceSampler():
     """
-    Base class for sampling covariances (principal axes and their 
-    lengths) of all clusters in a mixture model.
+    Base class for sampling the shapes of all clusters in a 
+    `MixtureModel`.
 
-    Methods
-    -------
-    sample_covariances(archetype)
-
+    Subclasses implement a concrete way of sampling cluster shapes
+    by overriding the :py:meth:`sample_covariances` method, which 
+    specifies a call signature that should be followed. By contrast, 
+    subclasses define their own attributes without restriction. 
+    
+    See also
+    --------
+    :py:class:`MaxMinCovarianceSampler\
+     <repliclust.maxmin.covariance.MaxMinCovarianceSampler>`
     """
+
     def __init__(self):
         raise NotImplementedError('this method is abstract. Instantiate'
                 ' objects from subclasses of CovarianceSampler, such' +
                 ' as MaxMinCovarianceSampler.')
 
     def sample_covariances(self, archetype):
+        """
+        Sample cluster shapes for all clusters in a `MixtureModel`.
+
+        **Subclasses overriding this method should follow the call 
+        signature below**.
+
+        Parameters
+        ----------
+        archetype : :py:class:`Archetype <repliclust.base.Archetype>`
+            Data set archetype specifying the desired overall geometry
+            of a probabilistic mixture model.
+
+        Returns
+        --------
+        (axes_list, axis_lengths_list): tuple[list[:py:class:\
+            `numpy.ndarray`], list[:py:class:`numpy.ndarray`]]
+            A tuple with two components. The first component, 
+            `axes_list`, is a list whose `i`-th entry stores the 
+            principal axes of cluster `i` as a matrix (each row is an 
+            axis). The second component, `axis_lengths_list`, is a list 
+            whose `i`-th entry stores the lengths of the `i`-th clusters
+            principal axes as a vector (the `j`-th entry is the length 
+            of the principal axis stored in the `j`-th row of 
+            `axes[i]`).
+        """
         raise NotImplementedError('this method is abstract. To sample'
                 + ' covariances, call this method from an instance of a'
                 + ' subclass of CovarianceSampler, such as' 
@@ -65,19 +135,42 @@ class CovarianceSampler():
 class ClusterCenterSampler():
     """
     Base class for sampling the locations of all cluster centers in 
-    a mixture model. 
+    a `MixtureModel`.
 
-    Methods
-    -------
-    sample_cluster_centers(archetype)
+    Subclasses implement a concrete way of sampling cluster centers by
+    overriding the :py:meth:`sample_cluster_centers` method, which 
+    specifies a call signature that should be followed. By contrast, 
+    subclasses define their own attributes without restriction. 
     
+    See also
+    --------
+    :py:class:`ConstrainedOverlapCenters <repliclust.overlap.centers.ConstrainedOverlapCenters>`
     """
+
     def __init__(self):
         raise NotImplementedError('this method is abstract. Instantiate'
                 + ' objects from subclasses of ClusterCenterSampler,'
                 + ' such as ConstrainedOverlapCenters.')
 
     def sample_cluster_centers(self, archetype):
+        """
+        Sample the locations of all clusters in a `MixtureModel`.
+
+        **Subclasses overriding this method should follow the call 
+        signature below**.
+
+        Parameters
+        ----------
+        archetype : :py:class:`Archetype`
+            Data set archetype specifying the desired overall geometry
+            of a probabilistic mixture model.
+
+        Returns
+        --------
+        centers: :py:class:`ndarray <numpy.ndarray>`
+            A matrix whose `i`-th row gives the location of the `i`-th
+            cluster in the mixture model.
+        """
         raise NotImplementedError('this method is abstract. To sample'
                 + ' cluster centers, call this method from an instance '
                 + ' of a subclass of ClusterCenterSampler, such as ' 
@@ -85,20 +178,46 @@ class ClusterCenterSampler():
 
 class GroupSizeSampler():
     """
-    Base class for sampling group sizes (the number of data points in
-    each cluster) for all clusters in a data set.
+    Base class for sampling the number of data points for each cluster
+    in a `MixtureModel`.
 
-    Methods
-    -------
-    sample_group_sizes(archetype)
+    Subclasses implement a concrete way of sampling group sizes by
+    overriding the :py:meth:`sample_group_sizes` method, which specifies
+    a call signature that should be followed. By contrast, subclasses 
+    define their own attributes without restriction. 
 
+    See also
+    --------
+    :py:class:`MaxMinGroupSizeSampler <repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler>`
     """
+
     def __init__(self):
         raise NotImplementedError('this class is abstract. Instantiate'
             + ' objects from subclasses of GroupSizeSampler, such as'
             + " MaxMinGroupSizeSampler.")
 
     def sample_group_sizes(self, archetype, total):
+        """
+        Sample the number of data points for each cluster in a
+        `MixtureModel`.
+
+        **Subclasses overriding this method should follow the call 
+        signature below**.
+
+        Parameters
+        ----------
+        archetype : :py:class:`Archetype`
+            Data set archetype specifying the desired overall geometry
+            of a probabilistic mixture model. 
+        total : `int`
+            The total number of samples (sum of all group sizes).
+
+        Returns
+        -------
+        group_sizes : :py:class:`ndarray <numpy.ndarray>`
+            A vector whose `i`-th entry is the number of data points
+            for the `i`-th cluster.
+        """
         raise NotImplementedError('this method is abstract. To sample' 
             + ' group sizes, run this method from a subclass of' +
             + ' GroupSizeSampler, such as MaxMinGroupSizeSampler.')
@@ -107,17 +226,36 @@ class GroupSizeSampler():
 class SingleClusterDistribution():
     """
     Base class for specifying the probability distribution of a
-    single cluster in a mixture model.
+    single cluster in a `MixtureModel`.
 
-    Methods
-    -------
+    Subclasses implement a probability distribution by overriding the
+    :py:meth:`_sample_1d` method, which specifies a call signature that
+    should be followed. By contrast, subclasses 
+    define their own attributes without restriction. 
+
+    See also
+    --------
+
+    :py:class:`MultivariateNormal \
+        <repliclust.distributions.MultivariateNormal>`
+        Multivariate normal probability distribution for a single cluster.
+    :py:class:`Exponential <repliclust.distributions.Exponential>`
+        Exponential probability distribution for a single cluster.
+    :py:class:`DistributionFromNumPy \
+        <repliclust.distributions.DistributionFromNumPy>`
+        Arbitrary probability distribution from \
+        :py:class:`numpy <numpy.random.Generator>` for a single cluster.
     """
+
     def __init__(self, **params):
         self.params = params
 
     def _sample_1d(self, n, **params):
         """ 
-        Sample one-dimensional data. 
+        Sample one-dimensional data.
+
+        **Subclasses overriding this method should follow the call 
+        signature below**.
 
         Parameters
         ----------
@@ -126,11 +264,11 @@ class SingleClusterDistribution():
 
         Returns
         -------
-        samples : ndarray
-            A vector of samples.
-        
+        samples_1d : :py:class:`ndarray <numpy.ndarray>`
+            `n` random samples arranged as a vector of length `n`.
         """
-        raise NotImplementedError("method 'sampler_1d' is abstract for"
+        raise NotImplementedError("method '_sample_1d' is an abstract"
+            + " method for"
             + " class 'SingleClusterDistribution'. Its subclasses, such"
             + " as 'MultivariateNormal' provide a concrete "
             + " implementation by"
@@ -139,18 +277,20 @@ class SingleClusterDistribution():
     def sample_cluster(self, n: int, center: np.ndarray, 
                        axes: np.ndarray, axis_lengths: np.ndarray):
         """ 
-        Sample data for a single cluster. 
+        Sample data points for a single cluster. 
 
         Parameters
         ----------
-        n : int
-            The number of samples to generate.
-        center : ndarray
+        n : `int`
+            The number of data points to generate.
+        center : :py:class:`ndarray <numpy.ndarray>`
             The cluster center.
         
-
         Returns
         -------
+        X : :py:class:`ndarray <numpy.ndarray>`
+            Data points for a single cluster, arranged as a matrix with
+            `n` rows (each row is a single data point).
         """
         if not ((len(center.shape) == 1) 
                     and (axis_lengths.shape == center.shape)
@@ -171,19 +311,26 @@ class SingleClusterDistribution():
 
 class DistributionMix():
     """
-    Base class for assigning probability distributions to clusters
-    in a mixture model.
+    Base class for assigning probability distributions to all clusters
+    in a `MixtureModel`.
 
-    Methods
-    -------
-    assign_distributions(n_clusters)
+    Subclasses implement a concrete assignment mechanism by overriding
+    the :py:meth:`assign_distributions` method, which specifies a call
+    signature that should be followed. By contrast, subclasses 
+    define their own attributes without restriction. 
 
+    See also
+    --------
+    :py:class:`FixedProportionMix <repliclust.distributions.FixedProportionMix>`
     """
 
     def assign_distributions(self, n_clusters):
         """
-        Assign probability distributions to all clusters in a mixture
-        model.
+        Assign probability distributions to all clusters in a 
+        `MixtureModel`.
+
+        **Subclasses overriding this method should follow the call 
+        signature below**.
 
         Parameters
         ----------
@@ -192,73 +339,75 @@ class DistributionMix():
 
         Returns
         -------
-        distributions : list of SingleClusterDistribution
-            A list whose i-th element is the probability distribution
-            assigned to the i-th cluster.
+        distributions : list[\
+            :py:class:`SingleClusterDistribution`]
+            A list whose `i`-th element represents the probability 
+            distribution assigned to the `i`-th cluster.
         """
         raise NotImplementedError("this method is abstract. Please run"
             + " assign_distributions from a subclass of"
             + " DistributionMix, such as FixedProportionMix.")
 
 
+
 class MixtureModel():
     """
-    Base class for a probabilistic mixture model. Instances of this
-    class sample data from the mixture distribution.
+    Represents a probabilistic mixture model from which you can 
+    draw samples.
 
     Parameters
     ----------
-    centers : ndarray
+    centers : :py:class:`ndarray <numpy.ndarray>`
         The locations of the cluster centers in this mixture model,
         arranged as a matrix. The i-th row of this matrix stores the 
-        i-th cluster center.
-    axes_list : list of ndarray
-        A list of the principal axes of each cluster. The i-th element
-        is a matrix whose rows are the orthonormal axes of the i-th
+        `i`-th cluster center.
+    axes : list[:py:class:`ndarray <numpy.ndarray>`]
+        A list of the principal axes of each cluster. The `i`-th element
+        is a matrix whose rows are the orthonormal axes of the `i`-th
         cluster.
-    axis_lengths_list : list of ndarray
+    axis_lengths : list[:py:class:`ndarray <numpy.ndarray>`]
         A list containing the lengths of the principal axes of each 
-        cluster. The i-th element is a vector whose j-th entry is the 
-        length of the j-th principal axis of cluster i.
-    distributions_list : list of SingleClusterDistribution
+        cluster. The `i`-th element is a vector whose `j`-th entry is 
+        the length of the `j`-th principal axis of cluster `i`.
+    distributions : list[:py:class:`SingleClusterDistribution`]
         A list assigning a probability distribution to each cluster
-        in this mixture model. The i-th element is the probability
-        distribution of the i-th cluster.
-
-    Methods
-    -------
-    sample_data(group_sizes)
-    
+        in this mixture model. The `i`-th element is the probability
+        distribution of the `i`-th cluster.
     """
     
     def __init__(
         self, centers, axes_list, axis_lengths_list, distributions_list
         ):
-        """ Instantiate a MixtureModel. """
-        self._centers = centers
-        self._axes_list = axes_list
-        self._axis_lengths_list = axis_lengths_list
-        self._distributions_list = distributions_list
+        """ Instantiate a `MixtureModel`. """
+        self.centers = centers
+        self.axes_list = axes_list
+        self.axis_lengths_list = axis_lengths_list
+        self.distributions_list = distributions_list
 
-    def sample_data(self, group_sizes) -> tuple[np.ndarray, np.ndarray]:
+    def sample_data(self, group_sizes):
         """
-        Sample a data set from the mixture distribution.
+        Sample a data set from this :py:class:`MixtureModel`. 
 
         Parameters
         ----------
-        group_sizes : ndarray, shape (k,)
-            The number of data points to sample for each of k clusters.
+        group_sizes : :py:class:`ndarray <numpy.ndarray>`
+            The number of data points to sample for each cluster,
+            formatted as a vector whose length is the number of clusters
+            in this :py:class:`MixtureModel`.
 
         Returns
         -------
-        (X, y) : tuple[ndarray, ndarray]
-            The matrix X represents the sampled data points, while the
-            vector y stores the cluster labels as integers ranging
-            from zero to the number of clusters minus one.
+        (X, y) : tuple[:py:class:`ndarray <numpy.ndarray>`, \
+            :py:class:`ndarray <numpy.ndarray>`]
+            Tuple with two components. The first component, `X' is a 
+            matrix that stores the sampled data points (the `i`-th row
+            is the `i`-th data point), while the second component, `y`,
+            is a vector that stores the cluster labels as integers 
+            ranging from zero to the number of clusters minus one. 
         """
         n = np.sum(group_sizes) # compute total number of samples
-        k = self._centers.shape[0] # extract number of clusters
-        dim = self._centers.shape[1] # extract number of dimensions
+        k = self.centers.shape[0] # extract number of clusters
+        dim = self.centers.shape[1] # extract number of dimensions
         X = np.full(shape=(n, dim), fill_value=np.nan)
         y = np.full(n, fill_value=np.nan).astype(int)
 
@@ -270,47 +419,65 @@ class MixtureModel():
         for i in range(k):
             end = start + group_sizes[i]
             y[start:end] = i
-            X[start:end,:] = self._distributions_list[i].sample_cluster(
-                n=group_sizes[i], center=self._centers[i,:], 
-                axes=self._axes_list[i], 
-                axis_lengths = self._axis_lengths_list[i]
+            X[start:end,:] = self.distributions_list[i].sample_cluster(
+                n=group_sizes[i], center=self.centers[i,:], 
+                axes=self.axes_list[i], 
+                axis_lengths = self.axis_lengths_list[i]
                 )
             start = end
 
         return (X, y)
 
+
+
 class Archetype():
     """
-    Base class for a data set archetype. Instances of this class
-    sample probabilistic mixture models with specified geometry.
+    Base class for a data set archetype.
+
+    Objects of this class sample probabilistic mixture models by
+    first sampling cluster shapes, then sampling the locations for 
+    all cluster centers, and finally assigning a probability 
+    distribution to each cluster.
+    
+    Subclasses implement concrete ways of sampling probabilistic mixture
+    models by providing a wrapper that runs this class's constructor 
+    with certain choices for the `covariance_sampler`, `center_sampler`,
+    `groupsize_sampler`, and `distribution_mix` parameters. 
+    Alternatively, it is possible to directly construct an `Archetype`
+    object by manually specifying these parameters.
 
     Parameters
     ----------
     n_clusters : int
-        The desired number of clusters in each mixture model.
+        The desired number of clusters.
     dim : int
-        The number of dimensions of each mixture model.
-    n_samples : int
+        The desired number of dimensions.
+    n_samples : int, default=500
         The desired total number of data points.
-    scale : float
-        The typical length scale for clusters in each mixture model.
-        Increasing this parameters makes the values of all coordinates 
-        bigger (but the underlying geometry stays the same).
-    covariance_sampler : CovarianceSampler
+    name : str, optional
+        The name of this archetype.
+    scale : float, default=1
+        The typical length scale for clusters. Increasing this 
+        parameter makes all clusters bigger without changing their
+        relatives sizes and positions. The default is 1.
+    covariance_sampler : :py:class:`CovarianceSampler`
         Sampler for cluster covariances.
-    center_sampler : ClusterCenterSampler
+    center_sampler : :py:class:`ClusterCenterSampler`
         Sampler for the locations of cluster centers.
-    groupsize_sampler : GroupSizeSampler
+    groupsize_sampler : :py:class:`GroupSizeSampler`
         Sampler for the number of data points in each cluster.
-    distribution_mix : DistributionMix
-        Object that assigns probability distributions to all clusters
-        in a mixture model.
+    distribution_mix : :py:class:`DistributionMix`
+        Assigns probability distributions to clusters.
+    **kwargs : `dict`, optional
+        Extra arguments used by subclasses of :py:class:`Archetype` to
+        store additional attributes.
 
-    Methods
-    -------
-    sample_mixture_model()
+    See also
+    --------
+    :py:class:`MaxMinArchetype <repliclust.maxmin.archetype.MaxMinArchetype>`
 
     """
+
     def __init__(
             self,
             n_clusters: int,
@@ -346,10 +513,17 @@ class Archetype():
 
         Returns
         -------
-        out : MixtureModel
-            A probabilistic mixture model satisfying the geometric
-            constraints imposed by this archetype.
+        mixture_model : :py:class:MixtureModel 
+            A probabilistic mixture model with the overall geometric
+            structure specified by this archetype.
         """
+        if not (self.covariance_sampler and self.groupsize_sampler
+                    and self.groupsize_sampler and self.center_sampler):
+            raise Exception("sampling a mixture model requires"
+                            + " a covariance sampler, center sampler,"
+                            + " group size sampler, and distribution"
+                            + " mix")
+
         self._axes, self._lengths = \
             self.covariance_sampler.sample_covariances(self)
         if self.n_clusters >= 2:
@@ -378,30 +552,27 @@ class Archetype():
         return mixture_model
 
 
+
 class DataGenerator():
     """
+    Data generator based on data set archetypes.
+
     Base class for a data generator. Instances of this class generate
     synthetic data sets based on archetypes indicating their desired
     geometries.
 
+    There are three different ways to generate synthetic data sets with
+    a DataGenerator. After constructing a DataGenerator `dg`, you can 
+    write:
 
-    Note
-    ----
-    There are three different ways to generate data sets with a 
-    DataGenerator. After constructing a DataGenerator dg, you can 
-    write...
-        ___________________________________________________
-    1) | X, y, archetype_name = dg.synthesize(?n_samples)  |
-        `-------------------------------------------------'
+    1) ``X, y, archetype_name = dg.synthesize(n_samples)``
         Generate a single data set with the desired number of samples.
-        ______________________________________
-    2) | for X, y, archetype_name in dg: ...  |                         
-        `------------------------------------'
+
+    2) ``for X, y, archetype_name in dg: ...``                        
         Iterate over dg and generate dg.n_datasets datasets, each with
         the number of samples specified by the corresponding archetype.
-        _______________________________________________________________
-    3) | for X, y, archetype_name in dg(?n_datasets, ?n_samples): ...  |
-        `-------------------------------------------------------------'
+
+    3) ``for X, y, archetype_name in dg(n_datasets, n_samples): ...``
         Iterate over dg and generate n_datasets datasets, each with
         n_samples data points if n_samples is a number; if n_samples
         is a list of n_datasets numbers, the i-th dataset will have
@@ -410,20 +581,18 @@ class DataGenerator():
         of data points specified by each archetype.
 
     In each case, the output format is as follows: X is a matrix-shaped
-    NumPy array containing the data points (samples by variables) and
-    y is a vector-shaped NumPy array containing the cluster labels. 
-    Finally, archetype_name is the name of the archetype that was used
-    to construct the dataset.
+    :py:class:`ndarray <numpy.ndarray>` containing the data points 
+    (samples by variables) and y is a vector-shaped :py:class:`ndarray \
+    <numpy.ndarray>` containing the cluster labels. 
+    Finally, `archetype_name` is the name of the archetype used to
+    construct the dataset.
 
 
     Parameters
     ----------
-    archetype : Archetype
-        A archetype for generating synthetic data sets.
-
-    Methods
-    -------
-    synthesize(n_samples)
+    archetype : Archetype or list[Archetype] or dict[str, Archetype]
+        One or several archetypes specifying the desired overall 
+        geometry of synthetic data sets.
 
     """
 
@@ -480,15 +649,15 @@ class DataGenerator():
 
     def __call__(self, n_datasets=None, n_samples=None):
         """
-        Generate n_datasets from this data generator, where n_samples
-        determines the number of samples in each dataset.
+        Set up a generator to yield `n_datasets` data sets, where 
+        `n_samples` determines the number of samples in each dataset.
 
         Parameters
         ----------
-        n_datasets : int (optional)
+        n_datasets : int, optional
             Set the number of datasets to generate. If not specified,
             iterate over self.n_datasets datasets.
-        n_samples : int or list[int] (optional)
+        n_samples : int or list[int], optional
             Set the number of samples for each data set. If n_samples
             is an int, each data set will consist of n_samples samples.
             If n_samples is a list of n_dataset integers, the i-th
@@ -498,12 +667,13 @@ class DataGenerator():
 
         Yields
         ------
-        (X, y, archetype_name) : tuple[ndarray, ndarray, str]
-            Data set X, cluster labels y, and name of the archetype
-            according to which X, y were generated. The data X is a
-            matrix (samples by coordinates) and the cluster labels y are
-            a vector.
-
+        (X, y, archetype_name) : tuple[ :py:class:`ndarray \
+            <numpy.ndarray>`, :py:class:`ndarray <numpy.ndarray>`, str]
+            Tuple with three components. The first component, `X`, 
+            stores the new data set as a matrix (each row is a data
+            point). The second component, `y`, stores the cluster labels
+            (`y[i]` is the label of data point `X[i,:]`). The third
+            component, `arch_name`, is the name of the archetype used to create `X`, `y`.
         """
         if not n_datasets:
             n_datasets = self._n_datasets
@@ -547,20 +717,25 @@ class DataGenerator():
 
         Returns
         -------
-        (X, y, bp_name) : tuple[ ndarray(matrix), ndarray(vector), str ]
-            The new data set, the cluster labels, and name of the 
-            archetype.
+        (X, y, archetype_name) : tuple[:py:class:`ndarray \
+            <numpy.ndarray>`, :py:class:`ndarray <numpy.ndarray>`, str]
+            Tuple with three components. The first component, `X`, 
+            stores the new data set as a matrix (each row is a data
+            point). The second component, `y`, stores the cluster labels
+            (`y[i]` is the label of data point `X[i,:]`). The third
+            component, `arch_name`, is the name of the archetype that
+            was used to create `X`, `y`.
         """
-        bp_name, bp = self._archetypes[self._next_archetype_idx]
-        group_sizes = (bp.groupsize_sampler
+        arch_name, arch = self._archetypes[self._next_archetype_idx]
+        group_sizes = (arch.groupsize_sampler
                          .sample_group_sizes(
-                            bp, 
-                            n_samples if n_samples else bp.n_samples))
-        X, y = bp.sample_mixture_model().sample_data(group_sizes)
+                            arch, 
+                            n_samples if n_samples else arch.n_samples))
+        X, y = arch.sample_mixture_model().sample_data(group_sizes)
         # increment the index for the next archetype
         self._next_archetype_idx = ((self._next_archetype_idx + 1) %
                                         len(self._archetypes))
-        return (X, y, bp_name)
+        return (X, y, arch_name)
 
     def __repr__(self):
         """

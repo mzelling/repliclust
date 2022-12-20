@@ -1,0 +1,1051 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Reference &#8212; repliclust 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="repliclust.maxmin" href="repliclust.maxmin.html" />
+    <link rel="prev" title="User Guide" href="user_guide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">repliclust 0.0.1 documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Reference
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Reference
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="repliclust.maxmin.html">repliclust.maxmin</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="repliclust.overlap.html">repliclust.overlap</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="module-repliclust">
+<span id="reference"></span><h1>Reference<a class="headerlink" href="#module-repliclust" title="Permalink to this heading">#</a></h1>
+<section id="repliclust">
+<h2>repliclust<a class="headerlink" href="#repliclust" title="Permalink to this heading">#</a></h2>
+<p><cite>repliclust</cite> is a Python package for generating synthetic data sets
+with clusters.</p>
+<p>The package is based on data set archetypes, high-level geometric
+blueprints that allow you to sample many data sets with the same overall
+geometric structure. The following modules and subpackages are available.</p>
+<dl class="simple">
+<dt><strong>Modules</strong>:</dt><dd><dl class="simple">
+<dt><cite>repliclust.base</cite></dt><dd><p>Provides the core framework of <cite>repliclust</cite>.</p>
+</dd>
+<dt><cite>repliclust.distributions</cite></dt><dd><p>Implements probability distributions and related functionality.</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>Subpackages</strong>:</dt><dd><dl class="simple">
+<dt><cite>repliclust.maxmin</cite></dt><dd><p>Implements a data set archetype based on max-min ratios.</p>
+</dd>
+<dt><cite>repliclust.overlap</cite></dt><dd><p>Helps locate cluster centers with the desired overlap.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="module-repliclust.base">
+<span id="repliclust-base"></span><h2>repliclust.base<a class="headerlink" href="#module-repliclust.base" title="Permalink to this heading">#</a></h2>
+<p>Provides the core framework of <cite>repliclust</cite>.</p>
+<p>An Archetype defines the overall geometry of a synthetic data set.
+Feeding one or several Archetypes into a DataGenerator allows you to
+sample synthetic data sets with the desired geometries.</p>
+<dl class="simple">
+<dt><strong>Functions</strong>:</dt><dd><dl class="simple">
+<dt><a class="reference internal" href="#repliclust.base.set_seed" title="repliclust.base.set_seed"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_seed()</span></code></a></dt><dd><p>Set a random seed for reproducibility.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.get_supported_distributions" title="repliclust.base.get_supported_distributions"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_supported_distributions()</span></code></a></dt><dd><p>Obtain a dictionary of supported probability distributions.</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>Classes</strong>:</dt><dd><dl class="simple">
+<dt><a class="reference internal" href="#repliclust.base.DataGenerator" title="repliclust.base.DataGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataGenerator</span></code></a></dt><dd><p>Sample synthetic data sets based on data set archetypes.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a></dt><dd><p>Sample probabilistic mixture models with a desired overall
+geometric structure.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.MixtureModel" title="repliclust.base.MixtureModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureModel</span></code></a></dt><dd><p>Probabilistic mixture model with defined cluster shapes,
+locations, and probability distributions.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.DistributionMix" title="repliclust.base.DistributionMix"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributionMix</span></code></a></dt><dd><p>Mechanism for assigning probability distributions to clusters
+when sampling a <a class="reference internal" href="#repliclust.base.MixtureModel" title="repliclust.base.MixtureModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureModel</span></code></a> via an         <a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a>.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a></dt><dd><p>Define the probability distribution for a single cluster in
+a <cite>MixtureModel</cite>.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.GroupSizeSampler" title="repliclust.base.GroupSizeSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupSizeSampler</span></code></a></dt><dd><p>Sample the number of data points for each cluster.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.ClusterCenterSampler" title="repliclust.base.ClusterCenterSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterCenterSampler</span></code></a></dt><dd><p>Sample the locations of cluster centers for a         <a class="reference internal" href="#repliclust.base.MixtureModel" title="repliclust.base.MixtureModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureModel</span></code></a>.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.base.CovarianceSampler" title="repliclust.base.CovarianceSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceSampler</span></code></a></dt><dd><p>Sample cluster shapes for a <a class="reference internal" href="#repliclust.base.MixtureModel" title="repliclust.base.MixtureModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureModel</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.Archetype">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">Archetype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">covariance_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#repliclust.base.CovarianceSampler" title="repliclust.base.CovarianceSampler"><span class="pre">CovarianceSampler</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#repliclust.base.ClusterCenterSampler" title="repliclust.base.ClusterCenterSampler"><span class="pre">ClusterCenterSampler</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupsize_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#repliclust.base.GroupSizeSampler" title="repliclust.base.GroupSizeSampler"><span class="pre">GroupSizeSampler</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_mix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#repliclust.base.DistributionMix" title="repliclust.base.DistributionMix"><span class="pre">DistributionMix</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.Archetype" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for a data set archetype.</p>
+<p>Objects of this class sample probabilistic mixture models by
+first sampling cluster shapes, then sampling the locations for
+all cluster centers, and finally assigning a probability
+distribution to each cluster.</p>
+<p>Subclasses implement concrete ways of sampling probabilistic mixture
+models by providing a wrapper that runs this class’s constructor
+with certain choices for the <cite>covariance_sampler</cite>, <cite>center_sampler</cite>,
+<cite>groupsize_sampler</cite>, and <cite>distribution_mix</cite> parameters.
+Alternatively, it is possible to directly construct an <cite>Archetype</cite>
+object by manually specifying these parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<em>int</em>) – The desired number of clusters.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – The desired number of dimensions.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em><em>, </em><em>default=500</em>) – The desired total number of data points.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of this archetype.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>default=1</em>) – The typical length scale for clusters. Increasing this
+parameter makes all clusters bigger without changing their
+relatives sizes and positions. The default is 1.</p></li>
+<li><p><strong>covariance_sampler</strong> (<a class="reference internal" href="#repliclust.base.CovarianceSampler" title="repliclust.base.CovarianceSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceSampler</span></code></a>) – Sampler for cluster covariances.</p></li>
+<li><p><strong>center_sampler</strong> (<a class="reference internal" href="#repliclust.base.ClusterCenterSampler" title="repliclust.base.ClusterCenterSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterCenterSampler</span></code></a>) – Sampler for the locations of cluster centers.</p></li>
+<li><p><strong>groupsize_sampler</strong> (<a class="reference internal" href="#repliclust.base.GroupSizeSampler" title="repliclust.base.GroupSizeSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupSizeSampler</span></code></a>) – Sampler for the number of data points in each cluster.</p></li>
+<li><p><strong>distribution_mix</strong> (<a class="reference internal" href="#repliclust.base.DistributionMix" title="repliclust.base.DistributionMix"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributionMix</span></code></a>) – Assigns probability distributions to clusters.</p></li>
+<li><p><strong>**kwargs</strong> (<cite>dict</cite>, optional) – Extra arguments used by subclasses of <a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a> to
+store additional attributes.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="repliclust.maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxMinArchetype</span></code></a></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.Archetype.sample_mixture_model">
+<span class="sig-name descname"><span class="pre">sample_mixture_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.Archetype.sample_mixture_model" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample a probabilistic mixture model according to this
+archetype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>mixture_model</strong> – A probabilistic mixture model with the overall geometric
+structure specified by this archetype.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>:py:class:MixtureModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.ClusterCenterSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">ClusterCenterSampler</span></span><a class="headerlink" href="#repliclust.base.ClusterCenterSampler" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for sampling the locations of all cluster centers in
+a <cite>MixtureModel</cite>.</p>
+<p>Subclasses implement a concrete way of sampling cluster centers by
+overriding the <a class="reference internal" href="#repliclust.base.ClusterCenterSampler.sample_cluster_centers" title="repliclust.base.ClusterCenterSampler.sample_cluster_centers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sample_cluster_centers()</span></code></a> method, which
+specifies a call signature that should be followed. By contrast,
+subclasses define their own attributes without restriction.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="repliclust.overlap.html#repliclust.overlap.centers.ConstrainedOverlapCenters" title="repliclust.overlap.centers.ConstrainedOverlapCenters"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedOverlapCenters</span></code></a></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.ClusterCenterSampler.sample_cluster_centers">
+<span class="sig-name descname"><span class="pre">sample_cluster_centers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archetype</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.ClusterCenterSampler.sample_cluster_centers" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample the locations of all clusters in a <cite>MixtureModel</cite>.</p>
+<p><strong>Subclasses overriding this method should follow the call
+signature below</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>archetype</strong> (<a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a>) – Data set archetype specifying the desired overall geometry
+of a probabilistic mixture model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>centers</strong> – A matrix whose <cite>i</cite>-th row gives the location of the <cite>i</cite>-th
+cluster in the mixture model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.CovarianceSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">CovarianceSampler</span></span><a class="headerlink" href="#repliclust.base.CovarianceSampler" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for sampling the shapes of all clusters in a
+<cite>MixtureModel</cite>.</p>
+<p>Subclasses implement a concrete way of sampling cluster shapes
+by overriding the <a class="reference internal" href="#repliclust.base.CovarianceSampler.sample_covariances" title="repliclust.base.CovarianceSampler.sample_covariances"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sample_covariances()</span></code></a> method, which
+specifies a call signature that should be followed. By contrast,
+subclasses define their own attributes without restriction.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="repliclust.maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler" title="repliclust.maxmin.covariance.MaxMinCovarianceSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler</span></code></a></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.CovarianceSampler.sample_covariances">
+<span class="sig-name descname"><span class="pre">sample_covariances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archetype</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.CovarianceSampler.sample_covariances" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample cluster shapes for all clusters in a <cite>MixtureModel</cite>.</p>
+<p><strong>Subclasses overriding this method should follow the call
+signature below</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>archetype</strong> (<a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a>) – Data set archetype specifying the desired overall geometry
+of a probabilistic mixture model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>(axes_list, axis_lengths_list)</strong> – A tuple with two components. The first component,
+<cite>axes_list</cite>, is a list whose <cite>i</cite>-th entry stores the
+principal axes of cluster <cite>i</cite> as a matrix (each row is an
+axis). The second component, <cite>axis_lengths_list</cite>, is a list
+whose <cite>i</cite>-th entry stores the lengths of the <cite>i</cite>-th clusters
+principal axes as a vector (the <cite>j</cite>-th entry is the length
+of the principal axis stored in the <cite>j</cite>-th row of
+<cite>axes[i]</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[list[:py:class:            <cite>numpy.ndarray</cite>], list[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.DataGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">DataGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archetype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'archetype'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.DataGenerator" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Data generator based on data set archetypes.</p>
+<p>Base class for a data generator. Instances of this class generate
+synthetic data sets based on archetypes indicating their desired
+geometries.</p>
+<p>There are three different ways to generate synthetic data sets with
+a DataGenerator. After constructing a DataGenerator <cite>dg</cite>, you can
+write:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">archetype_name</span> <span class="pre">=</span> <span class="pre">dg.synthesize(n_samples)</span></code></dt><dd><p>Generate a single data set with the desired number of samples.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">archetype_name</span> <span class="pre">in</span> <span class="pre">dg:</span> <span class="pre">...</span></code></dt><dd><p>Iterate over dg and generate dg.n_datasets datasets, each with
+the number of samples specified by the corresponding archetype.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">archetype_name</span> <span class="pre">in</span> <span class="pre">dg(n_datasets,</span> <span class="pre">n_samples):</span> <span class="pre">...</span></code></dt><dd><p>Iterate over dg and generate n_datasets datasets, each with
+n_samples data points if n_samples is a number; if n_samples
+is a list of n_datasets numbers, the i-th dataset will have
+n_samples[i] data points. If either n_datasets or n_samples
+are not specified, use n_datasets=dg.n_datasets and the number
+of data points specified by each archetype.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>In each case, the output format is as follows: X is a matrix-shaped
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> containing the data points
+(samples by variables) and y is a vector-shaped <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> containing the cluster labels.
+Finally, <cite>archetype_name</cite> is the name of the archetype used to
+construct the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>archetype</strong> (<a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><em>Archetype</em></a><em> or </em><em>list</em><em>[</em><a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><em>Archetype</em></a><em>] or </em><em>dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><em>Archetype</em></a><em>]</em>) – One or several archetypes specifying the desired overall
+geometry of synthetic data sets.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.DataGenerator.synthesize">
+<span class="sig-name descname"><span class="pre">synthesize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.DataGenerator.synthesize" title="Permalink to this definition">#</a></dt>
+<dd><p>Synthesize a data set according to the specified archetype(s).
+If this data generator consists of more than one archetype, this
+function cycles through the given archetypes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_samples</strong> (<em>int</em>) – Desired total number of data points to sample. Optional.
+If specified, overrides the number of samples specified
+by the archetype object.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>(X, y, archetype_name)</strong> – Tuple with three components. The first component, <cite>X</cite>,
+stores the new data set as a matrix (each row is a data
+point). The second component, <cite>y</cite>, stores the cluster labels
+(<cite>y[i]</cite> is the label of data point <cite>X[i,:]</cite>). The third
+component, <cite>arch_name</cite>, is the name of the archetype that
+was used to create <cite>X</cite>, <cite>y</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.DistributionMix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">DistributionMix</span></span><a class="headerlink" href="#repliclust.base.DistributionMix" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for assigning probability distributions to all clusters
+in a <cite>MixtureModel</cite>.</p>
+<p>Subclasses implement a concrete assignment mechanism by overriding
+the <a class="reference internal" href="#repliclust.base.DistributionMix.assign_distributions" title="repliclust.base.DistributionMix.assign_distributions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assign_distributions()</span></code></a> method, which specifies a call
+signature that should be followed. By contrast, subclasses
+define their own attributes without restriction.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#repliclust.distributions.FixedProportionMix" title="repliclust.distributions.FixedProportionMix"><code class="xref py py-class docutils literal notranslate"><span class="pre">FixedProportionMix</span></code></a></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.DistributionMix.assign_distributions">
+<span class="sig-name descname"><span class="pre">assign_distributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.DistributionMix.assign_distributions" title="Permalink to this definition">#</a></dt>
+<dd><p>Assign probability distributions to all clusters in a
+<cite>MixtureModel</cite>.</p>
+<p><strong>Subclasses overriding this method should follow the call
+signature below</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_clusters</strong> (<em>int</em>) – The number of clusters in the mixture model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>distributions</strong> – A list whose <cite>i</cite>-th element represents the probability
+distribution assigned to the <cite>i</cite>-th cluster.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[            <a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.GroupSizeSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">GroupSizeSampler</span></span><a class="headerlink" href="#repliclust.base.GroupSizeSampler" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for sampling the number of data points for each cluster
+in a <cite>MixtureModel</cite>.</p>
+<p>Subclasses implement a concrete way of sampling group sizes by
+overriding the <a class="reference internal" href="#repliclust.base.GroupSizeSampler.sample_group_sizes" title="repliclust.base.GroupSizeSampler.sample_group_sizes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sample_group_sizes()</span></code></a> method, which specifies
+a call signature that should be followed. By contrast, subclasses
+define their own attributes without restriction.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="repliclust.maxmin.html#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler" title="repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler</span></code></a></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.GroupSizeSampler.sample_group_sizes">
+<span class="sig-name descname"><span class="pre">sample_group_sizes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archetype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.GroupSizeSampler.sample_group_sizes" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample the number of data points for each cluster in a
+<cite>MixtureModel</cite>.</p>
+<p><strong>Subclasses overriding this method should follow the call
+signature below</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archetype</strong> (<a class="reference internal" href="#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a>) – Data set archetype specifying the desired overall geometry
+of a probabilistic mixture model.</p></li>
+<li><p><strong>total</strong> (<cite>int</cite>) – The total number of samples (sum of all group sizes).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>group_sizes</strong> – A vector whose <cite>i</cite>-th entry is the number of data points
+for the <cite>i</cite>-th cluster.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.MixtureModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">MixtureModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_lengths_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distributions_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.MixtureModel" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a probabilistic mixture model from which you can
+draw samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centers</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – The locations of the cluster centers in this mixture model,
+arranged as a matrix. The i-th row of this matrix stores the
+<cite>i</cite>-th cluster center.</p></li>
+<li><p><strong>axes</strong> (list[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]) – A list of the principal axes of each cluster. The <cite>i</cite>-th element
+is a matrix whose rows are the orthonormal axes of the <cite>i</cite>-th
+cluster.</p></li>
+<li><p><strong>axis_lengths</strong> (list[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]) – A list containing the lengths of the principal axes of each
+cluster. The <cite>i</cite>-th element is a vector whose <cite>j</cite>-th entry is
+the length of the <cite>j</cite>-th principal axis of cluster <cite>i</cite>.</p></li>
+<li><p><strong>distributions</strong> (list[<a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a>]) – A list assigning a probability distribution to each cluster
+in this mixture model. The <cite>i</cite>-th element is the probability
+distribution of the <cite>i</cite>-th cluster.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.MixtureModel.sample_data">
+<span class="sig-name descname"><span class="pre">sample_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_sizes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.MixtureModel.sample_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample a data set from this <a class="reference internal" href="#repliclust.base.MixtureModel" title="repliclust.base.MixtureModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureModel</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>group_sizes</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – The number of data points to sample for each cluster,
+formatted as a vector whose length is the number of clusters
+in this <a class="reference internal" href="#repliclust.base.MixtureModel" title="repliclust.base.MixtureModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureModel</span></code></a>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>(X, y)</strong> – Tuple with two components. The first component, <cite>X’ is a
+matrix that stores the sampled data points (the `i</cite>-th row
+is the <cite>i</cite>-th data point), while the second component, <cite>y</cite>,
+is a vector that stores the cluster labels as integers
+ranging from zero to the number of clusters minus one.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>,             <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.base.SingleClusterDistribution">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">SingleClusterDistribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.SingleClusterDistribution" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for specifying the probability distribution of a
+single cluster in a <cite>MixtureModel</cite>.</p>
+<p>Subclasses implement a probability distribution by overriding the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">_sample_1d()</span></code> method, which specifies a call signature that
+should be followed. By contrast, subclasses
+define their own attributes without restriction.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#repliclust.distributions.MultivariateNormal" title="repliclust.distributions.MultivariateNormal"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultivariateNormal</span></code></a></dt><dd><p>Multivariate normal probability distribution for a single cluster.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.distributions.Exponential" title="repliclust.distributions.Exponential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exponential</span></code></a></dt><dd><p>Exponential probability distribution for a single cluster.</p>
+</dd>
+<dt><a class="reference internal" href="#repliclust.distributions.DistributionFromNumPy" title="repliclust.distributions.DistributionFromNumPy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributionFromNumPy</span></code></a></dt><dd><p>Arbitrary probability distribution from         <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy</span></code></a> for a single cluster.</p>
+</dd>
+</dl>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.base.SingleClusterDistribution.sample_cluster">
+<span class="sig-name descname"><span class="pre">sample_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_lengths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.SingleClusterDistribution.sample_cluster" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample data points for a single cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<cite>int</cite>) – The number of data points to generate.</p></li>
+<li><p><strong>center</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – The cluster center.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>X</strong> – Data points for a single cluster, arranged as a matrix with
+<cite>n</cite> rows (each row is a single data point).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.base.get_supported_distributions">
+<span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">get_supported_distributions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.get_supported_distributions" title="Permalink to this definition">#</a></dt>
+<dd><p>Get a dictionary of the currently supported probability
+distributions, as well as their default parameters. The names
+agree with the class names in the <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a>
+module.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.base.set_seed">
+<span class="sig-prename descclassname"><span class="pre">repliclust.base.</span></span><span class="sig-name descname"><span class="pre">set_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.base.set_seed" title="Permalink to this definition">#</a></dt>
+<dd><p>Set a program-wide seed for <cite>repliclust</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – Random seed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="repliclust-maxmin">
+<h2>repliclust.maxmin<a class="headerlink" href="#repliclust-maxmin" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="repliclust.maxmin.html">repliclust.maxmin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="repliclust.maxmin.html#module-repliclust.maxmin.archetype">repliclust.maxmin.archetype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repliclust.maxmin.html#module-repliclust.maxmin.covariance">repliclust.maxmin.covariance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repliclust.maxmin.html#module-repliclust.maxmin.groupsizes">repliclust.maxmin.groupsizes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="repliclust-overlap">
+<h2>repliclust.overlap<a class="headerlink" href="#repliclust-overlap" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="repliclust.overlap.html">repliclust.overlap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="repliclust.overlap.html#module-repliclust.overlap.centers">repliclust.overlap.centers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repliclust.overlap.html#module-repliclust.overlap.gradients">repliclust.overlap.gradients</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-repliclust.distributions">
+<span id="repliclust-distributions"></span><h2>repliclust.distributions<a class="headerlink" href="#module-repliclust.distributions" title="Permalink to this heading">#</a></h2>
+<p>This module implements probability distributions for individual
+clusters, as well as distribution mixes that assign probability
+distributions to the clusters in a mixture model.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.distributions.DistributionFromNumPy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.distributions.</span></span><span class="sig-name descname"><span class="pre">DistributionFromNumPy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.distributions.DistributionFromNumPy" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a></p>
+<p>Allows arbitrary method from Generator class in numpy.random.
+The method must take the argument ‘size’ for selecting the number
+of samples.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.distributions.DistributionFromPDF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.distributions.</span></span><span class="sig-name descname"><span class="pre">DistributionFromPDF</span></span><a class="headerlink" href="#repliclust.distributions.DistributionFromPDF" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a></p>
+<p>Sample from arbitrary probability density function.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.distributions.Exponential">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.distributions.</span></span><span class="sig-name descname"><span class="pre">Exponential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.distributions.Exponential" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a></p>
+<p>Draw exponentially distributed data for a single cluster.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.distributions.FixedProportionMix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.distributions.</span></span><span class="sig-name descname"><span class="pre">FixedProportionMix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distributions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[('normal',</span> <span class="pre">1.0,</span> <span class="pre">{})]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.distributions.FixedProportionMix" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#repliclust.base.DistributionMix" title="repliclust.base.DistributionMix"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributionMix</span></code></a></p>
+<p>Assign probability distributions to clusters according to fixed
+proportions. For example, you may choose that 50% of clusters have
+a multivariate normal distribution and 50% have an exponential
+distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>distributions</strong> (<em>list of tuple</em>) – List of distributions to mix. Each distribution appears as
+a tuple (name, proportion, params), where name is a string
+giving the distribution name; proportion is a number giving
+the desired proportion of clusters with the named
+distribution, and params is a dict whose (key, value) pairs
+are the names and values of distributional parameters.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">assign_distributions(self,</span> <span class="pre">n_clusters):</span></span></dt>
+<dd><p>Assign probability distributions to clusters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="repliclust.distributions.FixedProportionMix._distributions">
+<span class="sig-name descname"><span class="pre">_distributions</span></span><a class="headerlink" href="#repliclust.distributions.FixedProportionMix._distributions" title="Permalink to this definition">#</a></dt>
+<dd><p>List of probability distributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="repliclust.distributions.FixedProportionMix._proportions">
+<span class="sig-name descname"><span class="pre">_proportions</span></span><a class="headerlink" href="#repliclust.distributions.FixedProportionMix._proportions" title="Permalink to this definition">#</a></dt>
+<dd><p>Desired proportion of clusters having the corresponding
+distribution. The i-th entry corresponds to the i-th element
+in _distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.distributions.FixedProportionMix.assign_distributions">
+<span class="sig-name descname"><span class="pre">assign_distributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.distributions.FixedProportionMix.assign_distributions" title="Permalink to this definition">#</a></dt>
+<dd><p>Assign probability distributions to all the clusters of a
+probabilistic mixture model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_clusters</strong> (<em>int</em>) – The number of clusters for which to assign probability
+distributions.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>distributions</strong> – Probability distributions for the clusters of a
+probabilistic mixture model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of <code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.distributions.MultivariateNormal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.distributions.</span></span><span class="sig-name descname"><span class="pre">MultivariateNormal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.distributions.MultivariateNormal" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a></p>
+<p>Draw multivariate normal data for a single cluster.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.distributions.StandardT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.distributions.</span></span><span class="sig-name descname"><span class="pre">StandardT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.distributions.StandardT" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#repliclust.base.SingleClusterDistribution" title="repliclust.base.SingleClusterDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a></p>
+<p>Draw t-distributed data for a single cluster.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.distributions.parse_distribution">
+<span class="sig-prename descclassname"><span class="pre">repliclust.distributions.</span></span><span class="sig-name descname"><span class="pre">parse_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distr_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.distributions.parse_distribution" title="Permalink to this definition">#</a></dt>
+<dd><p>Return the <code class="xref py py-class docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code> object
+corresponding to the probability distribution with name
+<cite>distr_name</cite>.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="user_guide.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">User Guide</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="repliclust.maxmin.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">repliclust.maxmin</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repliclust">
+   repliclust
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-repliclust.base">
+   repliclust.base
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repliclust-maxmin">
+   repliclust.maxmin
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repliclust-overlap">
+   repliclust.overlap
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-repliclust.distributions">
+   repliclust.distributions
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/reference.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022, Mike Zellinger.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

@@ -28,7 +28,7 @@ def adjusted_log_packing(packing: float, dim: int):
     ----------
     packing : float, >0
         The volume density of clusters within a bounded region in 2D.
-    dim : int, >= 2
+    dim : int, >=2
         The actual number of dimensions.
 
     Returns

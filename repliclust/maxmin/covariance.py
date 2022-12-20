@@ -27,14 +27,6 @@ class MaxMinCovarianceSampler():
     radius_maxmin : float, >= 1
         Max-min ratio for the radii of clusters in the mixture model.
 
-    Methods
-    -------
-    __init__(self, aspect_ref, aspect_maxmin, radius_maxmin)
-    make_cluster_aspect_ratios(self, n_clusters)
-    make_cluster_radii(self, n_clusters, ref_radius, n_dim)
-    make_axis_sd(self, n_axes, sd, aspect)
-    make_cov(self, clusterdata, ...)
-
     """
     
     def __init__(self, aspect_ref=1.5, aspect_maxmin=2, 
@@ -167,13 +159,16 @@ class MaxMinCovarianceSampler():
 
         Returns
         -------
-        out : tuple (axes_list, axis_lengths_list), where
-            axes_list : list of ndarray
-                The i-th element stores principal axes of the i-th 
-                cluster as a matrix. (Each row is an axis.)
-            axis_lengths_list : list of ndarray
-                The i-th element stores the lengths of the i-th 
-                cluster's principal axes as a vector.
+        (axes_list, axis_lengths_list) : Tuple[List[ndarray], List[ndarray]]
+            Tuple with two components. The first component, `axes_list`,
+            is a list whose `i`-th element stores the principal axes
+            of the `i`-th cluster as a matrix (each row is an 
+            axis). The second component, `axis_lengths_list`, is a
+            list whose i-th element stores the lengths of the i-th 
+            cluster's principal axes as a vector. In particular, for
+            any cluster `i` and axis `j`, the number 
+            `axis_lengths_list[i][j]` is the length corresponding
+            to the principal axis `axes_list[i][j,:]`.
         """
         axes_list = list()
         axis_lengths_list = list()

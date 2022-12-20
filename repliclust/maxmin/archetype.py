@@ -128,27 +128,19 @@ def parse_distribution_selection(distributions: list, proportions=None):
 
 class MaxMinArchetype(Archetype):
     """
-    A archetype for mixture models. The user chooses a desired
-    geometry by setting the ratios between largest and smallest values 
+    A data set archetype that defines the overall geometry of a data
+    set using max-min ratios.
+    
+    The user sets the ratios between largest and smallest values 
     of various geometric parameters.
 
 
-    Geometric attributes
-    --------------------
-    Cluster radius : float, >0
-        Geometric mean of the standard deviations along a cluster's 
-        principal axes (eigenvectors of covariance matrix)
-    Cluster aspect ratio : float, >=1
-        Ratio between the lengths of a cluster's longest and shortest
-        principal axes (eigenvectors of covariance matrix). 
-        This value equals 1 for a spherical cluster and exceeds 1 for 
-        an oblong cluster.
-    Group size : int
-        The number of data points in a cluster.
-
-
-    Configuring geometric attributes
-    --------------------------------
+    Parameters
+    ----------
+    n_clusters : int
+        The desired number of clusters.
+    dim : int
+        The desired number of dimensions.
     radius_maxmin : float, >=1
         Ratio between the maximum and minimum radii among all clusters
         in a mixture model.
@@ -159,25 +151,9 @@ class MaxMinArchetype(Archetype):
         Typical aspect ratio for the clusters in a mixture model.
         For example, if aspect_ref = 10, we expect that all clusters
         in the mixture model are strongly elongated.
-    imbalance_ratio : float, >=1
+    imbalance_maxmin : float, >=1
         Ratio between the greatest and smallest group sizes among all
         clusters in the mixture model.
-
-
-    Parameters
-    ----------
-    n_clusters : int
-        The desired number of clusters.
-    dim : int
-        The desired number of dimensions.
-    radius_maxmin : float, >=1
-        Ratio between the maximum and minimum cluster radii
-    aspect_maxmin : float, >=1
-        Ratio between maximum and minimum cluster aspect ratios
-    aspect_ref : float, >=1
-        Reference (typical) aspect ratio for clusters
-    imbalance_maxmin : float, >=1
-        Ratio between highest and lowest class sizes across clusters
     min_overlap : float in (0,1)
         The minimum required overlap between a cluster and ANY other
         cluster. This minimum overlap allows you to guarantee that no
@@ -195,6 +171,23 @@ class MaxMinArchetype(Archetype):
         distributional parameters. To print the names of all supported
         distributions and their parameters (along with default values), 
         print the output of repliclust.get_supported_distributions().
+
+    
+    Notes
+    -----
+
+    Below is a short glossary of some geometric terms used above.
+
+    Group size : int
+        The number of data points in a cluster.
+    Cluster radius : float
+        Geometric mean of the standard deviations along a cluster's 
+        principal axes (eigenvectors of covariance matrix).
+    Cluster aspect ratio : float
+        Ratio between the lengths of a cluster's longest and shortest
+        principal axes (eigenvectors of covariance matrix). 
+        This value equals 1 for a spherical cluster and exceeds 1 for 
+        an oblong cluster.
     """
 
     def __init__(

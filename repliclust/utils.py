@@ -8,8 +8,7 @@ from repliclust import config
 
 def log_volume(radius: float, dim: int):
     """
-    Compute log volume for a sphere of a given radius in the given
-    dimension.
+    Compute the logarithm of a sphere's volume.
 
     Parameters
     ----------
@@ -20,7 +19,7 @@ def log_volume(radius: float, dim: int):
 
     Returns
     -------
-    out : float
+    float
         The natural log of the volume of the sphere.
     """
     return dim*np.log(radius*np.sqrt(np.pi)) - loggamma((dim/2) + 1)
@@ -28,8 +27,8 @@ def log_volume(radius: float, dim: int):
 
 def radius_from_log_volume(log_volume: float, dim: int):
     """ 
-    Compute radius corresponding to a sphere of given log volume in the
-    given number of dimensions.
+    Compute the radius of a sphere for which the logarithm of volume
+    is given.
 
     Parameters
     ----------
@@ -40,7 +39,7 @@ def radius_from_log_volume(log_volume: float, dim: int):
 
     Returns
     -------
-    out : float
+    float
         The radius of the sphere.
     """
     return np.exp(
@@ -50,7 +49,7 @@ def radius_from_log_volume(log_volume: float, dim: int):
 
 def sample_unit_vectors(n: int, dim: int):
     """ 
-    Sample n unit vectors in dim dimensions.
+    Sample `n` unit vectors in `dim` dimensions.
 
     Parameters
     ----------
@@ -61,9 +60,9 @@ def sample_unit_vectors(n: int, dim: int):
 
     Returns
     -------
-    out : ndarray, shape (n, dim)
-        The unit vectors arranged as a matrix. 
-        Each row is a unit vector.
+    ndarray
+        The unit vectors arranged as a matrix, where each row is a unit 
+        vector. The output shape is `n` by `dim`.
     """
     # Sample Gaussian vectors and then normalize to unit length
     gaussian_vectors = config._rng.multivariate_normal(
@@ -77,8 +76,8 @@ def sample_unit_vectors(n: int, dim: int):
 
 def assemble_covariance_matrix(axes, axis_lengths, inverse=False):
     """
-    Assemble axes and axis lengths into a covariance matrix or
-    inverse covariance matrix.
+    Compute the covariance matrix or inverse covariance matrix
+    corresponding to the given axes and their lengths.
 
     Parameters
     ----------

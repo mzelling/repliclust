@@ -40,12 +40,8 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
     tol : float
         Numerical tolerance for achieving the desired overlap
         between pairs of clusters.
-
-
-    Methods
-    -------
-    sample_cluster_centers(archetype, print_progress=True)
     """
+    
     def __init__(self, max_overlap=0.1, min_overlap=0.09, packing=0.1, 
                     **optimization_args):
         """ Instantiate a ConstrainedOverlapCenters object. """

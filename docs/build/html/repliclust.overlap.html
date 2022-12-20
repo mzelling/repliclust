@@ -1,0 +1,742 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>repliclust.overlap &#8212; repliclust 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'repliclust.overlap';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="repliclust.maxmin" href="repliclust.maxmin.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">repliclust 0.0.1 documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="repliclust.maxmin.html">repliclust.maxmin</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">repliclust.overlap</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="repliclust-overlap">
+<h1>repliclust.overlap<a class="headerlink" href="#repliclust-overlap" title="Permalink to this heading">#</a></h1>
+<section id="module-repliclust.overlap.centers">
+<span id="repliclust-overlap-centers"></span><h2>repliclust.overlap.centers<a class="headerlink" href="#module-repliclust.overlap.centers" title="Permalink to this heading">#</a></h2>
+<p>This module implements a ClusterCenterSampler based on achieving the
+desired degree of pairwise overlap between clusters by minimizing an
+objective function.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.overlap.centers.ConstrainedOverlapCenters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.overlap.centers.</span></span><span class="sig-name descname"><span class="pre">ConstrainedOverlapCenters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">optimization_args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.centers.ConstrainedOverlapCenters" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reference.html#repliclust.base.ClusterCenterSampler" title="repliclust.base.ClusterCenterSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterCenterSampler</span></code></a></p>
+<p>This class provides an implementation for optimizing the location
+of cluster centers to achieve the desired degrees of overlap between
+pairs of clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_overlap</strong> (<em>float between 0 and 1</em>) – The maximum allowed overlap between two cluster centers,
+measured as a fraction of cluster mass.</p></li>
+<li><p><strong>min_overlap</strong> (<em>float</em>) – The minimum overlap each cluster needs to have with some other
+cluster, preventing it to be isolated. The overlap is measured
+as a fraction of cluster mass.</p></li>
+<li><p><strong>packing</strong> (<em>float</em>) – Sets the ratio of total cluster volume to the sampling volume.
+Used when choosing random cluster centers for initializing the
+optimization.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The rate at which cluster centers are optimized. If numerical
+instabilities appear, it is recommended to lower this number.</p></li>
+<li><p><strong>max_epoch</strong> (<em>int</em>) – The maximum number of optimization epochs to run. Increasing
+this number may slow down the optimization.</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – Numerical tolerance for achieving the desired overlap
+between pairs of clusters.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.overlap.centers.ConstrainedOverlapCenters.sample_cluster_centers">
+<span class="sig-name descname"><span class="pre">sample_cluster_centers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archetype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.centers.ConstrainedOverlapCenters.sample_cluster_centers" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample cluster centers at random and iteratively adjust them
+until the desired degrees of overlap between clusters are
+satisfied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archetype</strong> (<a class="reference internal" href="reference.html#repliclust.base.Archetype" title="repliclust.base.Archetype"><em>Archetype</em></a>) – Archetype conveying the desired number of clusters and other
+attributes.</p></li>
+<li><p><strong>print_progress</strong> (<em>bool</em>) – If true, print the progress during optimization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>centers</strong> – The optimized cluster centers.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-repliclust.overlap.gradients">
+<span id="repliclust-overlap-gradients"></span><h2>repliclust.overlap.gradients<a class="headerlink" href="#module-repliclust.overlap.gradients" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.assess_obs_overlap">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">assess_obs_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cov_inv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.assess_obs_overlap" title="Permalink to this definition">#</a></dt>
+<dd><p>Assess the observed min and maximum overlap between cluster centers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.chi2term_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">chi2term_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mharsum_vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.chi2term_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the chi2 term of the overlap gradients with respect to a
+reference cluster center vs all other centers (vectorized).
+Compute the harmonic sum of Mahalanobis distances (vectorized).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mharsum_vec</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>1</em><em>, </em><em>k-1</em><em>)</em>) – Harmonic sum of Mahalanobis distances (vectorized).</p></li>
+<li><p><strong>p</strong> (<em>int</em>) – Dimensionality of the data (degrees of freedom for chi2).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Chi2(p) density evaluated at the appropriate quantile cutoffs.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (1, k-1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.cluster_loss">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">cluster_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cov_inv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_bounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.cluster_loss" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the overlap loss for a reference cluster.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.compute_other_cluster_idx">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">compute_other_cluster_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.compute_other_cluster_idx" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute other cluster indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_idx</strong> (<em>int</em>) – Cluster index to exclude.</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – Number of clusters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – All cluster indices except for cluster_idx.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.compute_overlaps_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">compute_overlaps_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mharsum_vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.compute_overlaps_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute overlaps between a reference cluster and all other
+clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mharsum_vec</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>1</em><em>, </em><em>k-1</em><em>)</em>) – Harmonic sum of Mahalanobis distances.</p></li>
+<li><p><strong>p</strong> (<em>int</em>) – Dimensionality of the clusters / degrees of freedom for the
+chi-square distribution.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Overlaps between reference cluster and all other clusters.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (1, k-1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.cubicterm_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">cubicterm_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mharsum_vec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.cubicterm_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the inverse cubic term of the overlap gradients with respect
+to a reference cluster center vs all other centers (vectorized).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mharsum_vec</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>1</em><em>, </em><em>k-1</em><em>)</em>) – Harmonic sum of Mahalanobis distances (vectorized).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Inverse cubic term of the overlap gradients.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (1, k-1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.gradient_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">gradient_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_mat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_tf_mat_1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_tf_mat_2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdist_vec_1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdist_vec_2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mharsum_vec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'overlap'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.gradient_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the gradient of overlaps of a reference cluster with
+all other k-1 clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff_mat</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>k-1</em><em>)</em>) – Matrix of differences between reference cluster center and
+the other k-1 cluster centers.</p></li>
+<li><p><strong>diff_tf_mat_1</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>k-1</em><em>)</em>) – Same as diff_mat, except each column is left-multiplied by
+inverse covariance matrix of reference cluster.</p></li>
+<li><p><strong>diff_tf_mat_2</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>k-1</em><em>)</em>) – Same as diff_mat, except each column is left-multiplied by
+inverse covariance matrix of corresponding OTHER cluster.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Gradient vectors of the reference cluster’s overlap with
+the other clusters, with respect to the reference center.
+The j-th column of this matrix is the derivative of the
+overlap between the reference cluster and the j-th other
+cluster with respect to the reference center. To get the
+derivative of the same quantity with respect to the centers
+of the OTHER clusters, simply multiply the output by -1.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (p, k-1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.harsum_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">harsum_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.harsum_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute harmonic sum (vectorized).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>1</em><em>, </em><em>k-1</em><em>)</em>) – Input matrix.</p></li>
+<li><p><strong>Y</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>1</em><em>, </em><em>k-1</em><em>)</em>) – Input matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Harmonic sum of X and Y.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (1, k-1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.make_mahalanobis_args">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">make_mahalanobis_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_tf_mat_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_tf_mat_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.make_mahalanobis_args" title="Permalink to this definition">#</a></dt>
+<dd><p>Cmopute Mahalanobis quantities for use in other functions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.make_mharsum_vec">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">make_mharsum_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cov_inv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.make_mharsum_vec" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute harmonic sum of Mahalanobis distances from centers and
+inverse covariance matrices.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.make_premahalanobis_args">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">make_premahalanobis_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_cluster_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cov_inv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.make_premahalanobis_args" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute some quantities needed in other functions: differences
+between cluster centers, differences transformed by the reference
+clusters inverse covariance matrix, and differences transformed by
+the corresponding clusters’ covariance matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_idx</strong> (<em>int</em>) – Index of reference cluster.</p></li>
+<li><p><strong>other_cluster_idx</strong> (<em>list of int</em>) – List of other cluster indices.</p></li>
+<li><p><strong>centers</strong> (<em>ndarray</em>) – Matrix of cluster centers. Each row is a center.</p></li>
+<li><p><strong>cov_inv</strong> (<em>list of ndarray</em>) – List of inverse covariance matrices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Provide quantities useful for downstream computations.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict with keys ‘diff_mat’, ‘diff_tf_mat_1’, ‘diff_tf_mat_2’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.mdist_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">mdist_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_tf_mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.mdist_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute Mahalanobis distance (vectorized).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff_mat</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>k-1</em><em>)</em>) – Differences between pairs of distinct cluster centers,
+one vs all. The j-th column is the difference vector
+between the reference cluster center and the j-th other
+cluster center.</p></li>
+<li><p><strong>diff_tf_mat</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>k-1</em><em>)</em>) – Differences between pairs of distinct cluster centers left
+multiplied by the appropriate inverse covariance matrices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mdist</strong> – Mahalanobis distances between reference cluster and
+other clusters.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (1, k-1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.squareterm_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">squareterm_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mharsum_vec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.squareterm_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the inverse square term.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.summandterm_vectorized">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">summandterm_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdist_vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_tf_mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.summandterm_vectorized" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute summand term by broadcasting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mdist_vec</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>1</em><em>, </em><em>k-1</em><em>)</em>) – The vectorized Mahalanobis distances.</p></li>
+<li><p><strong>diff_tf_mat</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>p</em><em>, </em><em>k-1</em><em>)</em>) – Differences between pairs of distinct cluster centers left
+multiplied by the appropriate inverse covariance matrices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Summand term involved in computing the overlap gradient.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (p, k-1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.total_loss">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">total_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cov_inv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_bounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.total_loss" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the total overlap loss.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.overlap.gradients.update_centers">
+<span class="sig-prename descclassname"><span class="pre">repliclust.overlap.gradients.</span></span><span class="sig-name descname"><span class="pre">update_centers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cov_inv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_bounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.overlap.gradients.update_centers" title="Permalink to this definition">#</a></dt>
+<dd><p>Perform an iteration of stochastic gradient descent on the cluster
+centers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_idx</strong> (<em>int</em>) – Index of reference cluster (for stochastic gradient descent).</p></li>
+<li><p><strong>centers</strong> (<em>ndarray</em><em>, </em><em>shape</em><em> (</em><em>k</em><em>, </em><em>p</em><em>)</em>) – Matrix of all cluster centers. Each row is a center.</p></li>
+<li><p><strong>cov_inv</strong> (<em>list of ndarray; length k</em><em>, </em><em>each ndarray of shape</em><em> (</em><em>p</em><em>, </em><em>p</em><em>)</em>) – List of inverse covariance matrices.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate for gradient descent.</p></li>
+<li><p><strong>overlap_bounds</strong> (<em>dict with keys 'min' and 'max'</em>) – Minimum and maximum allowed overlaps between clusters.</p></li>
+<li><p><strong>effects</strong> (<em>Side</em>) – </p></li>
+<li><p><strong>------------</strong> – </p></li>
+<li><p><strong>step.</strong> (<em>Update centers by taking a stochastic gradient descent</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="repliclust.maxmin.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">repliclust.maxmin</p>
+      </div>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-repliclust.overlap.centers">
+   repliclust.overlap.centers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-repliclust.overlap.gradients">
+   repliclust.overlap.gradients
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/repliclust.overlap.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022, Mike Zellinger.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
