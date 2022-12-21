@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
-          pip install . sphinx pydata-sphinx-theme numpydoc
+          pip install . numpy sphinx pydata-sphinx-theme numpydoc
       - name: Sphinx build
         run: |
           sphinx-build -E -b html docs/source/ _build
