@@ -569,16 +569,17 @@ class DataGenerator():
         Generate a single data set with the desired number of samples.
 
     2) ``for X, y, archetype_name in dg: ...``                        
-        Iterate over dg and generate dg.n_datasets datasets, each with
-        the number of samples specified by the corresponding archetype.
+        Iterate over `dg` and generate `dg._n_datasets` datasets, each 
+        with the number of samples specified by the corresponding 
+        archetype.
 
     3) ``for X, y, archetype_name in dg(n_datasets, n_samples): ...``
-        Iterate over dg and generate n_datasets datasets, each with
-        n_samples data points if n_samples is a number; if n_samples
-        is a list of n_datasets numbers, the i-th dataset will have
-        n_samples[i] data points. If either n_datasets or n_samples
-        are not specified, use n_datasets=dg.n_datasets and the number
-        of data points specified by each archetype.
+        Iterate over `dg` and generate `n_datasets` datasets, each with
+        `n_samples` data points if `n_samples` is a number; if
+        `n_samples` is a list of n_datasets numbers, the i-th dataset 
+        will have `n_samples[i]` data points. If either `n_datasets` or 
+        `n_samples` are not specified, use `n_datasets = dg._n_datasets`
+        and the number of data points specified by each archetype.
 
     In each case, the output format is as follows: X is a matrix-shaped
     :py:class:`ndarray <numpy.ndarray>` containing the data points 
@@ -602,17 +603,16 @@ class DataGenerator():
         Instantiate a DataGenerator object.
         """
         if isinstance(archetype, Archetype):
-            bp_name = (archetype.name if archetype.name 
+            arch_name = (archetype.name if archetype.name 
                             else prefix+str(0))
-            self._archetypes = [(bp_name, archetype)]
+            self._archetypes = [(arch_name, archetype)]
         elif isinstance(archetype, list):
-            bp_name = (archetype.name if archetype.name 
-                else prefix+str(0))
-            self._archetypes = [(bp.name if bp.name else prefix+str(0),
-                                    bp) 
-                                 for i, bp in enumerate(archetype)]
+            self._archetypes = [(arch.name if arch.name \
+                                    else prefix+str(i),
+                                 arch) for i, arch in 
+                                    enumerate(archetype)]
         elif isinstance(archetype, dict):
-            self._archetypes = [(bp_name, bp) for bp_name, bp 
+            self._archetypes = [(arch_name, arch) for arch_name, arch 
                                     in archetype.items()]
         else:
             raise ValueError('archetypes should be a Archetype, list of'
@@ -688,8 +688,9 @@ class DataGenerator():
             raise ValueError('if you wish to override the number of'
                                 + ' samples specified by the'
                                 + ' archetype(s), n_samples should be'
-                                + ' a number or a list of n_datasets'
-                                + ' numbers.')
+                                + ' a number or a list whose length'
+                                + ' matches the number of datasets to'
+                                + ' generate.')
 
 
         for i in range(n_datasets):
@@ -713,7 +714,7 @@ class DataGenerator():
         n_samples : int
             Desired total number of data points to sample. Optional.
             If specified, overrides the number of samples specified
-            by the archetype object.
+            by an archetype object.
 
         Returns
         -------
