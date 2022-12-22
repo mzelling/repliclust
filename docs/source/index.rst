@@ -10,8 +10,6 @@ Synthetic Data for Cluster Analysis
 It is based on data set *archetypes*, high-level geometric blueprints that allow you
 to sample many data sets with the same overall geometric structure.
 
-.. note:: This project forms part of the author's PhD thesis at Caltech.
-
 .. toctree::
     install
     user_guide
