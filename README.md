@@ -4,7 +4,7 @@
 **repliclust** is a Python package for generating synthetic data sets 
 with clusters. 
 
-The package is based on data set archetypes, high-level geometric 
+The package is based on data set *archetypes*, high-level geometric 
 blueprints that allow you to sample many data sets with the same overall
 geometric structure; **repliclust** builds upon SciPy and NumPy and is
 meant to complement scikit-learn.
