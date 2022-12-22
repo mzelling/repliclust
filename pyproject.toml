@@ -6,17 +6,15 @@ build-backend = "hatchling.build"
 name = "repliclust"
 version = "0.0.1"
 authors = [
-  { name="Michael Zellinger", email="michael_zellinger@alumni.brown.edu" },
+  { name="Mike Zellinger", email="mike.j.zellinger@gmail.com" },
 ]
-description = "Reproducibly generate synthetic data with clusters."
+description = "Generate synthetic data with clusters."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/pypa/sampleproject"
-"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+"Homepage" = "https://repliclust.org"
