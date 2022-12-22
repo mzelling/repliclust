@@ -1,4 +1,4 @@
 User Guide
 ==========
 
-We explain the software here.
+This page is under development. We will post a user guide here soon.
