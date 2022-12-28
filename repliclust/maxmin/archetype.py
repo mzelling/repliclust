@@ -196,8 +196,7 @@ class MaxMinArchetype(Archetype):
             max_overlap=0.05, min_overlap=1e-3, 
             imbalance_ratio=2, aspect_maxmin=2, radius_maxmin=3,
             aspect_ref=1.5, name=None, scale=1.0, packing=0.1,
-            distributions=['normal', 'exponential', 
-                                ('standard_t', {'df': 2})],
+            distributions=['normal', 'exponential'],
             distribution_proportions=None,
             ):
         """ Instantiate a MaxMinArchetype object. """

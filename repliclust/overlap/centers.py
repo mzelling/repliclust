@@ -79,7 +79,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
 
     def _optimize_centers(self, centers, cov_inv, 
                           max_epoch=100, learning_rate=0.1, tol=1e-10,
-                          verbose=False):
+                          verbose=False, quiet=False):
         """
         Optimize the cluster centers to achieve the desired overlaps.
 
@@ -104,14 +104,18 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
             Numerical tolerance for achieving the desired overlap
             between pairs of clusters.
         verbose : bool
-            If true, print the progress during optimization.
+            If true, print step-by-step progress updates during
+            optimization. Even if ``verbose=False``, will still print
+            summary of optimization status unless ``quiet=True``.
+        quiet : bool
+            If true, suppress all print output.
 
         Returns
         -------
         centers : ndarray
             The optimized centers.
         """
-        print("\n[=== optimizing cluster overlaps ===]\n")
+        if not quiet: print("\n[=== optimizing cluster overlaps ===]\n")
         pad_epoch = int(np.maximum(2, np.floor(1+np.log10(max_epoch))))
 
         epoch_count = 0
@@ -133,14 +137,18 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                 self._print_optimization_progress(
                         epoch_count, max_epoch, pad_epoch, loss)
             if np.allclose(loss, 0):
-                if not verbose: print(" "*17 + "...")
-                self._print_optimization_result(epoch_count, pad_epoch)
+                if not verbose and not quiet:
+                    print(" "*17 + "...")
+                if not quiet:
+                    self._print_optimization_result(epoch_count,
+                                                    pad_epoch)
                 return centers
             
         return centers
         
 
-    def sample_cluster_centers(self, archetype, print_progress=False):
+    def sample_cluster_centers(self, archetype, print_progress=False,
+                               quiet=False):
         """
         Sample cluster centers at random and iteratively adjust them
         until the desired degrees of overlap between clusters are
@@ -153,7 +161,13 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
             attributes.
 
         print_progress : bool
-            If true, print the progress during optimization.
+            If true, print step-by-step progress updates during the
+            optimization. Even if ``print_progress=False``, will still
+            print a summary of the optimization status unless
+            ``quiet=True``.
+
+        quiet : bool
+            If true, suppress all print output.
 
         Returns
         -------
@@ -170,7 +184,8 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         init_centers = (RandomCenters(packing=self.packing)
                             .sample_cluster_centers(archetype))
         centers = self._optimize_centers(init_centers, cov_inv,
-                                         verbose=print_progress, 
+                                         verbose=print_progress,
+                                         quiet=quiet, 
                                          **self.optimization_args)
         return centers
 

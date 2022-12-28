@@ -26,11 +26,13 @@ import numpy as np
 
 from repliclust import config
 from repliclust.base import set_seed, SUPPORTED_DISTRIBUTIONS
+from repliclust import base, overlap, maxmin, distributions
+from repliclust.base import DataGenerator, get_supported_distributions
+from repliclust.maxmin import MaxMinArchetype as Archetype
 
 config.init_rng()
 
-# indicates public API, specifies which submodules to import when
-# running "from repliclust import *"
+# Indicate which components to import with "from repliclust import *"
 __all__ = [
     'base',
     'overlap'

@@ -506,7 +506,7 @@ class Archetype():
         for key, val in kwargs.items():
             setattr(self, key, val)
     
-    def sample_mixture_model(self):
+    def sample_mixture_model(self, quiet=False):
         """
         Sample a probabilistic mixture model according to this 
         archetype.
@@ -528,7 +528,8 @@ class Archetype():
             self.covariance_sampler.sample_covariances(self)
         if self.n_clusters >= 2:
             self._centers = (self.center_sampler
-                                .sample_cluster_centers(self))
+                                .sample_cluster_centers(self,
+                                                        quiet=quiet))
         elif self.n_clusters == 1:
             self._centers = np.zeros(self.dim)[np.newaxis,:]
         else:
@@ -703,7 +704,7 @@ class DataGenerator():
             yield (X, y, bp_name)
 
 
-    def synthesize(self, n_samples=None):
+    def synthesize(self, n_samples=None, quiet=False):
         """
         Synthesize a data set according to the specified archetype(s).
         If this data generator consists of more than one archetype, this
@@ -715,6 +716,9 @@ class DataGenerator():
             Desired total number of data points to sample. Optional.
             If specified, overrides the number of samples specified
             by an archetype object.
+        quiet : bool
+            If true, suppress all print output. This option is useful
+            when placing many successive calls to `synthesize`.
 
         Returns
         -------
@@ -732,7 +736,8 @@ class DataGenerator():
                          .sample_group_sizes(
                             arch, 
                             n_samples if n_samples else arch.n_samples))
-        X, y = arch.sample_mixture_model().sample_data(group_sizes)
+        X, y = (arch.sample_mixture_model(quiet=quiet)
+                    .sample_data(group_sizes))
         # increment the index for the next archetype
         self._next_archetype_idx = ((self._next_archetype_idx + 1) %
                                         len(self._archetypes))

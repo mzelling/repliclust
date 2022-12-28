@@ -5,7 +5,7 @@ the max-min approach.
 
 import numpy as np
 
-import repliclust.config
+from repliclust import config
 from repliclust.utils import make_orthonormal_axes
 from repliclust.maxmin.utils import sample_with_maxmin
 from repliclust.base import CovarianceSampler
@@ -60,11 +60,32 @@ class MaxMinCovarianceSampler():
             The aspect ratios for each cluster.
         """
         n_clusters = self.validate_k(n_clusters)
-        min_aspect = 1 + (self.aspect_ref-1)/np.sqrt(self.aspect_maxmin)
-        f_constraint = lambda a: ((self.aspect_ref-1)**2)/a
-        return 1 + sample_with_maxmin(n_clusters, self.aspect_ref-1, 
-                                      min_aspect-1, self.aspect_maxmin, 
-                                      f_constraint)
+
+        ref = self.aspect_ref
+        min_aspect = 1 + (ref-1)/self.aspect_maxmin
+        max_aspect = min_aspect*self.aspect_maxmin
+        maxmin_ratio = max_aspect / min_aspect
+
+        TOL = 0.05
+        def compute_other_aspect_ratio(a):
+            if (ref - min_aspect < TOL):
+                return (config._rng.triangular(
+                                left=ref, mode=ref,right=max_aspect
+                                )
+                        if (a <= ref) 
+                        else (ref + min_aspect)/2)
+            else:
+                return ((ref + ((ref - a)/(ref-min_aspect))
+                                    * (max_aspect-ref))
+                            if (a <= ref)
+                            else (ref + ((a - ref)/(max_aspect-ref))
+                                            * (min_aspect - ref))
+                            )
+
+        result = sample_with_maxmin(n_clusters, 
+                                    ref, min_aspect, maxmin_ratio, 
+                                    compute_other_aspect_ratio)
+        return result
 
 
     def validate_k(self, n_clusters):
@@ -106,7 +127,11 @@ class MaxMinCovarianceSampler():
         f_constraint = lambda log_r: 2*np.log(ref_radius) - log_r
         log_max_radius = (np.log(ref_radius) 
                             + np.log(self.radius_maxmin)/2)
-        maxmin_log_ratio = log_max_radius/log_min_radius
+                            
+        if (self.radius_maxmin == 1):
+            maxmin_log_ratio = 1
+        else:
+            maxmin_log_ratio = log_max_radius/log_min_radius
 
         return np.exp(sample_with_maxmin(
                         n_clusters, np.log(ref_radius), log_min_radius,
