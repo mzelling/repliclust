@@ -1,4 +1,7 @@
 User Guide
 ==========
 
-This page is under development. We will post a user guide here soon.
+.. toctree::
+    basic_usage
+    generating_multiple_datasets
+    specifying_an_archetype
