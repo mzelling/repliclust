@@ -7,7 +7,7 @@ from repliclust.base import Archetype
 from repliclust.utils import assemble_covariance_matrix
 from repliclust.random_centers import RandomCenters
 from repliclust.maxmin.archetype import MaxMinArchetype
-from repliclust.overlap.gradients import assess_obs_overlap
+from repliclust.overlap._gradients import assess_obs_overlap
 from repliclust.overlap.centers import \
     ConstrainedOverlapCenters
 

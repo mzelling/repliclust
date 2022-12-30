@@ -10,7 +10,7 @@ from repliclust import config
 from repliclust.base import ClusterCenterSampler
 from repliclust.utils import assemble_covariance_matrix
 from repliclust.random_centers import RandomCenters
-from repliclust.overlap import gradients
+from repliclust.overlap import _gradients
 
 class ConstrainedOverlapCenters(ClusterCenterSampler):
     """
@@ -123,7 +123,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         while keep_optimizing:
             epoch_order = config._rng.permutation(centers.shape[0])
             for i in epoch_order:
-                gradients.update_centers(
+                _gradients.update_centers(
                     i, centers, cov_inv, 
                     learning_rate=learning_rate, 
                     overlap_bounds=self.overlap_bounds
@@ -131,8 +131,8 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
             epoch_count += 1
             keep_optimizing = (epoch_count < max_epoch)
             
-            loss = gradients.total_loss(centers, cov_inv,
-                                        self.overlap_bounds)
+            loss = _gradients.total_loss(centers, cov_inv,
+                                         self.overlap_bounds)
             if verbose:
                 self._print_optimization_progress(
                         epoch_count, max_epoch, pad_epoch, loss)

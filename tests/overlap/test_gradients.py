@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 from scipy.stats import chi2
 
-from repliclust.overlap import gradients
+from repliclust.overlap import _gradients
 from repliclust.maxmin.archetype import MaxMinArchetype
 
 @pytest.fixture
@@ -61,7 +61,7 @@ def array_shapes_small():
 
 def test_mdist_vectorized(array_shapes_big):
     mtx = array_shapes_big
-    result = gradients.mdist_vectorized(mtx['mat1'], mtx['mat2'])
+    result = _gradients.mdist_vectorized(mtx['mat1'], mtx['mat2'])
     assert result.shape == (1,mtx['k']-1)
     assert np.allclose(result, 
         np.sqrt(13*mtx['p']) * np.ones(shape=(1,mtx['k']-1)))
@@ -69,35 +69,35 @@ def test_mdist_vectorized(array_shapes_big):
 
 def test_harsum_vectorized(array_shapes_small):
     mtx = array_shapes_small
-    result = gradients.harsum_vectorized(mtx['mat1'], mtx['mat2'])
+    result = _gradients.harsum_vectorized(mtx['mat1'], mtx['mat2'])
     assert result.shape == (1,mtx['k']-1)
     assert np.allclose(result, (6/5)*np.ones(shape=(1,mtx['k']-1)))
 
 
 def test_chi2term_vectorized(array_shapes_small):
     mtx = array_shapes_small
-    result = gradients.chi2term_vectorized(mtx['mat1'], mtx['p'])
+    result = _gradients.chi2term_vectorized(mtx['mat1'], mtx['p'])
     assert result.shape == (1,mtx['k']-1)
     assert np.allclose(result, -chi2.pdf(mtx['mat1']**2, df=mtx['p']))
 
 
 def test_cubicterm_vectorized(array_shapes_small):
     mtx = array_shapes_small
-    result = gradients.cubicterm_vectorized(mtx['mat1'])
+    result = _gradients.cubicterm_vectorized(mtx['mat1'])
     assert result.shape == (1,mtx['k']-1)
     assert np.allclose(result, -16*np.ones(shape=(1,mtx['k']-1)))
 
 
 def test_squareterm_vectorized(array_shapes_small):
     mtx = array_shapes_small
-    result = gradients.squareterm_vectorized(mtx['mat1'])
+    result = _gradients.squareterm_vectorized(mtx['mat1'])
     assert result.shape == (1,mtx['k']-1)
     assert np.allclose(result, -4*np.ones(shape=(1,mtx['k']-1)))
 
 
 def test_summandterm_vectorized(array_shapes_broadcast):
     mtx = array_shapes_broadcast
-    result = gradients.summandterm_vectorized(
+    result = _gradients.summandterm_vectorized(
         mtx['rowmat'], mtx['bigmat']
         )
     assert result.shape == (mtx['p'], mtx['k']-1)
@@ -114,15 +114,15 @@ def test_summandterm_vectorized(array_shapes_broadcast):
 def test_compute_other_cluster_idx():
     i = 1
     k = 3
-    test = gradients.compute_other_cluster_idx(i,k)
+    test = _gradients.compute_other_cluster_idx(i,k)
     assert test == [0,2]
 
 
 def test_make_gradient_arguments(raw_cluster_input):
     data = raw_cluster_input
     # take cluster 1 as the reference
-    result1 = gradients.make_premahalanobis_args(1, 
-                gradients.compute_other_cluster_idx(1, data['k']), 
+    result1 = _gradients.make_premahalanobis_args(1, 
+                _gradients.compute_other_cluster_idx(1, data['k']), 
                     data['centers'], data['cov_inv'])
 
     assert result1['diff_mat'].shape == (data['p'], data['k']-1)
@@ -153,22 +153,22 @@ def test_gradient_vectorized(archetype):
                 mean=np.zeros(p), cov=(k**2)*np.eye(p), size=k
                 )
     cov_inv = np.array([np.eye(p) for i in range(k)])
-    premahal_args = gradients.make_premahalanobis_args(1, 
-                        gradients.compute_other_cluster_idx(1, k), 
+    premahal_args = _gradients.make_premahalanobis_args(1, 
+                        _gradients.compute_other_cluster_idx(1, k), 
                             centers, cov_inv)
-    mahal_args = gradients.make_mahalanobis_args(**premahal_args)
-    result = gradients.gradient_vectorized(**premahal_args, 
+    mahal_args = _gradients.make_mahalanobis_args(**premahal_args)
+    result = _gradients.gradient_vectorized(**premahal_args, 
                                            **mahal_args)
     assert result.shape == (p, k-1)
 
     # check that sign of gradient is right when clusters too close
     centers = np.array([[0,2],[0,-1]])
     cov_inv = [(1/4)*np.eye(2), np.eye(2)]
-    premahal_args = gradients.make_premahalanobis_args(0, 
-                        gradients.compute_other_cluster_idx(0, 2), 
+    premahal_args = _gradients.make_premahalanobis_args(0, 
+                        _gradients.compute_other_cluster_idx(0, 2), 
                             centers, cov_inv)
-    mahal_args = gradients.make_mahalanobis_args(**premahal_args)
-    result = gradients.gradient_vectorized(
+    mahal_args = _gradients.make_mahalanobis_args(**premahal_args)
+    result = _gradients.gradient_vectorized(
         **(premahal_args | mahal_args), mode='overlap'
         )
     assert np.allclose(result[0,0], 0)
@@ -181,11 +181,11 @@ def test_gradient_vectorized(archetype):
     # check that sign of gradient is right when clusters too far
     centers = np.array([[0,100],[0,-100]])
     cov_inv = [np.eye(2), np.eye(2)]
-    premahal_args = gradients.make_premahalanobis_args(0, 
-                        gradients.compute_other_cluster_idx(0, 2), 
+    premahal_args = _gradients.make_premahalanobis_args(0, 
+                        _gradients.compute_other_cluster_idx(0, 2), 
                             centers, cov_inv)
-    mahal_args = gradients.make_mahalanobis_args(**premahal_args)
-    result = gradients.gradient_vectorized(
+    mahal_args = _gradients.make_mahalanobis_args(**premahal_args)
+    result = _gradients.gradient_vectorized(
         **(premahal_args | mahal_args), mode='mharsum'
         )
     assert np.allclose(result[0,0], 0)
@@ -206,11 +206,11 @@ def test_update_centers():
     # two centers that overlap too much -> should be separated
     centers = np.array([[0.,1.],[0.,-1.]])
     cov_inv = [(1/4)*np.eye(2), np.eye(2)]
-    premahal_args = gradients.make_premahalanobis_args(0, 
-                        gradients.compute_other_cluster_idx(0, 2), 
+    premahal_args = _gradients.make_premahalanobis_args(0, 
+                        _gradients.compute_other_cluster_idx(0, 2), 
                             centers, cov_inv)
-    mahal_args = gradients.make_mahalanobis_args(**premahal_args)
-    status = gradients.update_centers(
+    mahal_args = _gradients.make_mahalanobis_args(**premahal_args)
+    status = _gradients.update_centers(
         0, centers, cov_inv, learning_rate, overlap_bounds
         )
     assert np.allclose(centers[0,0] - centers[1,0], 0)
@@ -219,11 +219,11 @@ def test_update_centers():
     # two centers that are far away -> should be moved closer together
     centers = np.array([[0.,100.],[0.,-100.]])
     cov_inv = [np.eye(2), np.eye(2)]
-    premahal_args = gradients.make_premahalanobis_args(0, 
-                        gradients.compute_other_cluster_idx(0, 2), 
+    premahal_args = _gradients.make_premahalanobis_args(0, 
+                        _gradients.compute_other_cluster_idx(0, 2), 
                             centers, cov_inv)
-    mahal_args = gradients.make_mahalanobis_args(**premahal_args)
-    status = gradients.update_centers(
+    mahal_args = _gradients.make_mahalanobis_args(**premahal_args)
+    status = _gradients.update_centers(
         0, centers, cov_inv, learning_rate, overlap_bounds
         )
     assert np.allclose(centers[0,0] - centers[1,0], 0)
@@ -233,7 +233,7 @@ def test_update_centers():
 def test_assess_obs_overlap():
     centers = np.array([[0.,1.], [0.,0.], [0.,-10.]])
     cov_inv = [np.eye(2), np.eye(2), np.eye(2)]
-    result = gradients.assess_obs_overlap(centers, cov_inv)
+    result = _gradients.assess_obs_overlap(centers, cov_inv)
     assert result['min'] == 1 - chi2.cdf(25, df=2)
     assert result['max'] == 1 - chi2.cdf(1/4, df=2)
 
