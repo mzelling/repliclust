@@ -82,11 +82,11 @@ of `min_overlap` and `max_overlap`. We discuss the results below.
 
 
 
-.. image:: user_guide_img/3_0.svg
+.. image:: ./user_guide_img/3_0.svg
 
-.. image:: user_guide_img/3_1.svg
+.. image:: ./user_guide_img/3_1.svg
 
-.. image:: user_guide_img/3_2.svg
+.. image:: ./user_guide_img/3_2.svg
 
 
 
@@ -175,7 +175,7 @@ The simulation below demonstrates the effect of changing
 
 
 
-.. image:: user_guide_img/4.svg
+.. image:: ./user_guide_img/4.svg
 
 
 Cluster Volumes
@@ -227,7 +227,7 @@ The simulation below demonstrates the effect of varying
 
 
 
-.. image:: user_guide_img/5.svg
+.. image:: ./user_guide_img/5.svg
 
 
 Cluster Probability Distributions
@@ -254,7 +254,7 @@ appearing in your synthetic data sets. As an example, the scatter plots
 below visualize the differences between the normal,
 exponential, and standard t distributions.
 
-.. image:: user_guide_img/6.svg
+.. image:: ./user_guide_img/6.svg
 
 Note the vastly different scales of the 
 `X1` and `X2` axes. On the left, the normal distribution keeps all 
@@ -338,7 +338,7 @@ gamma-distributed clusters.
 
 
 
-.. image:: user_guide_img/7.svg
+.. image:: ./user_guide_img/7.svg
 
 
 When using multiple distributions, ``repliclust`` 
@@ -379,7 +379,7 @@ demonstrates such possibilities in a more complex example.
 
 
 
-.. image:: user_guide_img/8.svg
+.. image:: ./user_guide_img/8.svg
 
 Can you spot which of the clusters above have normal, exponential, or
 gamma distributions?
@@ -425,7 +425,7 @@ The simulation below demonstrates the effect of changing the
 
 
 
-.. image:: user_guide_img/9.svg
+.. image:: ./user_guide_img/9.svg
 
 
 In the scatter plots above, both datasets have ``n_samples=120``
