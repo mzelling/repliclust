@@ -13,13 +13,13 @@ jobs:
           pip install . numpy scipy sphinx pydata-sphinx-theme numpydoc
       - name: Sphinx build
         run: |
-          sphinx-build -E -b html docs/source/ build/
+          sphinx-build -E -b html docs/source build/html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' }}
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/
+          publish_dir: build/html
           cname: repliclust.org
           force_orphan: true
