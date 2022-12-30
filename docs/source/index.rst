@@ -7,10 +7,14 @@ Synthetic Data for Cluster Analysis
 ===================================
 
 **repliclust** is a Python package for generating synthetic data sets with clusters.
-It is based on data set *archetypes*, high-level geometric blueprints that allow you
+It is based on *dataset archetypes*, high-level geometric blueprints that allow you
 to sample many data sets with the same overall geometric structure.
 
+.. image:: frontpage_figure.svg
+
 .. toctree::
+    :hidden:
+
     install
     user_guide
     reference

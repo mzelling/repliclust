@@ -1,5 +1,8 @@
+Max-Min Implementation
+======================
+
 repliclust.maxmin
-=================
+-----------------
 
 .. automodule:: repliclust.maxmin
    :members:
@@ -29,5 +32,3 @@ repliclust.maxmin.groupsizes
    :members:
    :undoc-members:
    :show-inheritance:
-
-

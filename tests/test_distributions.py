@@ -77,9 +77,9 @@ def test_DistributionFromNumPy():
                                 **(DISTRIBUTION_TEST_PARAMS[distr]))
 
 
-def test_MultivariateNormal():
+def test_Normal():
     # test sampling
-    mvr = distributions.MultivariateNormal()
+    mvr = distributions.Normal()
     sample = mvr._sample_1d(100)
     assert sample.shape == (100,)
     assert np.abs(np.mean(sample)) < 10/np.sqrt(len(sample))
@@ -143,9 +143,9 @@ def test_parse_distribution():
         distributions.parse_distribution(
             distr_name = distr, params = {})
     
-    # test MultivariateNormal, Exponential, StandardT
+    # test Normal, Exponential, StandardT
     assert isinstance(distributions.parse_distribution("normal"),
-                      distributions.MultivariateNormal)
+                      distributions.Normal)
     assert isinstance(distributions.parse_distribution("exponential"),
                       distributions.Exponential)
     t_distr = distributions.parse_distribution(
@@ -171,7 +171,7 @@ def test_FixedProportionMix():
     with pytest.raises(ValueError):
         # not provide list
         distr = distributions.FixedProportionMix(
-            distributions=distributions.MultivariateNormal())
+            distributions=distributions.Normal())
             
     my_fix_solo_wo_param = distributions.FixedProportionMix(
         [('normal', 1.0, {})])
@@ -198,7 +198,7 @@ def test_FixedProportionMix():
     assert len(out3) == 10
 
     # test that distributions in outputs are correct
-    assert isinstance(out1[0], distributions.MultivariateNormal)
+    assert isinstance(out1[0], distributions.Normal)
     assert isinstance(out2[0], distributions.StandardT)
 
     # test proportions in out3 are correct
@@ -207,7 +207,7 @@ def test_FixedProportionMix():
         normal_count = 0
         exponential_count = 0
         for elem in output:
-            if isinstance(elem, distributions.MultivariateNormal):
+            if isinstance(elem, distributions.Normal):
                 normal_count += 1
             elif isinstance(elem, distributions.Exponential):
                 exponential_count += 1

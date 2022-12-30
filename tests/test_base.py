@@ -75,7 +75,7 @@ def test_SingleClusterDistribution():
     center = np.array([10,1])
     axes = np.array([[1, 1], [1, -1]])/np.sqrt(2)
     axis_lengths = np.array([10,0.1])
-    scdist_normal = distributions.MultivariateNormal()
+    scdist_normal = distributions.Normal()
     n_samples = 1000
     samples = base.SingleClusterDistribution.sample_cluster(
                 scdist_normal, n_samples, 

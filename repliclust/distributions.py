@@ -54,7 +54,7 @@ class DistributionFromPDF(SingleClusterDistribution):
                 + " future release. Stay tuned!")
 
 
-class MultivariateNormal(SingleClusterDistribution):
+class Normal(SingleClusterDistribution):
     """
     Draw multivariate normal data for a single cluster.
     """
@@ -101,7 +101,7 @@ def parse_distribution(distr_name: str, params: dict = {}):
                 + str(sorted(SUPPORTED_DISTRIBUTION_NAMES)))
     else:
         if distr_name == "normal":
-            return MultivariateNormal()
+            return Normal()
         elif distr_name == "exponential":
             return Exponential()
         elif distr_name == "standard_t":

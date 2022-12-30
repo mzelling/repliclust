@@ -155,7 +155,7 @@ class MaxMinArchetype(Archetype):
         Ratio between the greatest and smallest group sizes among all
         clusters in the mixture model.
     min_overlap : float in (0,1)
-        The minimum required overlap between a cluster and ANY other
+        The minimum required overlap between a cluster and *some* other
         cluster. This minimum overlap allows you to guarantee that no
         cluster will be isolated from all other clusters.
     max_overlap : float in (0,1)

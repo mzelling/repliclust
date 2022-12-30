@@ -474,7 +474,8 @@ class Archetype():
 
     See also
     --------
-    :py:class:`MaxMinArchetype <repliclust.maxmin.archetype.MaxMinArchetype>`
+    :py:class:`MaxMinArchetype <repliclust.maxmin.archetype.MaxMinArchetype>` :
+        The default implementation for a dataset archetype.
 
     """
 
@@ -674,7 +675,8 @@ class DataGenerator():
             stores the new data set as a matrix (each row is a data
             point). The second component, `y`, stores the cluster labels
             (`y[i]` is the label of data point `X[i,:]`). The third
-            component, `arch_name`, is the name of the archetype used to create `X`, `y`.
+            component, `arch_name`, is the name of the archetype used to
+            create `X` and `y`.
         """
         if not n_datasets:
             n_datasets = self._n_datasets
@@ -729,7 +731,7 @@ class DataGenerator():
             point). The second component, `y`, stores the cluster labels
             (`y[i]` is the label of data point `X[i,:]`). The third
             component, `arch_name`, is the name of the archetype that
-            was used to create `X`, `y`.
+            was used to create `X` and `y`.
         """
         arch_name, arch = self._archetypes[self._next_archetype_idx]
         group_sizes = (arch.groupsize_sampler
