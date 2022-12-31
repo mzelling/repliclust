@@ -2,7 +2,6 @@ Reference
 =========
 
 .. toctree::
-   :hidden:
 
    base
    maxmin
