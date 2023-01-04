@@ -44,16 +44,16 @@ from repliclust.utils import sample_unit_vectors
 # names and default parameters of supported probability distribution
 SUPPORTED_DISTRIBUTIONS = {
     'normal': {},
-    'standard_t': {'df': 1},
+    'standard_t': {'df': 5},
     'exponential': {},
-    'beta': {'a': 0.3, 'b': 0.5},
-    'chisquare': {'df': 1},
-    'gumbel': {'scale': 1.0},
-    'weibull': {'a': 2},
-    'gamma': {'shape': 0.5, 'scale': 1.0},
-    'pareto': {'a': 1},
-    'f': {'dfnum': 1, 'dfden': 1},
-    'lognormal': {'sigma': 1.0},
+    'beta': {'a': 2.5, 'b': 8.5},
+    'chisquare': {'df': 5},
+    'gumbel': {},
+    'weibull': {'a': 1.5},
+    'gamma': {'shape': 3},
+    'pareto': {'a': 10},
+    'f': {'dfnum': 7, 'dfden': 10},
+    'lognormal': {'sigma': 0.75},
 }
 
 
