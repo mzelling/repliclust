@@ -495,7 +495,7 @@ class Archetype():
         
         self.n_clusters = int(n_clusters)
         self.dim = dim
-        self.n_samples = n_samples
+        self.n_samples = int(n_samples)
         self.name = name
         self.scale = scale
 

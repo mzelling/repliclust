@@ -99,7 +99,6 @@ class MaxMinGroupSizeSampler(GroupSizeSampler):
         n_clusters = archetype.n_clusters
 
         if ((not isinstance(total, int)) 
-                or (not isinstance(total, int))
                 or (total <= 0)
                 or (n_clusters <= 0)):
             raise ValueError('the number of samples and the number of'
