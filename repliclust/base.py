@@ -724,13 +724,14 @@ class DataGenerator():
 
         Returns
         -------
-        (X, y, archetype_name) : tuple[:py:class:`ndarray \
-            <numpy.ndarray>`, :py:class:`ndarray <numpy.ndarray>`, str]
+        (X, y, archetype) : tuple[:py:class:`ndarray \
+            <numpy.ndarray>`, :py:class:`ndarray <numpy.ndarray>`, \
+                :py:class:`Archetype <repliclust.base.Archetype>`]
             Tuple with three components. The first component, `X`, 
             stores the new data set as a matrix (each row is a data
             point). The second component, `y`, stores the cluster labels
             (`y[i]` is the label of data point `X[i,:]`). The third
-            component, `arch_name`, is the name of the archetype that
+            component, `archetype`, is the data set archetype that
             was used to create `X` and `y`.
         """
         arch_name, arch = self._archetypes[self._next_archetype_idx]
@@ -743,7 +744,7 @@ class DataGenerator():
         # increment the index for the next archetype
         self._next_archetype_idx = ((self._next_archetype_idx + 1) %
                                         len(self._archetypes))
-        return (X, y, arch_name)
+        return (X, y, arch)
 
     def __repr__(self):
         """
