@@ -250,7 +250,7 @@ class SingleClusterDistribution():
     def __init__(self, **params):
         self.params = params
 
-    def _sample_1d(self, n, **params):
+    def _sample_1d(self, n, dim):
         """ 
         Sample one-dimensional data.
 
@@ -261,6 +261,8 @@ class SingleClusterDistribution():
         ----------
         n : int
             The number of samples to generate.
+        dim : int
+            The number of dimensions of the cluster.
 
         Returns
         -------
@@ -300,7 +302,7 @@ class SingleClusterDistribution():
                     + ' vectors; axes must be square matrix.')
         dim = axes.shape[1]
         directions = sample_unit_vectors(n, dim)
-        scaling = self._sample_1d(n)
+        scaling = self._sample_1d(n, dim)
         return (center[np.newaxis,:]
                 + ((directions * scaling[:,np.newaxis])
                     @ np.diag(axis_lengths)
@@ -567,15 +569,15 @@ class DataGenerator():
     a DataGenerator. After constructing a DataGenerator `dg`, you can 
     write:
 
-    1) ``X, y, archetype_name = dg.synthesize(n_samples)``
+    1) ``X, y, archetype = dg.synthesize(n_samples)``
         Generate a single data set with the desired number of samples.
 
-    2) ``for X, y, archetype_name in dg: ...``                        
+    2) ``for X, y, archetype in dg: ...``                        
         Iterate over `dg` and generate `dg._n_datasets` datasets, each 
         with the number of samples specified by the corresponding 
         archetype.
 
-    3) ``for X, y, archetype_name in dg(n_datasets, n_samples): ...``
+    3) ``for X, y, archetype in dg(n_datasets, n_samples): ...``
         Iterate over `dg` and generate `n_datasets` datasets, each with
         `n_samples` data points if `n_samples` is a number; if
         `n_samples` is a list of n_datasets numbers, the i-th dataset 
@@ -587,8 +589,8 @@ class DataGenerator():
     :py:class:`ndarray <numpy.ndarray>` containing the data points 
     (samples by variables) and y is a vector-shaped :py:class:`ndarray \
     <numpy.ndarray>` containing the cluster labels. 
-    Finally, `archetype_name` is the name of the archetype used to
-    construct the dataset.
+    Finally, `archetype` is the data set archetype from which the data
+    set was generated.
 
 
     Parameters
@@ -599,7 +601,7 @@ class DataGenerator():
 
     """
 
-    def __init__(self, archetype, n_datasets=10, 
+    def __init__(self, archetype, n_datasets=10, quiet=False, 
                  prefix='archetype'):
         """
         Instantiate a DataGenerator object.
@@ -622,6 +624,7 @@ class DataGenerator():
                                 + ' values are archetypes.')
         self._next_archetype_idx = 0
         self._n_datasets = n_datasets
+        self._quiet = quiet
 
 
     def __iter__(self):
@@ -635,21 +638,24 @@ class DataGenerator():
         """
         Fetch the next data set from this data generator.
         """
+        quiet = self._quiet
+
         if self._iter_count >= self._n_datasets:
             raise StopIteration
 
-        bp_name, bp = self._archetypes[self._next_archetype_idx]
-        group_sizes = (bp.groupsize_sampler
-                         .sample_group_sizes(bp, bp.n_samples))
-        X, y = bp.sample_mixture_model().sample_data(group_sizes) 
+        arch_name, arch = self._archetypes[self._next_archetype_idx]
+        group_sizes = (arch.groupsize_sampler
+                         .sample_group_sizes(arch, arch.n_samples))
+        X, y = (arch.sample_mixture_model(quiet=quiet)
+                    .sample_data(group_sizes))
 
         self._next_archetype_idx = ((self._next_archetype_idx + 1) %
                                         len(self._archetypes))
         self._iter_count += 1
-        return (X, y, bp_name)
+        return (X, y, arch)
 
 
-    def __call__(self, n_datasets=None, n_samples=None):
+    def __call__(self, n_datasets=None, n_samples=None, quiet=False):
         """
         Set up a generator to yield `n_datasets` data sets, where 
         `n_samples` determines the number of samples in each dataset.
@@ -666,17 +672,20 @@ class DataGenerator():
             dataset will consist of n_samples[i] data points. If
             n_samples is not specified, use the value specified by
             each archetype instead.
+        quiet : bool
+            If true, suppress all print output.
 
         Yields
         ------
-        (X, y, archetype_name) : tuple[ :py:class:`ndarray \
-            <numpy.ndarray>`, :py:class:`ndarray <numpy.ndarray>`, str]
+        (X, y, archetype) : tuple[:py:class:`ndarray \
+            <numpy.ndarray>`, :py:class:`ndarray <numpy.ndarray>`, \
+                :py:class:`Archetype <repliclust.base.Archetype>`]
             Tuple with three components. The first component, `X`, 
             stores the new data set as a matrix (each row is a data
             point). The second component, `y`, stores the cluster labels
             (`y[i]` is the label of data point `X[i,:]`). The third
-            component, `arch_name`, is the name of the archetype used to
-            create `X` and `y`.
+            component, `archetype`, is the data set archetype that
+            was used to create `X` and `y`.
         """
         if not n_datasets:
             n_datasets = self._n_datasets
@@ -697,13 +706,14 @@ class DataGenerator():
 
 
         for i in range(n_datasets):
-            bp_name, bp = self._archetypes[i % len(self._archetypes)]
-            group_sizes = (bp.groupsize_sampler
+            arch_name, arch = self._archetypes[i % len(self._archetypes)]
+            group_sizes = (arch.groupsize_sampler
                              .sample_group_sizes(
-                                bp, 
+                                arch, 
                                 _n_samples[i % len(_n_samples)]))
-            X, y = bp.sample_mixture_model().sample_data(group_sizes)
-            yield (X, y, bp_name)
+            X, y = (arch.sample_mixture_model(quiet=quiet)
+                        .sample_data(group_sizes))
+            yield (X, y, arch)
 
 
     def synthesize(self, n_samples=None, quiet=False):

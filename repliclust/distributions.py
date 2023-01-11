@@ -38,11 +38,11 @@ class DistributionFromNumPy(SingleClusterDistribution):
     def __repr__(self):    
        return "CustomDistribution('" + self.name + "')"
 
-    def _sample_1d(self, n):
-        return np.abs(getattr(config._rng, self.name)(
-                      size=n, **(self.params)
-                      )     
-                      ) / self._empirical_quantile
+    def _sample_1d(self, n, dim):
+        return np.sqrt(dim) * (np.abs(getattr(config._rng, self.name)(
+                                     size=n, **(self.params)
+                                     )     
+                                     ) / self._empirical_quantile)
 
 
 class DistributionFromPDF(SingleClusterDistribution):
@@ -58,16 +58,17 @@ class Normal(SingleClusterDistribution):
     """
     Draw multivariate normal data for a single cluster.
     """
-    def _sample_1d(self, n):
-        return config._rng.normal(loc=0.0, scale=1.0, size=n)
+    def _sample_1d(self, n, dim):
+        return np.sqrt(config._rng.chisquare(df=dim,size=n))
+#       return config._rng.normal(loc=0.0, scale=1.0, size=n)
 
 
 class Exponential(SingleClusterDistribution):
     """
     Draw exponentially distributed data for a single cluster.
     """
-    def _sample_1d(self, n):
-        return config._rng.exponential(scale=1, size=n)
+    def _sample_1d(self, n, dim):
+        return np.sqrt(dim) * config._rng.exponential(scale=1, size=n)
 
 
 class StandardT(SingleClusterDistribution):
@@ -82,9 +83,10 @@ class StandardT(SingleClusterDistribution):
             )
         SingleClusterDistribution.__init__(self, df=df)
 
-    def _sample_1d(self, n):
-        return (np.abs(config._rng.standard_t(size=n, **(self.params)))
-                / self._empirical_quantile)
+    def _sample_1d(self, n, dim):
+        return (np.sqrt(dim) * 
+                (np.abs(config._rng.standard_t(size=n, **(self.params)))
+                    / self._empirical_quantile))
 
 
 def parse_distribution(distr_name: str, params: dict = {}):
