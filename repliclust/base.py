@@ -652,6 +652,7 @@ class DataGenerator():
         self._next_archetype_idx = ((self._next_archetype_idx + 1) %
                                         len(self._archetypes))
         self._iter_count += 1
+        arch.name = arch_name # make sure the archetype stores its name
         return (X, y, arch)
 
 
@@ -713,6 +714,7 @@ class DataGenerator():
                                 _n_samples[i % len(_n_samples)]))
             X, y = (arch.sample_mixture_model(quiet=quiet)
                         .sample_data(group_sizes))
+            arch.name = arch_name # make sure archetype stores its name
             yield (X, y, arch)
 
 
@@ -754,6 +756,7 @@ class DataGenerator():
         # increment the index for the next archetype
         self._next_archetype_idx = ((self._next_archetype_idx + 1) %
                                         len(self._archetypes))
+        arch.name = arch_name # make sure archetype stores its name
         return (X, y, arch)
 
     def __repr__(self):
@@ -761,5 +764,7 @@ class DataGenerator():
         Construct string representation of this DataGenerator.
         """
         return ("DataGenerator" 
-                    + "\n\t- archetype(s) : " + str(1)
-                    + "\n\t- n_datasets (default) : " + str(2))
+                    + "\n\t- archetype(s) : "
+                    + str(len(self._archetypes))
+                    + "\n\t- n_datasets : "
+                    + str(self._n_datasets))

@@ -39,10 +39,12 @@ class DistributionFromNumPy(SingleClusterDistribution):
        return "CustomDistribution('" + self.name + "')"
 
     def _sample_1d(self, n, dim):
-        return np.sqrt(dim) * (np.abs(getattr(config._rng, self.name)(
-                                     size=n, **(self.params)
-                                     )     
-                                     ) / self._empirical_quantile)
+        return np.sqrt(np.sum(((np.abs(
+                                    getattr(config._rng, self.name)
+                                        (size=(n,dim), **(self.params))     
+                                    ) / self._empirical_quantile)
+                                **2), 
+                              axis=1))
 
 
 class DistributionFromPDF(SingleClusterDistribution):
@@ -68,8 +70,10 @@ class Exponential(SingleClusterDistribution):
     Draw exponentially distributed data for a single cluster.
     """
     def _sample_1d(self, n, dim):
-        return np.sqrt(dim) * config._rng.exponential(scale=1, size=n)
-
+        return np.sqrt(np.sum(config._rng.exponential(
+                                scale=1, size=(n, dim)
+                                )**2,
+                              axis=1))
 
 class StandardT(SingleClusterDistribution):
     """
@@ -84,9 +88,10 @@ class StandardT(SingleClusterDistribution):
         SingleClusterDistribution.__init__(self, df=df)
 
     def _sample_1d(self, n, dim):
-        return (np.sqrt(dim) * 
-                (np.abs(config._rng.standard_t(size=n, **(self.params)))
-                    / self._empirical_quantile))
+        return np.sqrt(np.sum((np.abs(config._rng.standard_t(
+                                         size=(n,dim), **(self.params)))
+                                    / self._empirical_quantile)
+                               **2, axis=1))
 
 
 def parse_distribution(distr_name: str, params: dict = {}):

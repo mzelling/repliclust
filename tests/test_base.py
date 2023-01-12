@@ -69,7 +69,7 @@ def test_GroupSizeSampler():
 def test_SingleClusterDistribution():
     scdist = base.SingleClusterDistribution()
     with pytest.raises(NotImplementedError):
-        scdist._sample_1d(10)
+        scdist._sample_1d(10, 2)
     # Use subclass to test sample_cluster functionality. This test
     # assumes a correct implementation of _sample_1d in the subclass.
     center = np.array([10,1])
@@ -169,64 +169,64 @@ def test_DataGenerator():
 
     # test the .synthesize interface for one archetype
 
-    X, y, arch_name = dg.synthesize()
+    X, y, arch = dg.synthesize()
     assert X.shape[0] == MaxMinArchetype().n_samples
     assert X.shape[0] == y.shape[0]
     assert (len(X.shape) == 2) and (len(y.shape) == 1)
-    assert arch_name == 'archetype0'
+    assert arch.name == 'archetype0'
 
-    X, y, arch_name = dg.synthesize(n_samples=101)
+    X, y, arch = dg.synthesize(n_samples=101)
     assert X.shape[0] == 101
     assert X.shape[0] == y.shape[0]
     assert (len(X.shape) == 2) and (len(y.shape) == 1)
-    assert arch_name == 'archetype0'
+    assert arch.name == 'archetype0'
 
 
     # test the callable generator interface for one archetype
     count = dg._n_datasets
-    for X, y, arch_name in dg():
+    for X, y, arch in dg():
         assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == 'archetype0'
+        assert arch.name == 'archetype0'
         count -= 1
     assert count == 0
 
     count = 5
-    for X, y, arch_name in dg(n_datasets=5):
+    for X, y, arch in dg(n_datasets=5):
         assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == 'archetype0'
+        assert arch.name == 'archetype0'
         count -= 1
     assert count == 0
 
     count = 13
-    for X, y, arch_name in dg(n_datasets=13, n_samples=77):
+    for X, y, arch in dg(n_datasets=13, n_samples=77):
         assert X.shape[0] == 77
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == 'archetype0'
+        assert arch.name == 'archetype0'
         count -= 1
     assert count == 0
 
     # test the iterator interface for a single archetype
     count = dg._n_datasets
-    for X, y, arch_name in dg:
+    for X, y, arch in dg:
         assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == 'archetype0'
+        assert arch.name == 'archetype0'
         count -= 1
     assert count == 0
 
     dg._n_datasets = 33
     count = 33
-    for X, y, arch_name in dg:
+    for X, y, arch in dg:
         assert X.shape[0] == MaxMinArchetype().n_samples
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == 'archetype0'
+        assert arch.name == 'archetype0'
         count -= 1
     assert count == 0
     
@@ -243,11 +243,11 @@ def test_DataGenerator():
 
     # test the .synthesize interface for multiple archetypes
     for i in range(2):
-        X, y, arch_name = dg_multi_dict.synthesize()
-        if (arch_name == "oblong"):
+        X, y, arch = dg_multi_dict.synthesize()
+        if (arch.name == "oblong"):
             assert X.shape[0] == 111
             assert X.shape[0] == y.shape[0]
-        elif (arch_name == "spherical"):
+        elif (arch.name == "spherical"):
             assert X.shape[0] == 222
             assert X.shape[0] == y.shape[0]
         else:
@@ -255,11 +255,11 @@ def test_DataGenerator():
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
     
     for i in range(2):
-        X, y, arch_name = dg_multi_list.synthesize()
-        if (arch_name == "archetype0"):
+        X, y, arch = dg_multi_list.synthesize()
+        if (arch.name == "archetype0"):
             assert X.shape[0] == 333
             assert X.shape[0] == y.shape[0]
-        elif (arch_name == "archetype1"):
+        elif (arch.name == "archetype1"):
             assert X.shape[0] == 444
             assert X.shape[0] == y.shape[0]
         else:
@@ -270,11 +270,11 @@ def test_DataGenerator():
 
     n_samples = 717
     for i in range(2):
-        X, y, arch_name = dg_multi_dict.synthesize(n_samples=n_samples)
-        if (arch_name == "oblong"):
+        X, y, arch = dg_multi_dict.synthesize(n_samples=n_samples)
+        if (arch.name == "oblong"):
             assert X.shape[0] == n_samples
             assert X.shape[0] == y.shape[0]
-        elif (arch_name == "spherical"):
+        elif (arch.name == "spherical"):
             assert X.shape[0] == n_samples
             assert X.shape[0] == y.shape[0]
         else:
@@ -282,11 +282,11 @@ def test_DataGenerator():
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
     
     for i in range(2):
-        X, y, arch_name = dg_multi_list.synthesize(n_samples=n_samples)
-        if (arch_name == "archetype0"):
+        X, y, arch = dg_multi_list.synthesize(n_samples=n_samples)
+        if (arch.name == "archetype0"):
             assert X.shape[0] == n_samples
             assert X.shape[0] == y.shape[0]
-        elif (arch_name == "archetype1"):
+        elif (arch.name == "archetype1"):
             assert X.shape[0] == n_samples
             assert X.shape[0] == y.shape[0]
         else:
@@ -312,11 +312,11 @@ def test_DataGenerator():
 
     n_datasets = dg_multi_dict._n_datasets
     count = n_datasets
-    for X, y, arch_name in dg_multi_dict(n_samples=123):
+    for X, y, arch in dg_multi_dict(n_samples=123):
         assert X.shape[0] == 123
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == ("oblong" if (count % 2) == (n_datasets % 2)
+        assert arch.name == ("oblong" if (count % 2) == (n_datasets % 2)
                                 else "spherical")
         count -= 1
     assert count == 0
@@ -327,22 +327,22 @@ def test_DataGenerator():
     if (count % 2 == 1):
         n_samples_list.append(10)
 
-    for X, y, arch_name in dg_multi_dict(n_samples=n_samples_list):
+    for X, y, arch in dg_multi_dict(n_samples=n_samples_list):
         assert X.shape[0] == n_samples_list[int(n_datasets-count)]
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == ("oblong" if (count % 2) == (n_datasets % 2)
+        assert arch.name == ("oblong" if (count % 2) == (n_datasets % 2)
                                 else "spherical")
         count -= 1
     assert count == 0
 
     count = 5
-    for X, y, arch_name in dg_multi_dict(n_datasets=5):
-        if arch_name == 'oblong':
+    for X, y, arch in dg_multi_dict(n_datasets=5):
+        if arch.name == 'oblong':
             assert X.shape[0] == 111
             assert X.shape[0] == y.shape[0]
             assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        elif arch_name == 'spherical':
+        elif arch.name == 'spherical':
             assert X.shape[0] == 222
             assert X.shape[0] == y.shape[0]
             assert (len(X.shape) == 2) and (len(y.shape) == 1)  
@@ -351,23 +351,23 @@ def test_DataGenerator():
 
     dg_multi_dict._next_archetype_idx == 0
     count = 3
-    for X, y, arch_name in dg_multi_dict(n_datasets=3, n_samples=33):
+    for X, y, arch in dg_multi_dict(n_datasets=3, n_samples=33):
         assert X.shape[0] == 33
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == "oblong" if (count % 2 == 1) else "spherical"
+        assert arch.name == "oblong" if (count % 2 == 1) else "spherical"
         count -= 1
     assert count == 0
 
     # test the iterator interface for multiple archetypes
     count = dg_multi_dict._n_datasets
     dg_multi_dict._next_archetype_idx = 0
-    for X, y, arch_name in dg_multi_dict:
+    for X, y, arch in dg_multi_dict:
         assert X.shape[0] == (111 if
             (count - dg_multi_dict._n_datasets) % 2 == 0 else 222)
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == ('oblong' if 
+        assert arch.name == ('oblong' if 
             (count - dg_multi_dict._n_datasets) % 2 == 0 
                 else 'spherical')
         count -= 1
@@ -376,12 +376,12 @@ def test_DataGenerator():
     dg_multi_dict._n_datasets = 33
     dg_multi_dict._next_archetype_idx = 0
     count = 33
-    for X, y, arch_name in dg_multi_dict:
+    for X, y, arch in dg_multi_dict:
         assert X.shape[0] == (111 if
             (count - dg_multi_dict._n_datasets) % 2 == 0 else 222)
         assert X.shape[0] == y.shape[0]
         assert (len(X.shape) == 2) and (len(y.shape) == 1)
-        assert arch_name == ('oblong' if 
+        assert arch.name == ('oblong' if 
             (count - dg_multi_dict._n_datasets) % 2 == 0
                 else 'spherical')
         count -= 1

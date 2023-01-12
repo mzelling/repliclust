@@ -10,7 +10,7 @@ from repliclust import config
 from repliclust.base import ClusterCenterSampler
 from repliclust.utils import assemble_covariance_matrix
 from repliclust.random_centers import RandomCenters
-from repliclust.overlap import _gradients
+from repliclust.overlap import _gradients_marginal as _gradients
 
 class ConstrainedOverlapCenters(ClusterCenterSampler):
     """
@@ -64,9 +64,9 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                     loss, precision=3).rjust(10, " "))
 
     
-    def _print_optimization_result(self, epoch_count: int, 
-                                   pad_epoch: int):
-        """ Print the result of optimizing cluster centers. """
+    def _print_optimization_victory(self, epoch_count: int, 
+                                    pad_epoch: int):
+        """ Print result of successfully optimizing cluster centers. """
         pad_epoch_actual = int(np.floor(
                                 1+np.log10(epoch_count)))
         print("\n[====== completed in "
@@ -76,9 +76,21 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                 + ("="*(4+(pad_epoch-pad_epoch_actual)))
                 + "]\n")
 
+    def _print_optimization_defeat(self, epoch_count: int, 
+                                   pad_epoch: int):
+        """ Print warning of failure to optimize cluster centers. """
+        pad_epoch_actual = int(np.floor(
+                                1+np.log10(epoch_count)))
+        print("\n[=== unfinished after "
+                + str(epoch_count)
+                + " "
+                + ("epochs " if epoch_count > 1 else "epoch =")
+                + ("="*(pad_epoch-pad_epoch_actual))
+                + "===]\n")
 
-    def _optimize_centers(self, centers, cov_inv, 
-                          max_epoch=100, learning_rate=0.1, tol=1e-10,
+
+    def _optimize_centers(self, centers, cov, 
+                          max_epoch=500, learning_rate=0.05, tol=1e-10,
                           verbose=False, quiet=False):
         """
         Optimize the cluster centers to achieve the desired overlaps.
@@ -88,8 +100,8 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         centers : ndarray
             The initial centers. Each row is a center. The i-th row
             gives the coordinates of the i-th center.
-        cov_inv : list of ndarray
-            The inverse covariance matrices of the clusters. The i-th
+        cov : list of ndarray
+            The covariance matrices of the clusters. The i-th
             element is the inverse covariance matrix of the i-th
             cluster.
         max_epoch : int
@@ -124,15 +136,15 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
             epoch_order = config._rng.permutation(centers.shape[0])
             for i in epoch_order:
                 _gradients.update_centers(
-                    i, centers, cov_inv, 
+                    i, centers, cov, 
                     learning_rate=learning_rate, 
-                    overlap_bounds=self.overlap_bounds
+                    overlap_bounds=self.overlap_bounds,
                     )
             epoch_count += 1
             keep_optimizing = (epoch_count < max_epoch)
             
-            loss = _gradients.total_loss(centers, cov_inv,
-                                         self.overlap_bounds)
+            loss = _gradients.overlap_loss(centers, cov,
+                                           self.overlap_bounds)
             if verbose:
                 self._print_optimization_progress(
                         epoch_count, max_epoch, pad_epoch, loss)
@@ -140,9 +152,13 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                 if not verbose and not quiet:
                     print(" "*17 + "...")
                 if not quiet:
-                    self._print_optimization_result(epoch_count,
-                                                    pad_epoch)
+                    self._print_optimization_victory(epoch_count,
+                                                     pad_epoch)
                 return centers
+
+            if not keep_optimizing:
+                print(" "*17 + "...")
+                self._print_optimization_defeat(epoch_count, pad_epoch)
             
         return centers
         
@@ -177,15 +193,16 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         if (archetype.n_clusters == 1):
             return np.zeros(archetype.dim)[np.newaxis,:]
 
-        cov_inv = [assemble_covariance_matrix(
-                        archetype._axes[i], archetype._lengths[i],
-                            inverse=True)
-                        for i in range(archetype.n_clusters)]
+        cov = [assemble_covariance_matrix(
+                    archetype._axes[i], archetype._lengths[i],
+                        inverse=False)
+                    for i in range(archetype.n_clusters)]
+
         init_centers = (RandomCenters(packing=self.packing)
                             .sample_cluster_centers(archetype))
-        centers = self._optimize_centers(init_centers, cov_inv,
+        centers = self._optimize_centers(init_centers, cov,
                                          verbose=print_progress,
-                                         quiet=quiet, 
+                                         quiet=quiet,
                                          **self.optimization_args)
         return centers
 

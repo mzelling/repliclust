@@ -33,20 +33,20 @@ def make_distribution_test(
     # test sampling
     distr = distributions.DistributionFromNumPy(distribution_name, 
                                                 **params)
-    sample = distr._sample_1d(n_sample_basic)
+    sample = distr._sample_1d(n_sample_basic,10)
     assert sample.shape == (n_sample_basic,)
     
     # test that seed works
     repliclust.set_seed(777)
-    sample1 = distr._sample_1d(n_sample_basic)
-    sample2 = distr._sample_1d(n_sample_basic)
+    sample1 = distr._sample_1d(n_sample_basic, 100)
+    sample2 = distr._sample_1d(n_sample_basic, 100)
     repliclust.set_seed(777)
-    sample3 = distr._sample_1d(n_sample_basic)
+    sample3 = distr._sample_1d(n_sample_basic, 100)
     assert not np.all(sample1 == sample2)
     assert np.all(sample1 == sample3)
 
     # test that the QUANTILE_LEVEL is 1
-    sample = distr._sample_1d(n_sample_quantile)
+    sample = distr._sample_1d(n_sample_quantile, 1)
     assert np.allclose(np.quantile(sample, q=QUANTILE_LEVEL), 1,
                         rtol=1e-1)
 
@@ -62,9 +62,9 @@ def test_DistributionFromNumPy():
     t_real = distributions.StandardT(df = df)
     test_quantiles = np.array([0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9])
     assert np.allclose(
-        np.quantile(t_imitation._sample_1d(n_sample_quantile),
+        np.quantile(t_imitation._sample_1d(n_sample_quantile,10),
                     q=test_quantiles),
-        np.quantile(t_real._sample_1d(n_sample_quantile),
+        np.quantile(t_real._sample_1d(n_sample_quantile,10),
                     q=test_quantiles),
         rtol=1e-2
     )
@@ -80,16 +80,16 @@ def test_DistributionFromNumPy():
 def test_Normal():
     # test sampling
     mvr = distributions.Normal()
-    sample = mvr._sample_1d(100)
+    sample = mvr._sample_1d(100,1)
     assert sample.shape == (100,)
     assert np.abs(np.mean(sample)) < 10/np.sqrt(len(sample))
 
     # test that seed works
     repliclust.set_seed(123)
-    sample1 = mvr._sample_1d(100)
-    sample2 = mvr._sample_1d(100)
+    sample1 = mvr._sample_1d(100,2)
+    sample2 = mvr._sample_1d(100,2)
     repliclust.set_seed(123)
-    sample3 = mvr._sample_1d(100)
+    sample3 = mvr._sample_1d(100,2)
     assert not np.all(sample1 == sample2)
     assert np.all(sample1 == sample3)
 
@@ -97,16 +97,16 @@ def test_Normal():
 def test_Exponential():
     # test sampling
     exp = distributions.Exponential()
-    sample = exp._sample_1d(100)
+    sample = exp._sample_1d(100,1)
     assert sample.shape == (100,)
     assert np.abs(np.mean(sample) - 1) < 10
 
     # test that seed works
     repliclust.set_seed(123)
-    sample1 = exp._sample_1d(100)
-    sample2 = exp._sample_1d(100)
+    sample1 = exp._sample_1d(100, 3)
+    sample2 = exp._sample_1d(100, 3)
     repliclust.set_seed(123)
-    sample3 = exp._sample_1d(100)
+    sample3 = exp._sample_1d(100, 3)
     assert not np.all(sample1 == sample2)
     assert np.all(sample1 == sample3)
 
@@ -116,8 +116,8 @@ def test_StandardT():
     repliclust.set_seed(None)
     t_1 = distributions.StandardT(df=1)
     t_10 = distributions.StandardT(df=10)
-    sample_1 = t_1._sample_1d(123456)
-    sample_10 = t_10._sample_1d(123456)
+    sample_1 = t_1._sample_1d(123456, 1)
+    sample_10 = t_10._sample_1d(123456, 1)
     assert np.allclose(np.quantile(sample_1, q=QUANTILE_LEVEL), 1, 
                                    rtol=1e-1)
     assert np.allclose(np.quantile(sample_10, q=QUANTILE_LEVEL), 1,
@@ -128,10 +128,10 @@ def test_StandardT():
 
     # test that seed works
     repliclust.set_seed(123)
-    sample1 = t_1._sample_1d(100)
-    sample2 = t_1._sample_1d(100)
+    sample1 = t_1._sample_1d(100, 2)
+    sample2 = t_1._sample_1d(100, 2)
     repliclust.set_seed(123)
-    sample3 = t_1._sample_1d(100)
+    sample3 = t_1._sample_1d(100, 2)
     assert not np.all(sample1 == sample2)
     assert np.all(sample1 == sample3)
 
