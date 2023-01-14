@@ -11,6 +11,7 @@ from repliclust.base import ClusterCenterSampler
 from repliclust.utils import assemble_covariance_matrix
 from repliclust.random_centers import RandomCenters
 from repliclust.overlap import _gradients_marginal as _gradients
+from repliclust.overlap import _gradients_marginal_lda as _gradients_lda
 
 class ConstrainedOverlapCenters(ClusterCenterSampler):
     """
@@ -208,3 +209,59 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                                          **self.optimization_args)
         return centers
 
+
+class LDAConstrainedOverlapCenters(ConstrainedOverlapCenters):
+    """
+    More precise but slower implementation.
+    """
+
+    def _optimize_centers(self, centers, cov, 
+                          max_epoch=500, learning_rate=0.5, tol=1e-5,
+                          verbose=False, quiet=False):
+        # compute the inverses of average pairwise covariances
+        print("Optimizing cluster centers with mode='precise'...")
+        print("\n[=== inverting covariance matrices ===]\n")
+        print("[ Hint: if this step takes too long, try setting "
+                + "mode='fast' " 
+                + "in the archetype. ]")
+        k = centers.shape[0]
+        ave_cov_inv = [np.solve((cov[i] + cov[j])/2, 
+                                centers[i,:] - centers[j,:])
+                       for i in range(k) for j in range(i+1,k)]
+
+        # print status update that optimization is starting
+        if not quiet: print("\n[=== optimizing cluster overlaps ===]\n")
+        pad_epoch = int(np.maximum(2, np.floor(1+np.log10(max_epoch))))
+
+        epoch_count = 0
+        keep_optimizing = (epoch_count < max_epoch)
+        while keep_optimizing:
+            epoch_order = config._rng.permutation(centers.shape[0])
+            for i in epoch_order:
+                _gradients_lda.update_centers(
+                    i, centers, cov, ave_cov_inv
+                    learning_rate=learning_rate, 
+                    overlap_bounds=self.overlap_bounds,
+                    )
+            epoch_count += 1
+            keep_optimizing = (epoch_count < max_epoch)
+            
+            loss = _gradients_lda.overlap_loss(centers, cov, ave_cov_inv
+                                           self.overlap_bounds)
+            if verbose:
+                self._print_optimization_progress(
+                        epoch_count, max_epoch, pad_epoch, loss)
+            if np.allclose(loss, 0, atol=tol):
+                if not verbose and not quiet:
+                    print(" "*17 + "...")
+                if not quiet:
+                    self._print_optimization_victory(epoch_count,
+                                                     pad_epoch, loss)
+                return centers
+
+            if not keep_optimizing:
+                print(" "*17 + "...")
+                self._print_optimization_defeat(epoch_count, pad_epoch,
+                                                loss)
+            
+        return centers
