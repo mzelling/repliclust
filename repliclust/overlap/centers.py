@@ -65,7 +65,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
 
     
     def _print_optimization_victory(self, epoch_count: int, 
-                                    pad_epoch: int):
+                                    pad_epoch: int, loss: float):
         """ Print result of successfully optimizing cluster centers. """
         pad_epoch_actual = int(np.floor(
                                 1+np.log10(epoch_count)))
@@ -77,7 +77,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                 + "]\n")
 
     def _print_optimization_defeat(self, epoch_count: int, 
-                                   pad_epoch: int):
+                                   pad_epoch: int, loss: float):
         """ Print warning of failure to optimize cluster centers. """
         pad_epoch_actual = int(np.floor(
                                 1+np.log10(epoch_count)))
@@ -87,10 +87,11 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                 + ("epochs " if epoch_count > 1 else "epoch =")
                 + ("="*(pad_epoch-pad_epoch_actual))
                 + "===]\n")
+        print("\t^ LOSS = " + str(loss))
 
 
     def _optimize_centers(self, centers, cov, 
-                          max_epoch=500, learning_rate=0.05, tol=1e-10,
+                          max_epoch=500, learning_rate=0.5, tol=1e-5,
                           verbose=False, quiet=False):
         """
         Optimize the cluster centers to achieve the desired overlaps.
@@ -148,17 +149,18 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
             if verbose:
                 self._print_optimization_progress(
                         epoch_count, max_epoch, pad_epoch, loss)
-            if np.allclose(loss, 0):
+            if np.allclose(loss, 0, atol=tol):
                 if not verbose and not quiet:
                     print(" "*17 + "...")
                 if not quiet:
                     self._print_optimization_victory(epoch_count,
-                                                     pad_epoch)
+                                                     pad_epoch, loss)
                 return centers
 
             if not keep_optimizing:
                 print(" "*17 + "...")
-                self._print_optimization_defeat(epoch_count, pad_epoch)
+                self._print_optimization_defeat(epoch_count, pad_epoch,
+                                                loss)
             
         return centers
         

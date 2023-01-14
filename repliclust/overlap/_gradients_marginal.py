@@ -146,7 +146,8 @@ def update_centers(cluster_idx, centers, cov, learning_rate,
         #print('gradients', gradients)
         q_min = overlap2quantile_vec(overlap_bounds['max'])
         q = quantiles[:,repel_mask]
-        MSE_grad = -(H_vec(q_min - q) + 2*ReLU_vec(q_min - q))*gradients
+        #MSE_grad = -(H_vec(q_min - q) + 2*ReLU_vec(q_min - q))*gradients
+        MSE_grad = -(2*ReLU_vec(q_min - q))*gradients
         #print('MSE grad', MSE_grad)
         # Update centers matrix with a gradient step
         repel_idx = np.array(other_cluster_idx)[repel_mask]
@@ -165,13 +166,14 @@ def update_centers(cluster_idx, centers, cov, learning_rate,
         #print('gradients', gradients)
         q_max = overlap2quantile_vec(overlap_bounds['min'])
         q = quantiles[:,[attract_pre_idx]]
-        MSE_grad = (H_vec(q - q_max) + 2*ReLU_vec(q - q_max))*gradients
+        #MSE_grad = (H_vec(q - q_max) + 2*ReLU_vec(q - q_max))*gradients
+        MSE_grad = (2*ReLU_vec(q - q_max))*gradients
         #print('MSE_grad', MSE_grad)
         # Update centers matrix with a gradient step
         attract_idx = other_cluster_idx[attract_pre_idx]
         centers[cluster_idx,:] -= learning_rate * MSE_grad.flatten()
         centers[attract_idx,:] -= learning_rate * (-MSE_grad).flatten()
-        return MSE_grad #"status: moving clusters closer to each other"
+        return "status: moving clusters closer to each other"
 
     else:
         return "status: doing nothing because overlap constraints are satisfied"
