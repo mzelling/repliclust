@@ -63,7 +63,14 @@ def marginal_gradient_vec(diff_mat, l_mat, l_tf_mat_1, l_tf_mat_2,
                       )
                   )
     return first_term + second_term
-)
+
+def linearized_idx(i,j,k):
+    """
+    Linearize the index assuming i < j.
+    """
+    assert i < j
+    return int(i*(k-1) - ((i-1)*i/2) + (j-i-1))
+
 
 def get_1d_idx(i,j_vec,k):
     """
@@ -75,22 +82,21 @@ def get_1d_idx(i,j_vec,k):
     diagonal removed) as a vector by sweeping across columns (j) for
     increasing row (i) index.
     """
-    i_new = np.minimum(np.array([i]), j_vec)
-    j_new = np.maximum(np.array([i]), j_vec)
-    return i_new*(k-1) - int((i_new-1)*i_new/2) + (j_new-1)
+    return [linearized_idx(i,j,k) if i<j else linearized_idx(j,i,k)
+            for j in j_vec]
 
 
-def matvecprod_vectorized(matrix_list, matrix_idx, vectors_mat):
+def matvecprod_vectorized(matrix_list, matrix_col_idx, vectors_mat):
     """
     matrix_list : list of (p,p) matrices
-    matrix_idx : relates column indices of vectors_mat to the
+    matrix_col_idx : relates column indices of vectors_mat to the
                     indices of matrix_list
     vectors_mat : shape (p,k-1)
     """
     return np.concatenate(
-                list(map(lambda j: (matrix_list[matrix_idx[j]] 
+                list(map(lambda j: (matrix_list[matrix_col_idx[j]] 
                                 @ vectors_mat[:,j])[:,np.newaxis],
-                    range(len(matrix_idx)))), 
+                    range(len(matrix_col_idx)))), 
                 axis=1
             )
 
@@ -134,7 +140,8 @@ def make_marginal_args(i, centers, cov, ave_cov_inv):
             'l_tf_plus_mat_2': l_tf_plus_mat_2}
 
 
-def make_quantile_vec(diff_mat, l_mat, l_tf_mat_1, l_tf_mat_2):
+def make_quantile_vec(diff_mat, l_mat, l_tf_mat_1, l_tf_mat_2, 
+                      l_tf_plus_mat_1=None, l_tf_plus_mat_2=None):
     """ Make quantile for LDA-based marginal overlap. """
     return (np.sum(l_mat * diff_mat,axis=0)[np.newaxis,:] / 
                 (sd_term(l_mat, l_tf_mat_1)
@@ -198,8 +205,8 @@ def update_centers(cluster_idx, centers, cov, ave_cov_inv,
         gradients = marginal_gradient_vec(**grad_args)
         q_min = overlap2quantile_vec(overlap_bounds['max'])
         q = quantiles[:,repel_mask]
-        #MSE_grad = -(H_vec(q_min - q) + 2*ReLU_vec(q_min - q))*gradients
-        MSE_grad = -(2*ReLU_vec(q_min - q))*gradients
+        MSE_grad = -(H_vec(q_min - q) + 2*ReLU_vec(q_min - q))*gradients
+        #MSE_grad = -(2*ReLU_vec(q_min - q))*gradients
 
         # Update centers matrix with a gradient step
         repel_idx = np.array(other_cluster_idx)[repel_mask]
@@ -217,9 +224,8 @@ def update_centers(cluster_idx, centers, cov, ave_cov_inv,
         gradients = marginal_gradient_vec(**grad_args)
         q_max = overlap2quantile_vec(overlap_bounds['min'])
         q = quantiles[:,[attract_pre_idx]]
-        #MSE_grad = (H_vec(q - q_max) + 2*ReLU_vec(q - q_max))*gradients
-        MSE_grad = (2*ReLU_vec(q - q_max))*gradients
-        #print('MSE_grad', MSE_grad)
+        MSE_grad = (H_vec(q - q_max) + 2*ReLU_vec(q - q_max))*gradients
+        #MSE_grad = (2*ReLU_vec(q - q_max))*gradients
 
         # Update centers matrix with a gradient step
         attract_idx = other_cluster_idx[attract_pre_idx]

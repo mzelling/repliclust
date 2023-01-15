@@ -8,7 +8,7 @@ import numpy as np
 
 from repliclust.base import Archetype
 from repliclust.overlap.centers import \
-    ConstrainedOverlapCenters
+    ConstrainedOverlapCenters, LDAConstrainedOverlapCenters
 
 from repliclust.maxmin.covariance import MaxMinCovarianceSampler
 from repliclust.maxmin.groupsizes import MaxMinGroupSizeSampler
@@ -171,7 +171,11 @@ class MaxMinArchetype(Archetype):
         distributional parameters. To print the names of all supported
         distributions and their parameters (along with default values), 
         print the output of repliclust.get_supported_distributions().
-
+    distributions_proportions :
+        The proportions of clusters that have each distribution listed
+        in `distributions`.
+    mode : {"auto", "precise", "fast"}
+        Select the degree of precision when computing cluster overlaps.
     
     Notes
     -----
@@ -198,6 +202,7 @@ class MaxMinArchetype(Archetype):
             aspect_ref=1.5, name=None, scale=1.0, packing=0.1,
             distributions=['normal', 'exponential'],
             distribution_proportions=None,
+            mode='auto',
             ):
         """ Instantiate a MaxMinArchetype object. """
         covariance_args = {'aspect_ref': aspect_ref,
@@ -214,15 +219,24 @@ class MaxMinArchetype(Archetype):
         validate_archetype_args(**(covariance_args | groupsize_args 
                                                 | center_args))
 
-        covariance_sampler = MaxMinCovarianceSampler(**covariance_args)
-        groupsize_sampler = MaxMinGroupSizeSampler(**groupsize_args)
-        center_sampler = ConstrainedOverlapCenters(**center_args)
+        # choose cluster center sampler
+        if mode=='auto':
+            center_sampler = (
+                LDAConstrainedOverlapCenters(**center_args) 
+                    if (n_clusters*dim <= 1000)
+                else ConstrainedOverlapCenters(**center_args)
+            )
+        elif mode=='precise':
+            center_sampler = LDAConstrainedOverlapCenters(**center_args)
+        elif mode=='fast':
+            center_sampler = ConstrainedOverlapCenters(**center_args)
+
         distribution_sampler = FixedProportionMix(distributions_parsed)
 
         Archetype.__init__(
             self, n_clusters, dim, n_samples, name, scale,
             MaxMinCovarianceSampler(**covariance_args),
-            ConstrainedOverlapCenters(**center_args),
+            center_sampler,
             MaxMinGroupSizeSampler(**groupsize_args),
             distribution_sampler,
             **covariance_args, **groupsize_args, **center_args,

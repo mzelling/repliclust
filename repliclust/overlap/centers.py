@@ -216,17 +216,16 @@ class LDAConstrainedOverlapCenters(ConstrainedOverlapCenters):
     """
 
     def _optimize_centers(self, centers, cov, 
-                          max_epoch=500, learning_rate=0.5, tol=1e-5,
+                          max_epoch=100, learning_rate=0.1, tol=1e-5,
                           verbose=False, quiet=False):
         # compute the inverses of average pairwise covariances
         print("Optimizing cluster centers with mode='precise'...")
-        print("\n[=== inverting covariance matrices ===]\n")
+        print("\n[== inverting covariance matrices ==]\n")
         print("[ Hint: if this step takes too long, try setting "
                 + "mode='fast' " 
-                + "in the archetype. ]")
+                + "in the archetype ]")
         k = centers.shape[0]
-        ave_cov_inv = [np.solve((cov[i] + cov[j])/2, 
-                                centers[i,:] - centers[j,:])
+        ave_cov_inv = [np.linalg.inv((cov[i] + cov[j])/2)
                        for i in range(k) for j in range(i+1,k)]
 
         # print status update that optimization is starting
@@ -239,15 +238,16 @@ class LDAConstrainedOverlapCenters(ConstrainedOverlapCenters):
             epoch_order = config._rng.permutation(centers.shape[0])
             for i in epoch_order:
                 _gradients_lda.update_centers(
-                    i, centers, cov, ave_cov_inv
+                    i, centers, cov, ave_cov_inv,
                     learning_rate=learning_rate, 
                     overlap_bounds=self.overlap_bounds,
                     )
             epoch_count += 1
             keep_optimizing = (epoch_count < max_epoch)
             
-            loss = _gradients_lda.overlap_loss(centers, cov, ave_cov_inv
-                                           self.overlap_bounds)
+            loss = _gradients_lda.overlap_loss(
+                        centers, cov, ave_cov_inv, self.overlap_bounds)
+
             if verbose:
                 self._print_optimization_progress(
                         epoch_count, max_epoch, pad_epoch, loss)
