@@ -3,7 +3,8 @@ from scipy.stats import chi2, norm
 
 def update_centers(ref_cluster_idx, centers, cov_list, 
                    ave_cov_inv_list, axis_deriv_t_list,
-                   learning_rate, linear_penalty_weight, quantile_bounds,
+                   learning_rate, linear_penalty_weight, 
+                   quantile_bounds,
                    mode='lda'):
     """
     Perform an iteration of stochastic gradient descent on the cluster
@@ -35,8 +36,7 @@ def update_centers(ref_cluster_idx, centers, cov_list,
     -------
     (grad, loss) : tuple
         Tuple whose first component is the loss gradient and whose 
-        second component is the loss. If no action is taken during the
-        gradient descent step, both components are None.
+        second component is the loss.
 
     Side effects
     ------------
@@ -52,7 +52,6 @@ def update_centers(ref_cluster_idx, centers, cov_list,
                     'ave_cov_inv_list': ave_cov_inv_list,
                     'axis_deriv_t_list': axis_deriv_t_list}
 
-    loss_grad = None; loss = None
     repulsive_clusters_idx = other_cluster_idx[mask_repulsive(
                                     q=q, min_q=quantile_bounds['min'])
                                 ]
@@ -90,6 +89,14 @@ def update_centers(ref_cluster_idx, centers, cov_list,
         loss = overlap_loss(centers, quantile_bounds,
                             linear_penalty_weight,cov_list=cov_list,
                             ave_cov_inv_list=ave_cov_inv_list, mode=mode)
+    # Case 3: Overlap constraints are satisfied -- do nothing
+    else:
+        loss = overlap_loss(centers, quantile_bounds,
+                            linear_penalty_weight,cov_list=cov_list,
+                            ave_cov_inv_list=ave_cov_inv_list, 
+                            mode=mode)
+        loss_grad = np.zeros(shape=(centers.shape[1],
+                                    centers.shape[0]-1))
 
     return (loss_grad, loss)
 
@@ -166,19 +173,28 @@ def quantile_gradients(ref_center, other_centers, ref_cluster_idx,
     # writing the quantile as A/B, we get dA*B + A*d(1/B)
     marginal_std_sum = ref_std + other_std
     axis_dot_delta = np.sum(axis_mat * delta_mat, axis=0)[np.newaxis,:]
-    numerator_term = ((axis_mat + matvecprod_vectorized(
-                                    axis_deriv_t_list, 
-                                    get_1d_idx(ref_cluster_idx, 
-                                        other_cluster_idx,
-                                        len(cov_list)), 
-                                    delta_mat))
-                        / marginal_std_sum)
-    denominator_term = ((1/2)*(-axis_dot_delta)/(marginal_std_sum**2)
-        * matvecprod_vectorized(
-            axis_deriv_t_list, 
-            get_1d_idx(ref_cluster_idx, other_cluster_idx,
-                       len(cov_list)),
-            ref_tf/ref_std + other_tf/other_std))
+    if mode=='lda':
+        numerator_term = ((axis_mat + matvecprod_vectorized(
+                                        axis_deriv_t_list, 
+                                        get_1d_idx(ref_cluster_idx, 
+                                            other_cluster_idx,
+                                            len(cov_list)), 
+                                        delta_mat))
+                            / marginal_std_sum)
+        denominator_term = (
+            (1/2)*(-axis_dot_delta)/(marginal_std_sum**2)
+                * matvecprod_vectorized(
+                    axis_deriv_t_list, 
+                    get_1d_idx(ref_cluster_idx, other_cluster_idx,
+                            len(cov_list)),
+                    ref_tf/ref_std + other_tf/other_std))
+    elif mode=='c2c':
+        numerator_term = (axis_mat + delta_mat) / marginal_std_sum
+        denominator_term = (
+            (1/2)*(-axis_dot_delta)/(marginal_std_sum**2)
+                * (ref_tf/ref_std + other_tf/other_std)
+        )
+
     q_grad = numerator_term + denominator_term
     q = axis_dot_delta/marginal_std_sum
     return (q, q_grad)
@@ -501,14 +517,16 @@ def single_cluster_loss(q, q_bounds, linear_penalty_weight):
     """
     if not check_for_attraction(q=q, max_q=q_bounds['max']):
         # return the loss for repulsion
-        return np.sum(
-                    poly_vec(ReLU_vec(q_bounds['min'] - q), 
-                             linear_weight=linear_penalty_weight)
+        out = np.sum(
+                     poly_vec(ReLU_vec(q_bounds['min'] - q), 
+                              linear_weight=linear_penalty_weight)
                     )
+        return out
     else:
         # return the loss for attraction
-        return poly_vec(ReLU_vec(np.min(q) - q_bounds['max']),
-                        linear_weight=linear_penalty_weight)
+        out = poly_vec(ReLU_vec(np.min(q) - q_bounds['max']),
+                       linear_weight=linear_penalty_weight)
+        return out
 
 
 def overlap_loss(centers, q_bounds, linear_penalty_weight,

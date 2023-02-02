@@ -30,10 +30,10 @@ def make_random_cluster_quantities():
     else:
         # produce a case where clusters are too close together
         loss_mode = 'repel'
-        o_bounds = {'min': 0.01, 'max':0.05}
+        o_bounds = {'min': 0.001, 'max':0.01}
     mm = (Archetype(n_clusters=np.random.choice(np.arange(2,10)),
-                    min_overlap=0.05,
-                    max_overlap=0.1)
+                    min_overlap=0.025,
+                    max_overlap=0.075)
             .sample_mixture_model())
     centers = mm.centers 
     n_clusters = centers.shape[0]

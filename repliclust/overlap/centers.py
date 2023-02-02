@@ -6,7 +6,7 @@ objective function.
 
 import numpy as np
 from scipy.stats import norm
-
+from tqdm import tqdm
 from repliclust import config
 from repliclust.base import ClusterCenterSampler
 from repliclust.utils import assemble_covariance_matrix
@@ -22,6 +22,31 @@ def overlap2quantile_vec(overlaps):
 def quantile2overlap_vec(quantiles):
     """ Convert quantiles to the corresponding overlaps. """
     return 2*(1-norm.cdf(quantiles))
+
+
+def assess_obs_overlap(centers, cov_list, ave_cov_inv_list, mode='lda'):
+    """
+    Compute the observed minimum and maximum overlap between cluster
+    centers.
+
+    Parameters
+    ----------
+    centers : ndarray
+        The cluster centers arranged as a matrix. Each row is a center.
+    cov_list : list[ndarray]
+        A list whose i-th entry is the covariance matrix of the i-th
+        cluster.
+    ave_cov_inv_list : list[ndarray]
+        A list with k*(k-1)/2 entries that gives the inverses of the
+        average covariance matrices between each distinct pair of 
+        clusters.
+    mode : {'lda', 'c2c'}
+        The method for calculating cluster overlap.
+    """
+    obs_separation = _gradients.assess_obs_separation(
+                            centers, cov_list, ave_cov_inv_list, mode)
+    return {'min': quantile2overlap_vec(obs_separation['max']),
+            'max': quantile2overlap_vec(obs_separation['min'])}
 
 
 class ConstrainedOverlapCenters(ClusterCenterSampler):
@@ -169,16 +194,25 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
 
     def _optimize_centers(self, centers, cov_list=None, 
                           ave_cov_inv_list=None, axis_deriv_t_list=None, 
-                          verbose=False, quiet=False):
+                          verbose=False, quiet=False, 
+                          progress_bar=None):
         """
         Minimize overlap loss using stochastic gradient descent.
 
         Parameters
         ----------
         centers : ndarray
+            The cluster centers arranged as a matrix. Each row is a center.
         cov_list : list[ndarray]
-        ave_cov_inv_list :
-        axis_deriv_t_list : 
+            A list whose `i`-th component is the covariance matrix of the
+            `i`-th cluster center.
+        ave_cov_inv_list : list[ndarray]
+            A list that stores the inverse of the average covariance
+            matrices between each distinct pair of clusters.
+        axis_deriv_t_list : list[ndarray]
+            A list that stores the transpose of the differential of the
+            separation axis axis with respect to reference cluster's
+            center, for each distinct pair of clusters.
 
         Returns
         -------
@@ -198,6 +232,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         grad_size = np.Inf; loss_curr = np.Inf; loss_prev = np.Inf
         while self._check_for_continuation(epoch, loss_curr, loss_prev,
                                            grad_size):
+            progress_bar.update(n=1)
             epoch_queue= config._rng.permutation(n_clusters)
             grad_size = 0
             for cluster_idx in epoch_queue:
@@ -209,14 +244,14 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                     quantile_bounds=self.quantile_bounds, 
                     mode=self.overlap_mode,
                     )
-                if grad is not None:
-                    grad_size += np.linalg.norm(grad)/n_clusters
+                grad_size += np.linalg.norm(grad)/n_clusters
             # Increment parameters for tracking the optimization
             epoch += 1
-            if loss is not None:
-                loss_prev = loss_curr
-                loss_curr = loss
+            loss_prev = loss_curr
+            loss_curr = loss
 
+        # make progress bar appear to have gone for max_epoch iterations
+        progress_bar.update(n=self.max_epoch-epoch)
         return loss_curr
 
     
@@ -246,13 +281,14 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
             axis_deriv_t_list = ave_cov_inv_list
         elif self.overlap_mode=='c2c':
             ave_cov_inv_list = None
-            axis_deriv_t_list = [np.eye(dim) for i in range(n_clusters) 
-                                    for j in range(i+1, n_clusters)]
+            axis_deriv_t_list = None
         elif self.overlap_mode=='exact':
             raise NotImplementedError("the 'exact' mode has not been" +
                                         " implemented yet.")
 
         # Repeat optimization from different initializations
+        progress_bar = tqdm(total=int(self.n_restarts*self.max_epoch),
+                            desc="Optimizing Cluster Centers")
         best_loss = np.Inf
         best_centers = None
         for optimization_restart in range(self.n_restarts):
@@ -261,11 +297,34 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                             .sample_cluster_centers(archetype))
             loss = self._optimize_centers(centers, cov_list, 
                                           ave_cov_inv_list,
-                                          axis_deriv_t_list)
+                                          axis_deriv_t_list,
+                                          progress_bar=progress_bar)
             if loss < best_loss:
                 # Must copy current-best centers to prevent overwriting
                 best_centers = np.copy(centers)
                 best_loss = loss
+                if np.allclose(best_loss, 0):
+                    progress_bar.update(
+                        n=(self.n_restarts-optimization_restart-1)*self.max_epoch)
+                    break
+                    
+        if np.allclose(best_loss,0):
+            progress_bar.set_postfix({"Status": "SUCCESS"})
+        else:
+            progress_bar.set_postfix({"Status": "WARNING"})
+            # Assess attained overlaps
+            obs_overlap = assess_obs_overlap(best_centers, cov_list, 
+                                         ave_cov_inv_list,
+                                         self.overlap_mode)
+            print("WARNING: did not fully converge!"
+                    + " Attained overlaps:" 
+                    + " min="
+                    + np.format_float_scientific(obs_overlap['min'], 
+                        precision=2)
+                    + ", max="
+                    + np.format_float_scientific(obs_overlap['max'],
+                        precision=2)
+                )
 
         # Shift centers to have zero-mean and return the result
         centers_mean = np.mean(centers, axis=0)
