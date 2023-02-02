@@ -7,8 +7,7 @@ values of various geometric parameters.
 import numpy as np
 
 from repliclust.base import Archetype
-from repliclust.overlap.centers import \
-    ConstrainedOverlapCenters, LDAConstrainedOverlapCenters
+from repliclust.overlap.centers import ConstrainedOverlapCenters
 
 from repliclust.maxmin.covariance import MaxMinCovarianceSampler
 from repliclust.maxmin.groupsizes import MaxMinGroupSizeSampler
@@ -34,6 +33,8 @@ def validate_overlaps(max_overlap=0.05,min_overlap=1e-3):
     elif (max_overlap > 1) or (min_overlap < 0):
         raise ValueError("max_overlap and min_overlap should be" +
                          " between 0 and 1.")
+    elif max_overlap <= min_overlap:
+        raise ValueError("max_overlap must exceed min_overlap.")
 
 def validate_maxmin_ratios(maxmin_ratio=2, arg_name="aspect_maxmin",
                             underlying_param="aspect ratio"):
@@ -174,7 +175,7 @@ class MaxMinArchetype(Archetype):
     distributions_proportions :
         The proportions of clusters that have each distribution listed
         in `distributions`.
-    mode : {"auto", "precise", "fast"}
+    mode : {"auto", "lda", "c2c"}
         Select the degree of precision when computing cluster overlaps.
     
     Notes
@@ -194,6 +195,12 @@ class MaxMinArchetype(Archetype):
         an oblong cluster.
     """
 
+    def guess_learning_rate(self, dim):
+        """
+        Guess the appropriate learning rate as a function of dimension.
+        """
+        return 0.5*(1/np.log10(10+dim))
+
     def __init__(
             self, 
             n_clusters=6, dim=2, n_samples=500,
@@ -202,16 +209,26 @@ class MaxMinArchetype(Archetype):
             aspect_ref=1.5, name=None, scale=1.0, packing=0.1,
             distributions=['normal', 'exponential'],
             distribution_proportions=None,
-            mode='auto',
+            overlap_mode='auto', linear_penalty_weight=0.5, 
+            learning_rate='auto',
             ):
         """ Instantiate a MaxMinArchetype object. """
         covariance_args = {'aspect_ref': aspect_ref,
                            'aspect_maxmin': aspect_maxmin,
                            'radius_maxmin': radius_maxmin}
         groupsize_args = {'imbalance_ratio': imbalance_ratio}
+
+        if learning_rate=='auto':
+            learning_rate = self.guess_learning_rate(dim)
+        elif not isinstance(learning_rate, float):
+            raise ValueError("learning_rate should be 'auto' or a "
+                                + "float between 0 and 1")
+        
         center_args = {'max_overlap': max_overlap, 
                        'min_overlap': min_overlap,
-                       'packing': packing}
+                       'packing': packing,
+                       'learning_rate': learning_rate,
+                       'linear_penalty_weight': linear_penalty_weight}
         distributions_parsed = parse_distribution_selection(
                                     distributions, 
                                     distribution_proportions)
@@ -220,16 +237,12 @@ class MaxMinArchetype(Archetype):
                                                 | center_args))
 
         # choose cluster center sampler
-        if mode=='auto':
-            center_sampler = (
-                LDAConstrainedOverlapCenters(**center_args) 
-                    if (n_clusters*dim <= 1000)
-                else ConstrainedOverlapCenters(**center_args)
-            )
-        elif mode=='precise':
-            center_sampler = LDAConstrainedOverlapCenters(**center_args)
-        elif mode=='fast':
-            center_sampler = ConstrainedOverlapCenters(**center_args)
+        if overlap_mode=='auto':
+            overlap_mode = 'lda' if n_clusters*dim <= 10000 else 'c2c'
+        
+        center_sampler = ConstrainedOverlapCenters(
+                            overlap_mode=overlap_mode, **center_args
+                            )
 
         distribution_sampler = FixedProportionMix(distributions_parsed)
 

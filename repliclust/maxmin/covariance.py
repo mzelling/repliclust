@@ -62,29 +62,43 @@ class MaxMinCovarianceSampler():
         n_clusters = self.validate_k(n_clusters)
 
         ref = self.aspect_ref
-        min_aspect = 1 + (ref-1)/self.aspect_maxmin
-        max_aspect = min_aspect*self.aspect_maxmin
-        maxmin_ratio = max_aspect / min_aspect
+        mm = self.aspect_maxmin
 
-        TOL = 0.05
-        def compute_other_aspect_ratio(a):
-            if (ref - min_aspect < TOL):
-                return (config._rng.triangular(
-                                left=ref, mode=ref,right=max_aspect
-                                )
-                        if (a <= ref) 
-                        else (ref + min_aspect)/2)
-            else:
-                return ((ref + ((ref - a)/(ref-min_aspect))
-                                    * (max_aspect-ref))
-                            if (a <= ref)
-                            else (ref + ((a - ref)/(max_aspect-ref))
-                                            * (min_aspect - ref))
-                            )
+        delta = (-(1+mm) + np.sqrt((1+mm)**2 + 4*mm*(ref**2-1)))/2
+        max_aspect = 1 + delta
+        min_aspect = 1 + (delta/mm)
+        # print('ref aspect:', ref, '| nominal mm:', mm, '| effective mm:', 
+        #         max_aspect/min_aspect)
 
-        result = sample_with_maxmin(n_clusters, 
-                                    ref, min_aspect, maxmin_ratio, 
-                                    compute_other_aspect_ratio)
+        # ref = self.aspect_ref
+        # min_aspect = 1 + (ref-1)/self.aspect_maxmin
+        # max_aspect = min_aspect*self.aspect_maxmin
+        # maxmin_ratio = max_aspect / min_aspect
+
+        # TOL = 0.05
+        # def compute_other_aspect_ratio(a):
+        #     if (ref - min_aspect < TOL):
+        #         return (config._rng.triangular(
+        #                         left=ref, mode=ref,right=max_aspect
+        #                         )
+        #                 if (a <= ref) 
+        #                 else (ref + min_aspect)/2)
+        #     else:
+        #         return ((ref + ((ref - a)/(ref-min_aspect))
+        #                             * (max_aspect-ref))
+        #                     if (a <= ref)
+        #                     else (ref + ((a - ref)/(max_aspect-ref))
+        #                                     * (min_aspect - ref))
+        #                     )
+
+        # result = sample_with_maxmin(n_clusters, 
+        #                             ref, min_aspect, maxmin_ratio, 
+        #                             compute_other_aspect_ratio)
+
+        result = sample_with_maxmin(n_clusters, ref, min_aspect,
+                                    max_aspect/min_aspect,
+                                    lambda a: (ref**2)/a)
+
         return result
 
 

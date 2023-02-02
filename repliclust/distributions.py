@@ -13,7 +13,7 @@ from repliclust.base import SingleClusterDistribution, DistributionMix
 
 
 N_EMPIRICAL_QUANTILE = int(1e+6)
-QUANTILE_LEVEL = 0.3415 # refers to a distr taking only positive vals
+QUANTILE_LEVEL = 0.682 #0.477 # 0.3415 # refers to a distr taking only positive vals
 
 SUPPORTED_DISTRIBUTION_NAMES = list(
     SUPPORTED_DISTRIBUTIONS.keys())
@@ -36,7 +36,7 @@ class DistributionFromNumPy(SingleClusterDistribution):
                                                q=QUANTILE_LEVEL)
 
     def __repr__(self):    
-       return "CustomDistribution('" + self.name + "')"
+       return "DistributionFromNumPy('" + self.name + "')"
 
     def _sample_1d(self, n, dim):
         return np.sqrt(np.sum(((np.abs(
@@ -56,24 +56,29 @@ class DistributionFromPDF(SingleClusterDistribution):
                 + " future release. Stay tuned!")
 
 
-class Normal(SingleClusterDistribution):
+class Normal(DistributionFromNumPy):
     """
     Draw multivariate normal data for a single cluster.
     """
-    def _sample_1d(self, n, dim):
-        return np.sqrt(config._rng.chisquare(df=dim,size=n))
+    def __init__(self):
+        DistributionFromNumPy.__init__(self, "normal", loc=0, scale=1)
+
+    # def _sample_1d(self, n, dim):
+    #     return np.sqrt(config._rng.chisquare(df=dim,size=n))
 #       return config._rng.normal(loc=0.0, scale=1.0, size=n)
 
 
-class Exponential(SingleClusterDistribution):
+class Exponential(DistributionFromNumPy):
     """
     Draw exponentially distributed data for a single cluster.
     """
-    def _sample_1d(self, n, dim):
-        return np.sqrt(np.sum(config._rng.exponential(
-                                scale=1, size=(n, dim)
-                                )**2,
-                              axis=1))
+    def __init__(self):
+        DistributionFromNumPy.__init__(self, "exponential", scale=1)
+    # def _sample_1d(self, n, dim):
+    #     return np.sqrt(np.sum(config._rng.exponential(
+    #                             scale=1, size=(n, dim)
+    #                             )**2,
+    #                           axis=1))
 
 class StandardT(SingleClusterDistribution):
     """

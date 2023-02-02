@@ -41,7 +41,7 @@ def sd_term(diff_mat, diff_mat_tf):
     return np.sqrt(np.sum(diff_mat * diff_mat_tf,axis=0)[np.newaxis,:])
 
 
-def marginal_gradient_vec(diff_mat, l_mat, l_tf_mat_1, l_tf_mat_2,
+def quantile_gradient_vec(diff_mat, l_mat, l_tf_mat_1, l_tf_mat_2,
                           l_tf_plus_mat_1, l_tf_plus_mat_2):
     """
     diff_mat
@@ -63,6 +63,39 @@ def marginal_gradient_vec(diff_mat, l_mat, l_tf_mat_1, l_tf_mat_2,
                       )
                   )
     return first_term + second_term
+
+def loss_gradient_vec(q, q_thold, q_grad, mode='repel', 
+                      linear_weight=0.5):
+    """
+    Compute the gradient of the loss function with respect to the
+    cluster centers.
+
+    Parameters
+    ----------
+    q : ndarray
+        The vector of separation quantiles.
+    q_thold : float
+        If mode='repel', the minimum separation quantile. If
+        mode='attract', the maximum separation quantile.
+    q_grad : ndarray
+        Matrix of gradients with respect to the separation quantiles.
+    linear_weight : float, between 0 and 1
+        Weight of the linear penalty. If linear_weight=0 then the
+        penalty is quadratic. If linear_weight=1 the penalty is linear.
+        For intermediate values, the penalty is mixed.
+
+    Returns
+    -------
+    gradient : ndarray
+        The gradient with respect to the loss function.
+    """
+    if mode=='repel':
+        return -(linear_weight*H_vec(q_thold - q)
+                    + 2*(1-linear_weight)*ReLU_vec(q_thold - q))*q_grad
+    elif mode=='attract':
+        return (linear_weight*H_vec(q - q_thold)
+                    + 2*(1-linear_weight)*ReLU_vec(q - q_thold))*q_grad
+
 
 def linearized_idx(i,j,k):
     """
@@ -158,8 +191,71 @@ def quantile2overlap_vec(quantiles):
     return 2*(1-norm.cdf(quantiles))
 
 
+def subset_clusters_of_interest(data, subset):
+    """ 
+    Reduce precomputed data to columns corresponding to the
+    clusters of interest. 
+
+    Parameters
+    ----------
+    data : dict
+        Precomputed data.
+    subset : ndarray(dtype='bool') or list[int]
+        Index into the columns of interest. Can be boolean array or
+        a list of integer indices.
+
+    Returns
+    -------
+    reduced_data : dict
+        The input dictionary but with each item reduced to contain only
+        the columns of interest. 
+    """
+    return {X_name: X[:,subset] for X_name, X in data.items()}
+
+
+def apply_gradient_update(centers, loss_grad,
+                          cluster_idx, other_cluster_idx, 
+                          subset, learning_rate, mode='repel'):
+    """
+    Apply a gradient step to update the cluster centers. Helper function
+    for update_centers.
+
+    Parameters
+    ----------
+    centers : ndarray
+        The current locations of the cluster centers.
+    loss_grad : ndarray
+        The gradients with respect to the loss function.
+    cluster_idx : int
+        The index of the reference cluster.
+    other_cluster_idx : list[int]
+        The indices for the other clusters.
+    subset : ndarray (dtype=bool) or int
+        Index into the columns of interest. If mode='repel', `subset` is
+        a boolean array. If mode='attract', `subset` is an integer.
+    learning_rate : float
+        Learning rate for the gradient descent step.
+    mode : {'repel', 'attract'}
+        Select whether the gradient descent step moves clusters further
+        apart ('repel') or closer together ('attract').
+
+    Returns
+    -------
+    """
+    if mode=='repel':
+        repel_idx = np.array(other_cluster_idx)[subset]
+        centers[cluster_idx,:] -= (learning_rate 
+                                    * (np.sum(loss_grad, axis=1)))
+        centers[repel_idx,:] -= (learning_rate
+                                    * np.transpose(-loss_grad))
+    elif mode=='attract':
+        attract_idx = other_cluster_idx[subset]
+        centers[cluster_idx,:] -= learning_rate * loss_grad.flatten()
+        centers[attract_idx,:] -= learning_rate * (-loss_grad).flatten()
+
+
 def update_centers(cluster_idx, centers, cov, ave_cov_inv, 
-                    learning_rate, overlap_bounds):
+                   learning_rate, penalty_coef, overlap_bounds):
     """
     Perform an iteration of stochastic gradient descent on the cluster
     centers. 
@@ -176,6 +272,9 @@ def update_centers(cluster_idx, centers, cov, ave_cov_inv,
         List of inverses of the pairwise average covariance matrices.
     learning_rate : float
         Learning rate for gradient descent.
+    penalty_coef : float, between 0 and 1
+        Determines the penalty function for the loss. The penalty
+        polynomial is p(x) = penalty_coef*x + (1-penalty_coef)*(x**2).
     overlap_bounds : dict with keys 'min' and 'max'
         Minimum and maximum allowed overlaps between clusters.
     cov : list of ndarray; length k, each ndarray of shape (p, p)
@@ -185,67 +284,101 @@ def update_centers(cluster_idx, centers, cov, ave_cov_inv,
     ------------
     Update centers by taking a stochastic gradient descent step.
     """
-    # Make reusable arguments for the subsequent steps
-    p = centers.shape[1]
-    k = centers.shape[0]
-
-    other_cluster_idx = compute_other_cluster_idx(cluster_idx,k)
-    marginal_args = make_marginal_args(
-                        cluster_idx, centers, cov, ave_cov_inv
-                    ) 
-    quantiles = make_quantile_vec(**marginal_args)
+    other_cluster_idx = compute_other_cluster_idx(cluster_idx,
+                                                  centers.shape[0])
+    precomputed_data = make_marginal_args(
+                            cluster_idx, centers, cov, ave_cov_inv) 
+    quantiles = make_quantile_vec(**precomputed_data)
     overlaps = quantile2overlap_vec(quantiles)
 
-    # See if any clusters repel the reference cluster
-    repel_mask = (overlaps >= overlap_bounds['max']).flatten()
-    if np.any(repel_mask):
-        # Select only the clusters that repel the reference cluster
-        grad_args = {X_name: X[:,repel_mask] for X_name, X in \
-                     marginal_args.items()}
-        gradients = marginal_gradient_vec(**grad_args)
+    # Case 1: Clusters are too close to this cluster.
+    which_clusters_repel = get_max_overlap_violators(
+                                overlaps, overlap_bounds['max'])
+    if np.any(which_clusters_repel):
+        # Reduce data to all clusters that are too close
+        precomputed_data = subset_clusters_of_interest(
+                                precomputed_data, which_clusters_repel)
+        q = quantiles[:,which_clusters_repel]
         q_min = overlap2quantile_vec(overlap_bounds['max'])
-        q = quantiles[:,repel_mask]
-        MSE_grad = -(H_vec(q_min - q) + 2*ReLU_vec(q_min - q))*gradients
-        #MSE_grad = -(2*ReLU_vec(q_min - q))*gradients
-
-        # Update centers matrix with a gradient step
-        repel_idx = np.array(other_cluster_idx)[repel_mask]
-        centers[cluster_idx,:] -= (learning_rate 
-                                    * (np.sum(MSE_grad, axis=1)/(k-1)))
-        centers[repel_idx,:] -= (learning_rate
-                                    * np.transpose(-MSE_grad))
-        return "status: moving clusters farther away from each other"
-
-    elif np.max(overlaps) <= overlap_bounds['min']:
-        # Select only the cluster closest to the reference cluster
-        attract_pre_idx = np.argmax(overlaps)
-        grad_args = {X_name: X[:,[attract_pre_idx]] for X_name, X in \
-                     marginal_args.items()}
-        gradients = marginal_gradient_vec(**grad_args)
+        # Compute gradients and update cluster centers
+        quantile_grad = quantile_gradient_vec(**precomputed_data)
+        loss_grad = loss_gradient_vec(q, q_min, quantile_grad, 
+                                      mode='repel', 
+                                      linear_weight=penalty_coef)
+        apply_gradient_update(centers, loss_grad, cluster_idx, 
+                              other_cluster_idx, which_clusters_repel, 
+                              learning_rate, mode='repel')
+    # Case 2: All clusters are too far away from this cluster.
+    elif violate_min_overlap(overlaps, overlap_bounds['min']):
+        # Reduce data to only the closest cluster
+        closest_cluster_idx = np.argmax(overlaps)
+        precomputed_data = subset_clusters_of_interest(
+                                precomputed_data, 
+                                subset=[closest_cluster_idx])
+        q = quantiles[:,[closest_cluster_idx]]
         q_max = overlap2quantile_vec(overlap_bounds['min'])
-        q = quantiles[:,[attract_pre_idx]]
-        MSE_grad = (H_vec(q - q_max) + 2*ReLU_vec(q - q_max))*gradients
-        #MSE_grad = (2*ReLU_vec(q - q_max))*gradients
+        # Compute gradients and update cluster centers
+        quantile_grad = quantile_gradient_vec(**precomputed_data)
+        loss_grad = loss_gradient_vec(q, q_max, quantile_grad, 
+                                      mode='attract', 
+                                      linear_weight=penalty_coef)
+        apply_gradient_update(centers, loss_grad, cluster_idx, 
+                              other_cluster_idx, closest_cluster_idx, 
+                              learning_rate, mode='attract')
 
-        # Update centers matrix with a gradient step
-        attract_idx = other_cluster_idx[attract_pre_idx]
-        centers[cluster_idx,:] -= learning_rate * MSE_grad.flatten()
-        centers[attract_idx,:] -= learning_rate * (-MSE_grad).flatten()
-        return "status: moving clusters closer to each other"
 
-    else:
-        return ("status: doing nothing because overlap "
-                + "constraints are satisfied")
+def get_max_overlap_violators(overlaps, max_overlap):
+    """ 
+    Return boolean array whose entries are TRUE if the
+    corresponding cluster violates the maximum overlap condition with
+    respect to the reference cluster.
+    """
+    return (overlaps >= max_overlap).flatten()
+
+
+def violate_min_overlap(overlaps, min_overlap):
+    """ Return true if cluster violates minimum overlap condition."""
+    return np.max(overlaps) < min_overlap
 
 
 def ReLU_vec(x):
-    """ Apply rectified linear unit x+ = max(x,0). """
+    """ 
+    Apply rectified linear unit x+ = max(x,0).
+
+    Parameters
+    ----------
+    x : ndarray
+        Input array of numbers.
+
+    Returns
+    -------
+    relu : ndarray
+        Rectified linear unit applied to each entry of input array.
+    """
     return np.maximum(x,0)
         
 
-def poly_vec(x):
-    """ Apply the polynomial p(x) = x + x**2. """
-    return x + (x**2)
+def poly_vec(x, linear_weight=0.5):
+    """ 
+    Apply a penalty polynomial p(x) = lmbda*x + (1-lmbda)*(x**2) in
+    a vectorized fashion.
+
+    Parameters
+    ----------
+    x : ndarray
+        Input array of numbers.
+    linear_weight : float, between 0 and 1 (inclusive)
+        Determine the relative weighting of the linear penalty. If
+        linear_weight=0, the penalty is quadratic. If linear_weight=1,
+        the penalty is linear. For intermediate values, the penalty is
+        mixed.
+
+    Returns
+    -------
+    poly : ndarray, same shape as `x`
+        Penalty polynomial evaluated at each element in `x`.
+    """
+    return linear_weight*np.abs(x) + (1-linear_weight)*(x**2)
 
 
 def H_vec(x):
@@ -279,12 +412,13 @@ def overlap_loss(centers, cov, ave_cov_inv, overlap_bounds):
     """
     Compute the total overlap loss.
     """
-    k = centers.shape[0]
-    return np.sum(list(
+    n_clusters = centers.shape[0]
+    return np.sqrt(np.sum(list(
             map(lambda i: single_cluster_loss(
                             i, centers, cov, ave_cov_inv, overlap_bounds
-                          )/k, 
-                range(k))))
+                          )/n_clusters, 
+                range(n_clusters))))
+            )
 
 
 def assess_obs_overlap(centers, cov, ave_cov_inv):
