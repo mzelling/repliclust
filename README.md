@@ -5,9 +5,9 @@
 is a Python package for generating synthetic data sets with clusters. 
 
 The package is based on *data set archetypes*, high-level descriptions
-of the desired data sets. Our framework allows you to generate similar but
-distinct data sets, making benchmarks more informative and reproducible;
-**repliclust** builds upon SciPy and NumPy and is meant to complement
-scikit-learn.
+of whole classes of desired data sets. Our framework allows you to
+generate similar but distinct data sets, making benchmarks more
+informative and reproducible; **repliclust** builds upon SciPy and NumPy
+and is meant to complement scikit-learn.
 
 For a full documentation, visit the project website: [https://repliclust.org](https://repliclust.org).
