@@ -5,6 +5,7 @@ objective function.
 """
 
 import numpy as np
+from warnings import warn
 from scipy.stats import norm
 from tqdm import tqdm
 from repliclust import config
@@ -156,8 +157,8 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
 
         self.overlap_bounds = {'min': min_overlap, 'max': max_overlap}
 
-    def _check_for_continuation(self, epoch, loss_curr, loss_prev,
-                                grad_size):
+    def _check_for_continuation(self, epoch, loss_curr,
+                                loss_prev, grad_size):
         """
         Return TRUE if we should keep optimizing the cluster centers,
         and FALSE if we should stop. 
@@ -170,6 +171,21 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         3) Norm of gradient is within absolute tolerance of zero.
         4) Make little progress (current loss is has decreased from
            previous loss by less than relative tolerance.)
+
+        Parameters
+        ----------
+        epoch : int
+            The running epoch count.
+        loss_curr : float
+            The loss obtained in the current iteration.
+        loss_prev : float
+            The loss obtained in the previous iteration.
+        grad_size : float
+            The size of the current gradient.
+
+        Returns
+        -------
+        bool : TRUE if gradient descent should continue; FALSE otherwise.
         """
         # Stop if maximum number of epochs reached.
         if epoch > self.max_epoch-1:
@@ -194,8 +210,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
 
     def _optimize_centers(self, centers, cov_list=None, 
                           ave_cov_inv_list=None, axis_deriv_t_list=None, 
-                          verbose=False, quiet=False, 
-                          progress_bar=None):
+                          quiet=False, progress_bar=None):
         """
         Minimize overlap loss using stochastic gradient descent.
 
@@ -232,7 +247,7 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
         grad_size = np.Inf; loss_curr = np.Inf; loss_prev = np.Inf
         while self._check_for_continuation(epoch, loss_curr, loss_prev,
                                            grad_size):
-            progress_bar.update(n=1)
+            if progress_bar: progress_bar.update(n=1)
             epoch_queue= config._rng.permutation(n_clusters)
             grad_size = 0
             for cluster_idx in epoch_queue:
@@ -251,12 +266,11 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
             loss_curr = loss
 
         # make progress bar appear to have gone for max_epoch iterations
-        progress_bar.update(n=self.max_epoch-epoch)
+        if progress_bar: progress_bar.update(n=self.max_epoch-epoch)
         return loss_curr
 
     
-    def sample_cluster_centers(self, archetype, 
-                               verbose=False, quiet=False):
+    def sample_cluster_centers(self, archetype, quiet=False):
         """
         Sample cluster centers for the given archetype.
         """
@@ -287,8 +301,11 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                                         " implemented yet.")
 
         # Repeat optimization from different initializations
-        progress_bar = tqdm(total=int(self.n_restarts*self.max_epoch),
-                            desc="Optimizing Cluster Centers")
+        progress_bar = None if quiet else (
+                        tqdm(total=int(self.n_restarts*self.max_epoch),
+                             desc="Optimizing Cluster Centers")
+                        )
+
         best_loss = np.Inf
         best_centers = None
         for optimization_restart in range(self.n_restarts):
@@ -304,27 +321,30 @@ class ConstrainedOverlapCenters(ClusterCenterSampler):
                 best_centers = np.copy(centers)
                 best_loss = loss
                 if np.allclose(best_loss, 0):
-                    progress_bar.update(
-                        n=(self.n_restarts-optimization_restart-1)*self.max_epoch)
+                    if not quiet:
+                        progress_bar.update(
+                            n=((self.n_restarts-optimization_restart-1)
+                                *self.max_epoch)
+                            )
                     break
-                    
+
         if np.allclose(best_loss,0):
-            progress_bar.set_postfix({"Status": "SUCCESS"})
+            if not quiet: progress_bar.set_postfix({"Status": "SUCCESS"})
         else:
-            progress_bar.set_postfix({"Status": "WARNING"})
             # Assess attained overlaps
             obs_overlap = assess_obs_overlap(best_centers, cov_list, 
-                                         ave_cov_inv_list,
-                                         self.overlap_mode)
-            print("WARNING: did not fully converge!"
+                                             ave_cov_inv_list,
+                                             self.overlap_mode)
+            if not quiet: progress_bar.set_postfix({"Status": "WARNING"})
+            print("\tWARNING: Failed to converge!"
                     + " Attained overlaps:" 
                     + " min="
                     + np.format_float_scientific(obs_overlap['min'], 
-                        precision=2)
+                                                 precision=2)
                     + ", max="
                     + np.format_float_scientific(obs_overlap['max'],
-                        precision=2)
-                )
+                                                 precision=2),
+            )
 
         # Shift centers to have zero-mean and return the result
         centers_mean = np.mean(centers, axis=0)

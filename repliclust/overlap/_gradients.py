@@ -533,6 +533,20 @@ def overlap_loss(centers, q_bounds, linear_penalty_weight,
                  mode=None, cov_list=None, ave_cov_inv_list=None):
     """
     Compute the total overlap loss.
+
+    Parameters
+    ----------
+    centers : ndarray
+    q_bounds : dict
+    linear_penalty_weight : float
+    mode : {}
+    cov_list : list[ndarray]
+    ave_cov_inv : list[ndarray]
+
+    Returns
+    -------
+    loss : float
+        The overlap loss for the cluster ensemble.
     """
     n_clusters = centers.shape[0]
     return np.sqrt(np.sum(list(

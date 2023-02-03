@@ -509,7 +509,7 @@ class Archetype():
         for key, val in kwargs.items():
             setattr(self, key, val)
     
-    def sample_mixture_model(self, verbose=False, quiet=False):
+    def sample_mixture_model(self, quiet=False):
         """
         Sample a probabilistic mixture model according to this 
         archetype.
@@ -533,7 +533,6 @@ class Archetype():
             self._centers = (self.center_sampler
                                 .sample_cluster_centers(
                                     self,
-                                    verbose=verbose,
                                     quiet=quiet))
         elif self.n_clusters == 1:
             self._centers = np.zeros(self.dim)[np.newaxis,:]
@@ -604,8 +603,7 @@ class DataGenerator():
     """
 
     def __init__(self, archetype, n_datasets=10, 
-                 quiet=False, verbose=False,
-                 prefix='archetype'):
+                 quiet=False, prefix='archetype'):
         """
         Instantiate a DataGenerator object.
         """
@@ -628,7 +626,6 @@ class DataGenerator():
         self._next_archetype_idx = 0
         self._n_datasets = n_datasets
         self._quiet = quiet
-        self._verbose = verbose
 
 
     def __iter__(self):
@@ -643,7 +640,6 @@ class DataGenerator():
         Fetch the next data set from this data generator.
         """
         quiet = self._quiet
-        verbose = self._verbose
 
         if self._iter_count >= self._n_datasets:
             raise StopIteration
@@ -651,7 +647,7 @@ class DataGenerator():
         arch_name, arch = self._archetypes[self._next_archetype_idx]
         group_sizes = (arch.groupsize_sampler
                          .sample_group_sizes(arch, arch.n_samples))
-        X, y = (arch.sample_mixture_model(quiet=quiet, verbose=verbose)
+        X, y = (arch.sample_mixture_model(quiet=quiet)
                     .sample_data(group_sizes))
 
         self._next_archetype_idx = ((self._next_archetype_idx + 1) %
@@ -662,7 +658,7 @@ class DataGenerator():
 
 
     def __call__(self, n_datasets=None, n_samples=None, 
-                 quiet=False, verbose=False):
+                 quiet=False):
         """
         Set up a generator to yield `n_datasets` data sets, where 
         `n_samples` determines the number of samples in each dataset.
@@ -719,13 +715,13 @@ class DataGenerator():
                                 arch, 
                                 _n_samples[i % len(_n_samples)]))
             X, y = (arch.sample_mixture_model(
-                            quiet=quiet, verbose=verbose)
+                            quiet=quiet)
                         .sample_data(group_sizes))
             arch.name = arch_name # make sure archetype stores its name
             yield (X, y, arch)
 
 
-    def synthesize(self, n_samples=None, quiet=False, verbose=False):
+    def synthesize(self, n_samples=None, quiet=False):
         """
         Synthesize a data set according to the specified archetype(s).
         If this data generator consists of more than one archetype, this
