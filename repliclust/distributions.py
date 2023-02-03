@@ -62,6 +62,7 @@ class Normal(DistributionFromNumPy):
     """
     def __init__(self):
         DistributionFromNumPy.__init__(self, "normal", loc=0, scale=1)
+        self.params = {}
 
     # def _sample_1d(self, n, dim):
     #     return np.sqrt(config._rng.chisquare(df=dim,size=n))
@@ -74,6 +75,7 @@ class Exponential(DistributionFromNumPy):
     """
     def __init__(self):
         DistributionFromNumPy.__init__(self, "exponential", scale=1)
+        self.params = {}
     # def _sample_1d(self, n, dim):
     #     return np.sqrt(np.sum(config._rng.exponential(
     #                             scale=1, size=(n, dim)

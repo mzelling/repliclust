@@ -29,10 +29,10 @@ class TestMaxMinArchetype():
             # wanting negative imbalance ratio
             MaxMinArchetype(imbalance_ratio=-1)
 
-        # creating a archetype with zero minimum overlap should work
-        zero_min_overlap = MaxMinArchetype(min_overlap=0)
+        # Should creating a archetype with zero minimum overlap work?
+        # zero_min_overlap = MaxMinArchetype(min_overlap=0)
 
-        # imbalance ratio of 1 should work
+        # Imbalance ratio of 1 should work
         imbal_ratio_unity = MaxMinArchetype(imbalance_ratio=1)
 
     def test_sample_mixture_model(self):
