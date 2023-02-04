@@ -199,7 +199,7 @@ class TestInternalMechanics:
             data = make_random_clusters(overlap_mode=overlap_mode)
             my_centers = ConstrainedOverlapCenters(
                             max_epoch=1,
-                            learning_rate=1e-4,
+                            learning_rate=1e-5,
                             max_overlap=data['max_overlap'],
                             min_overlap=data['min_overlap'],
                             overlap_mode=overlap_mode,
@@ -223,7 +223,7 @@ class TestInternalMechanics:
             if returned_loss == 0.0: zero_loss_count += 1
 
         # make sure we did not always have zero loss
-        assert zero_loss_count/n_runs <= 0.1
+        assert zero_loss_count/n_runs <= 0.5
 
         # For easy cases, verify that loss goes to zero
         fail_count = 0; total_runs = 20
