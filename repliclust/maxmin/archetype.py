@@ -199,7 +199,7 @@ class MaxMinArchetype(Archetype):
         """
         Guess the appropriate learning rate as a function of dimension.
         """
-        return 0.5*(1/np.log10(10+dim))
+        return 0.5 #0.5*(1/np.log10(10+dim))
 
     def __init__(
             self, 
@@ -209,7 +209,7 @@ class MaxMinArchetype(Archetype):
             aspect_ref=1.5, name=None, scale=1.0, packing=0.1,
             distributions=['normal', 'exponential'],
             distribution_proportions=None,
-            overlap_mode='auto', linear_penalty_weight=0.5, 
+            overlap_mode='auto', linear_penalty_weight=0.01, 
             learning_rate='auto',
             ):
         """ Instantiate a MaxMinArchetype object. """
