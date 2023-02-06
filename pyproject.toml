@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "repliclust"
-version = "0.0.1"
+version = "0.0.3"
 authors = [
   { name="Mike Zellinger", email="mike.j.zellinger@gmail.com" },
 ]
@@ -13,8 +13,11 @@ readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
 ]
 
 [project.urls]
 "Homepage" = "https://repliclust.org"
+"Source" = "https://github.com/mzelling/repliclust"
+"Bug Tracker" = "https://github.com/mzelling/repliclust/issues"
