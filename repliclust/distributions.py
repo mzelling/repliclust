@@ -121,7 +121,12 @@ def parse_distribution(distr_name: str, params: dict = {}):
         elif distr_name == "standard_t":
             return StandardT(**params)
         else:
-            return DistributionFromNumPy(distr_name, **params)
+            if params:
+                return DistributionFromNumPy(distr_name, **params)
+            else:
+                default_params = SUPPORTED_DISTRIBUTIONS[distr_name]
+                return DistributionFromNumPy(distr_name, 
+                                             **default_params)
 
 
 class FixedProportionMix(DistributionMix):
