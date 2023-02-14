@@ -32,9 +32,9 @@ After defining the `data_generator` based on `archetype_oblong`, we can
 immediately start generating synthetic data sets with oblong clusters.
 One way to do this is by calling the method 
 :py:meth:`synthesize() <repliclust.base.DataGenerator.synthesize>`.
-The output of this method is a tuple `(X, y, archetype_name)`, where
-`X` is the dataset, `y` are the cluster labels, and `archetype_name`
-is the name of the archetype. (If we had not specified the name as
+The output of this method is a tuple `(X, y, archetype)`, where
+`X` is the dataset, `y` are the cluster labels, and `archetype`
+is the archetype. (If we had not specified the name as
 “oblong”, ``repliclust`` would have automatically assigned a default
 name such as “archetype0”.)
 
@@ -49,11 +49,11 @@ to define the archetype and data generator.
     from repliclust import set_seed
 
     set_seed(0)
-    X, y, archetype_name = data_generator.synthesize()
+    X, y, archetype = data_generator.synthesize()
 
     plt.scatter(X[:,0], X[:,1], c=y, alpha=0.25)
     plt.title("Synthetic Data from Archetype '"
-                + archetype_name + "'")
+                + archetype.name + "'")
     plt.xlabel('X1')
     plt.ylabel('X2').set_rotation(0)
     plt.axis('equal');

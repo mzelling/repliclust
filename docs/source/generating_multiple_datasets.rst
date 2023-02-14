@@ -24,14 +24,14 @@ archetype and data generator again for convenience.
 
     for i in range(3):
         for j in range(3):
-            X, y, archetype_name = data_generator.synthesize(quiet=True)
+            X, y, archetype = data_generator.synthesize(quiet=True)
             ax[i,j].set_title('Dataset #' + str(i*3 + (j+1)), fontsize=10)
             ax[i,j].scatter(X[:,0],X[:,1],c=y, alpha=0.25)
             ax[i,j].set_xticks([]); ax[i,j].set_yticks([])
 
     plt.subplots_adjust(hspace=0.20)
     fig.suptitle("Synthetic Data from Archetype '"
-                + archetype_name + "'", y=0.97)
+                + archetype.name + "'", y=0.97)
     plt.savefig('2.svg', format='svg', bbox_inches='tight')
 
 

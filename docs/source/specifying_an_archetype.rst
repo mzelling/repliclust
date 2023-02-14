@@ -73,8 +73,8 @@ of `min_overlap` and `max_overlap`. We discuss the results below.
                             min_overlap=overlaps['min_overlap'],
                             max_overlap=overlaps['max_overlap']
                             )
-            X, y, archetype_name = (DataGenerator(archetype)
-                                        .synthesize(quiet=True))
+            X, y, archetype = (DataGenerator(archetype)
+                               .synthesize(quiet=True))
             ax[j].scatter(X[:,0], X[:,1], c=y, alpha=0.25)
             ax[j].set_xticks([]); ax[j].set_yticks([]) 
             fig.subplots_adjust(hspace=0.5)
