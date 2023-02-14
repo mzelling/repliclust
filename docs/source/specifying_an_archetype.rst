@@ -49,11 +49,11 @@ of `min_overlap` and `max_overlap`. We discuss the results below.
     import matplotlib.pyplot as plt
 
     set_seed(2)
-    eps = 1e-4
+    eps = 0.025
 
-    overlap_settings = [{'min_overlap': 1e-3, 'max_overlap': 1e-3+eps},
+    overlap_settings = [{'min_overlap': 1e-3, 'max_overlap': (1+eps)*1e-3},
                         {'min_overlap': 1e-3, 'max_overlap': 0.5},
-                        {'min_overlap': 0.5, 'max_overlap': 0.5+eps}]
+                        {'min_overlap': 0.5, 'max_overlap': (1+eps)*0.5}]
 
     for i, overlaps in enumerate(overlap_settings):
         fig, ax = plt.subplots(figsize=(10,2),dpi=300,nrows=1, ncols=4)
@@ -74,13 +74,10 @@ of `min_overlap` and `max_overlap`. We discuss the results below.
                             max_overlap=overlaps['max_overlap']
                             )
             X, y, archetype = (DataGenerator(archetype)
-                               .synthesize(quiet=True))
-            ax[j].scatter(X[:,0], X[:,1], c=y, alpha=0.25)
-            ax[j].set_xticks([]); ax[j].set_yticks([]) 
+                            .synthesize(quiet=True))
+            ax[j].scatter(X[:,0], X[:,1], c=y, s=5, alpha=0.5, linewidth=0.5)
+            ax[j].set_xticks([]); ax[j].set_yticks([])
             fig.subplots_adjust(hspace=0.5)
-
-
-
 
 .. image:: ./user_guide_img/3_0.svg
 
@@ -124,7 +121,7 @@ cluster, whereas a low aspect ratio indicates a round cluster. Possible
 values for the aspect ratio range from 1 (a perfect sphere) to
 infinitely large.
 
-When generating synthetic data using ``repliclust``, you can influence
+When generating synthetic data using **repliclust**, you can influence
 the cluster aspect ratios by changing the parameters
 :py:obj:`aspect_ref <repliclust.maxmin.archetype.MaxMinArchetype>`
 and :py:obj:`aspect_maxmin <repliclust.maxmin.archetype.MaxMinArchetype>`.
@@ -150,7 +147,7 @@ The simulation below demonstrates the effect of changing
     fig, ax = plt.subplots(figsize=(8,8), dpi=300, nrows=2, ncols=2)
 
     for i, aspect_ref in enumerate([1, 3]):
-        for j, aspect_maxmin in enumerate([1, 3]): 
+        for j, aspect_maxmin in enumerate([1, 3]):
             archetype = repliclust.Archetype(n_clusters=5, n_samples=750,
                                             aspect_ref=aspect_ref,
                                             aspect_maxmin=aspect_maxmin,
@@ -159,7 +156,7 @@ The simulation below demonstrates the effect of changing
                                             max_overlap=0.05,
                                             distributions=['normal'])
             X, y, _ = repliclust.DataGenerator(archetype).synthesize(quiet=True)
-            ax[i,j].scatter(X[:,0], X[:,1],c=y, alpha=0.25)
+            ax[i,j].scatter(X[:,0], X[:,1],c=y, s=5, alpha=0.5, linewidth=0.5)
             aspect_ref_description = (r"$\bf{Round~Shape}$" if (i==0)
                                     else r"$\bf{Long~Shape}$")
             aspect_maxmin_description = (r"$\bf{-~no~Variability}$" if (j==0)
@@ -170,9 +167,8 @@ The simulation below demonstrates the effect of changing
                             +r"$ aspect\_maxmin $=" + str(aspect_maxmin),
                             fontsize=10, y=1.05)
             ax[i,j].set_aspect('equal')
-            ax[i,j].set_xticks([]); ax[i,j].set_yticks([]) 
+            ax[i,j].set_xticks([]); ax[i,j].set_yticks([])
             plt.subplots_adjust(hspace=0.3, wspace=0.15)
-
 
 
 .. image:: ./user_guide_img/4.svg
@@ -187,7 +183,7 @@ we quantify the spatial extent of a cluster in terms of its radius
 instead. The radius of an ellipsoidal cluster is the spherical radius
 of a ball with the same volume.
 
-When generating synthetic data with ``repliclust``, you can influence
+When generating synthetic data with **repliclust**, you can influence
 the variability in cluster volumes by changing the
 :py:obj:`radius_maxmin <repliclust.maxmin.archetype.MaxMinArchetype>`
 parameter. This parameter sets the ratio between the
@@ -214,14 +210,14 @@ The simulation below demonstrates the effect of varying
                                         max_overlap=0.05,min_overlap=0.04)
         X, y, _ = repliclust.DataGenerator(archetype).synthesize(quiet=True)
         description = (
-            r"$\bf{Equal~Cluster~Volumes}$" 
+            r"$\bf{Equal~Cluster~Volumes}$"
                 if i==0
                 else (r"$\bf{3x~Variability}$"
                     if (i==1)
                     else r"$\bf{10x~Variability}$")
             )
-        ax[i].scatter(X[:,0], X[:,1], c=y, alpha=0.25)
-        ax[i].set_xticks([]); ax[i].set_yticks([]) 
+        ax[i].scatter(X[:,0], X[:,1], c=y, s=10, alpha=0.5, linewidth=0.25, edgecolor='gray')
+        ax[i].set_xticks([]); ax[i].set_yticks([])
         ax[i].set_title(description + '\n'
                         + r'$ radius\_maxmin $'+ " = " + str(radius_maxmin))
 
@@ -248,7 +244,7 @@ Going even further, heavy-tailed distributions such as the
 with ``df=1`` degrees of freedom give rise to *outliers*, data points
 very far from the cluster center.
 
-When generating synthetic data using ``repliclust``, you can use the
+When generating synthetic data using **repliclust**, you can use the
 ``distributions`` parameter to customize the probability distributions
 appearing in your synthetic data sets. As an example, the scatter plots
 below visualize the differences between the normal,
@@ -270,7 +266,7 @@ data sets in which different clusters have different probability
 distributions. In general, the parameter ``distributions`` is a list
 containing the names of all probability distributions, as well as their
 parameters. Not all distributions have parameters. To obtain a list of
-the probability distributions currently supported in ``repliclust``, as
+the probability distributions currently supported in **repliclust**, as
 well as their parameters, call ``get_supported_distributions()``.
 
 .. code:: ipython3
@@ -284,16 +280,16 @@ well as their parameters, call ``get_supported_distributions()``.
 .. parsed-literal::
 
     {'normal': {},
-     'standard_t': {'df': 1},
-     'exponential': {},
-     'beta': {'a': 0.3, 'b': 0.5},
-     'chisquare': {'df': 1},
-     'gumbel': {'scale': 1.0},
-     'weibull': {'a': 2},
-     'gamma': {'shape': 0.5, 'scale': 1.0},
-     'pareto': {'a': 1},
-     'f': {'dfnum': 1, 'dfden': 1},
-     'lognormal': {'sigma': 1.0}}
+    'standard_t': {'df': 5},
+    'exponential': {},
+    'beta': {'a': 2.5, 'b': 8.5},
+    'chisquare': {'df': 5},
+    'gumbel': {},
+    'weibull': {'a': 1.5},
+    'gamma': {'shape': 3},
+    'pareto': {'a': 10},
+    'f': {'dfnum': 7, 'dfden': 10},
+    'lognormal': {'sigma': 0.75}}
 
 It is important to
 spell the names of distributions exactly as shown above. All names are
@@ -308,12 +304,12 @@ corresponding entry in ``distributions`` should be a tuple
 *parameters* is a dictionary of distributional parameters. For example,
 the gamma distribution has parameters `shape` and `scale`. Below
 we generate synthetic data based on an archetype with gamma-distributed
-clusters. Note that in ``repliclust`` you can only change the parameters
+clusters. Note that in **repliclust** you can only change the parameters
 listed when calling
 :py:func:`get_supported_distributions() <repliclust.base.get_supported_distributions>`, 
 even though the corresponding ``numpy`` class might have additional
 parameters. For example, the normal and exponential distributions have
-no parameters in ``repliclust``.
+no parameters in **repliclust**.
 
 The simulation below generates a synthetic data set with
 gamma-distributed clusters.
@@ -330,9 +326,9 @@ gamma-distributed clusters.
                         distributions=[('gamma', {'shape': 1, 'scale': 2.0})])
     X, y, _ = repliclust.DataGenerator(my_archetype).synthesize(quiet=True)
 
-    plt.scatter(X[:,0],X[:,1],c=y,alpha=0.35)
+    plt.scatter(X[:,0],X[:,1],c=y, s=20, alpha=0.5, linewidth=0.25, edgecolor='gray')
     plt.gcf().set_dpi(300)
-    plt.gca().set_xticks([]); plt.gca().set_yticks([]) 
+    plt.gca().set_xticks([]); plt.gca().set_yticks([])
     plt.title(r"$\bf{Gamma{-}Distributed~Clusters}$" + '\n'
                 + r"$distributions=[('gamma', \{'shape': 1, 'scale': 2.0\})]$");
 
@@ -341,7 +337,7 @@ gamma-distributed clusters.
 .. image:: ./user_guide_img/7.svg
 
 
-When using multiple distributions, ``repliclust`` 
+When using multiple distributions, **repliclust** 
 randomly assigns a distribution to each cluster. For example, the
 choice ``distributions=['normal', 'exponential']`` makes half of the
 clusters normally distributed, and the other half exponentially
@@ -368,7 +364,7 @@ demonstrates such possibilities in a more complex example.
                         )
     X, y, _ = repliclust.DataGenerator(my_archetype).synthesize(quiet=True)
 
-    plt.scatter(X[:,0],X[:,1],c=y,alpha=0.35)
+    plt.scatter(X[:,0],X[:,1],c=y,alpha=0.5, linewidth=0.25, edgecolor='gray')
     plt.gcf().set_dpi(300)
     ax[i].set_xticks([]); ax[i].set_yticks([])
     plt.title(r"$\bf{Using~Multiple~Probability~Distributions}$"
@@ -390,7 +386,7 @@ Group Sizes
 The *group size* of a cluster is the number of data points in it. When
 group sizes vary significantly between clusters in the same data set, we
 speak of *class imbalance*. When generating synthetic data using
-``repliclust``, you can vary the class imbalance by specifying the
+**repliclust**, you can vary the class imbalance by specifying the
 ``imbalance_ratio``. This parameter sets the ratio of the greatest to
 the smallest number of data points among all clusters in the same data
 set. For example, if ``imbalance_ratio=10`` then the cluster with the
@@ -416,7 +412,7 @@ The simulation below demonstrates the effect of changing the
                         distributions=['normal'],
                         imbalance_ratio=imbalance_ratio)
         X, y, _ = repliclust.DataGenerator(archetype).synthesize(quiet=True)
-        ax[i].scatter(X[:,0], X[:,1],c=y, alpha=0.5)
+        ax[i].scatter(X[:,0], X[:,1],c=y, alpha=0.5, linewidth=0.25, edgecolor='gray')
         plot_description = (r"$\bf{Perfect~Balance}$" if (i==0)
                                 else r"$\bf{10x~Imbalance}$")
         ax[i].set_title(plot_description + "\n" +r"$ imbalance\_ratio $="

@@ -51,7 +51,8 @@ to define the archetype and data generator.
     set_seed(0)
     X, y, archetype = data_generator.synthesize()
 
-    plt.scatter(X[:,0], X[:,1], c=y, alpha=0.25)
+    fig, ax = plt.subplots(figsize=(6,6), dpi=150)
+    ax.scatter(X[:,0], X[:,1], c=y, s=15, alpha=0.5, linewidth=1.0)
     plt.title("Synthetic Data from Archetype '"
                 + archetype.name + "'")
     plt.xlabel('X1')

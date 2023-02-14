@@ -16,8 +16,8 @@ sketches our workflow.
 
 .. image:: workflow.svg
 
-The following tutorials demonstrate how to use **repliclust**. The
-section :ref:`basic_usage` will get you started generating your own
+The following brief tutorials demonstrate how to use **repliclust**. The
+section :ref:`Basic Usage <basic_usage>` will get you started generating your own
 synthetic data sets within minutes.
 
 .. toctree::
