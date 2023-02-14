@@ -8,7 +8,7 @@ different data sets based on the “oblong” archetype defined in the
 archetype and data generator again for convenience.
 
 
-.. code:: ipython3
+.. code-block:: python
 
     import matplotlib.pyplot as plt
     from repliclust import Archetype, DataGenerator, set_seed

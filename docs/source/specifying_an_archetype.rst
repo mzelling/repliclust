@@ -43,7 +43,7 @@ too small, data generation may take unacceptably long.
 The simulation below generates synthetic data sets for various choices
 of `min_overlap` and `max_overlap`. We discuss the results below.
 
-.. code:: ipython3
+.. code-block:: python
 
     from repliclust import set_seed, Archetype, DataGenerator
     import matplotlib.pyplot as plt
@@ -143,7 +143,7 @@ times longer than the most "round" cluster.
 The simulation below demonstrates the effect of changing 
 `aspect_ref` and `aspect_maxmin`.
 
-.. code:: ipython3
+.. code-block:: python
 
     import matplotlib.pyplot as plt
     import repliclust
@@ -208,7 +208,7 @@ greater than the smallest.
 The simulation below demonstrates the effect of varying
 ``radius_maxmin``.
 
-.. code:: ipython3
+.. code-block:: python
 
     import repliclust
     import matplotlib.pyplot as plt
@@ -285,15 +285,12 @@ parameters. Not all distributions have parameters. To obtain a list of
 the probability distributions currently supported in **repliclust**, as
 well as their parameters, call ``get_supported_distributions()``.
 
-.. code:: ipython3
+.. code-block:: python
 
     from repliclust import get_supported_distributions
     get_supported_distributions()
 
-
-
-
-.. parsed-literal::
+.. code:: ipython3
 
     {'normal': {},
     'standard_t': {'df': 5},
@@ -330,7 +327,7 @@ no parameters in **repliclust**.
 The simulation below generates a synthetic data set with
 gamma-distributed clusters.
 
-.. code:: ipython3
+.. code-block:: python
 
     import repliclust
     import matplotlib.pyplot as plt
@@ -366,7 +363,7 @@ exponentially distributed clusters to 75%, set
 ``distribution_proportions=[0.25,0.75]``. The simulation below
 demonstrates such possibilities in a more complex example.
 
-.. code:: ipython3
+.. code-block:: python
 
     import repliclust
     import matplotlib.pyplot as plt
@@ -422,7 +419,7 @@ introduced in the :ref:`Basic Parameters <basic_parameters>` section.
 The simulation below demonstrates the effect of changing the
 ``imbalance_ratio``.
 
-.. code:: ipython3
+.. code-block:: python
 
     import matplotlib
     import repliclust

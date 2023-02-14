@@ -19,7 +19,7 @@ three. The choice ``aspect_maxmin=1.5`` creates some variability in the
 cluster aspect ratio, making some clusters a bit more oblong than
 others.
 
-.. code:: ipython3
+.. code-block:: python
 
     from repliclust import Archetype, DataGenerator
 
@@ -42,7 +42,7 @@ The simulation below shows how to generate synthetic data based on our
 current setup. Before running the code below, first run the code above
 to define the archetype and data generator.
 
-.. code:: ipython3
+.. code-block:: python
 
     import matplotlib.pyplot as plt
 
