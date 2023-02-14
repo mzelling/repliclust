@@ -13,7 +13,7 @@ of whole classes of data sets. Our framework allows you to generate
 similar but distinct data sets, making benchmarks more informative and
 reproducible.
 
-.. image:: frontpage_figure.svg
+.. image:: frontpage_figure_2.svg
 
 .. toctree::
     :hidden:
