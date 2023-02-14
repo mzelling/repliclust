@@ -51,16 +51,21 @@ of `min_overlap` and `max_overlap`. We discuss the results below.
     set_seed(2)
     eps = 0.025
 
-    overlap_settings = [{'min_overlap': 1e-3, 'max_overlap': (1+eps)*1e-3},
-                        {'min_overlap': 1e-3, 'max_overlap': 0.5},
-                        {'min_overlap': 0.5, 'max_overlap': (1+eps)*0.5}]
+    overlap_settings = [
+        {'min_overlap': 1e-3, 'max_overlap': (1+eps)*1e-3},
+        {'min_overlap': 1e-3, 'max_overlap': 0.5},
+        {'min_overlap': 0.5, 'max_overlap': (1+eps)*0.5}
+    ]
 
     for i, overlaps in enumerate(overlap_settings):
-        fig, ax = plt.subplots(figsize=(10,2),dpi=300,nrows=1, ncols=4)
+        fig, ax = plt.subplots(
+            figsize=(10,2), dpi=300,nrows=1, ncols=4)
+
         description = (
             r"$\bf{Cluster~Overlaps~around~0.1\%}$" if i==0
-                else (r"$\bf{Cluster~Overlaps~between~0.1\%~and~50\%}$" if (i==1)
-                    else r"$\bf{Cluster~Overlaps~around~50\%}$")
+                else (r"$\bf{Cluster~Overlaps~"
+                        + "between~0.1\%~and~50\%}$" if (i==1)
+                      else r"$\bf{Cluster~Overlaps~around~50\%}$")
             )
         fig.suptitle(description + '\n'
                         + "min_overlap" + r"$ \approx $"
@@ -75,7 +80,8 @@ of `min_overlap` and `max_overlap`. We discuss the results below.
                             )
             X, y, archetype = (DataGenerator(archetype)
                             .synthesize(quiet=True))
-            ax[j].scatter(X[:,0], X[:,1], c=y, s=5, alpha=0.5, linewidth=0.5)
+            ax[j].scatter(X[:,0], X[:,1], c=y, s=5,
+                          alpha=0.5, linewidth=0.5)
             ax[j].set_xticks([]); ax[j].set_yticks([])
             fig.subplots_adjust(hspace=0.5)
 
@@ -106,9 +112,8 @@ substantial gap between ``min_overlap=0.001`` and ``max_overlap=0.5``.
 In this case, all clusters must overlap less than 50%, but we permit
 much smaller overlaps. This choice increases the variability of
 synthetic data sets because within the range of 0.001 to 0.5 we leave
-the actual overlaps to chance. For example, the clusters in the 
-second data set from the left overlap more than those in the third data
-set. Such variation may or not be helpful for your application.
+the actual overlaps to chance. Such variation may or not be helpful for
+your application.
 
 Cluster Aspect Ratios
 ^^^^^^^^^^^^^^^^^^^^^
@@ -148,24 +153,30 @@ The simulation below demonstrates the effect of changing
 
     for i, aspect_ref in enumerate([1, 3]):
         for j, aspect_maxmin in enumerate([1, 3]):
-            archetype = repliclust.Archetype(n_clusters=5, n_samples=750,
-                                            aspect_ref=aspect_ref,
-                                            aspect_maxmin=aspect_maxmin,
-                                            radius_maxmin=1.0,
-                                            min_overlap=0.04,
-                                            max_overlap=0.05,
-                                            distributions=['normal'])
-            X, y, _ = repliclust.DataGenerator(archetype).synthesize(quiet=True)
-            ax[i,j].scatter(X[:,0], X[:,1],c=y, s=5, alpha=0.5, linewidth=0.5)
+            archetype = repliclust.Archetype(
+                            n_clusters=5, n_samples=750,
+                            aspect_ref=aspect_ref,
+                            aspect_maxmin=aspect_maxmin,
+                            radius_maxmin=1.0,
+                            min_overlap=0.04, max_overlap=0.05,
+                            distributions=['normal'])
+            X, y, _ = (repliclust.DataGenerator(archetype)
+                                 .synthesize(quiet=True))
+            ax[i,j].scatter(X[:,0], X[:,1],c=y, s=5, 
+                            alpha=0.5, linewidth=0.5)
             aspect_ref_description = (r"$\bf{Round~Shape}$" if (i==0)
                                     else r"$\bf{Long~Shape}$")
-            aspect_maxmin_description = (r"$\bf{-~no~Variability}$" if (j==0)
-                                    else r"$\bf{-~3x~Variability}$")
-            ax[i,j].set_title(aspect_ref_description + " "
-                            + aspect_maxmin_description + "\n"
-                            +r"$ aspect\_ref $=" + str(aspect_ref) + ", "
-                            +r"$ aspect\_maxmin $=" + str(aspect_maxmin),
-                            fontsize=10, y=1.05)
+            aspect_maxmin_description = (
+                r"$\bf{-~no~Variability}$" if (j==0)
+                else r"$\bf{-~3x~Variability}$"
+            )
+            ax[i,j].set_title(
+                aspect_ref_description + " "
+                + aspect_maxmin_description + "\n"
+                +r"$ aspect\_ref $=" + str(aspect_ref) + ", "
+                +r"$ aspect\_maxmin $=" + str(aspect_maxmin),
+                fontsize=10, y=1.05
+            )
             ax[i,j].set_aspect('equal')
             ax[i,j].set_xticks([]); ax[i,j].set_yticks([])
             plt.subplots_adjust(hspace=0.3, wspace=0.15)
@@ -203,12 +214,16 @@ The simulation below demonstrates the effect of varying
     import matplotlib.pyplot as plt
     repliclust.set_seed(1)
 
-    fig, ax = plt.subplots(figsize=(10,3.3), dpi=300, nrows=1, ncols=3)
+    fig, ax = plt.subplots(figsize=(10,3.3), dpi=300, 
+                           nrows=1, ncols=3)
 
     for i, radius_maxmin in enumerate([1,3,10]):
-        archetype = repliclust.Archetype(radius_maxmin=radius_maxmin,
-                                        max_overlap=0.05,min_overlap=0.04)
-        X, y, _ = repliclust.DataGenerator(archetype).synthesize(quiet=True)
+        archetype = repliclust.Archetype(
+                        radius_maxmin=radius_maxmin,
+                        max_overlap=0.05, min_overlap=0.04
+                        )
+        X, y, _ = (repliclust.DataGenerator(archetype)
+                             .synthesize(quiet=True))
         description = (
             r"$\bf{Equal~Cluster~Volumes}$"
                 if i==0
@@ -216,11 +231,12 @@ The simulation below demonstrates the effect of varying
                     if (i==1)
                     else r"$\bf{10x~Variability}$")
             )
-        ax[i].scatter(X[:,0], X[:,1], c=y, s=10, alpha=0.5, linewidth=0.25, edgecolor='gray')
+        ax[i].scatter(X[:,0], X[:,1], c=y, s=10, alpha=0.5,
+                      linewidth=0.25, edgecolor='gray')
         ax[i].set_xticks([]); ax[i].set_yticks([])
         ax[i].set_title(description + '\n'
-                        + r'$ radius\_maxmin $'+ " = " + str(radius_maxmin))
-
+                        + r'$ radius\_maxmin $' 
+                        + " = " + str(radius_maxmin))
 
 
 .. image:: ./user_guide_img/5.svg
@@ -322,16 +338,19 @@ gamma-distributed clusters.
     repliclust.set_seed(1)
 
     my_archetype = repliclust.Archetype(
-                        min_overlap=0.01, max_overlap=0.05,
-                        distributions=[('gamma', {'shape': 1, 'scale': 2.0})])
-    X, y, _ = repliclust.DataGenerator(my_archetype).synthesize(quiet=True)
+        min_overlap=0.01, max_overlap=0.05,
+        distributions=[('gamma', {'shape': 1, 'scale': 2.0})]
+    )
+    X, y, _ = (repliclust.DataGenerator(my_archetype)
+                         .synthesize(quiet=True))
 
-    plt.scatter(X[:,0],X[:,1],c=y, s=20, alpha=0.5, linewidth=0.25, edgecolor='gray')
+    plt.scatter(X[:,0],X[:,1],c=y, s=20, alpha=0.5,
+                linewidth=0.25, edgecolor='gray')
     plt.gcf().set_dpi(300)
     plt.gca().set_xticks([]); plt.gca().set_yticks([])
     plt.title(r"$\bf{Gamma{-}Distributed~Clusters}$" + '\n'
-                + r"$distributions=[('gamma', \{'shape': 1, 'scale': 2.0\})]$");
-
+                + r"$distributions=[('gamma', "
+                + "\{'shape': 1, 'scale': 2.0\})]$");
 
 
 .. image:: ./user_guide_img/7.svg
@@ -354,23 +373,28 @@ demonstrates such possibilities in a more complex example.
 
     repliclust.set_seed(2)
 
-    distr_list = ['normal','exponential',('gamma', {'shape': 1, 'scale': 2.0})]
+    distr_list = ['normal','exponential',
+                  ('gamma', {'shape': 1, 'scale': 2.0})]
     distr_proportions = [0.25,0.5,0.25]
 
     my_archetype = repliclust.Archetype(
-                        n_clusters=8, min_overlap=0.005, max_overlap=0.006,
+                        n_clusters=8, 
+                        min_overlap=0.005, max_overlap=0.006,
                         distributions=distr_list,
                         distribution_proportions=distr_proportions
                         )
-    X, y, _ = repliclust.DataGenerator(my_archetype).synthesize(quiet=True)
+    X, y, _ = (repliclust.DataGenerator(my_archetype)
+                         .synthesize(quiet=True))
 
-    plt.scatter(X[:,0],X[:,1],c=y,alpha=0.5, linewidth=0.25, edgecolor='gray')
+    plt.scatter(X[:,0],X[:,1],c=y,alpha=0.5, 
+                linewidth=0.25, edgecolor='gray')
     plt.gcf().set_dpi(300)
     ax[i].set_xticks([]); ax[i].set_yticks([])
     plt.title(r"$\bf{Using~Multiple~Probability~Distributions}$"
                 + '\n' + r"$ distributions=['normal', 'exponential',"
                 + r"('gamma', \{'shape': 1, 'scale': 2.0\})] $,"
-                + '\n' + r"$ distribution\_proportions=[0.25,0.5,0.25] $",
+                + '\n'
+                + r"$ distribution\_proportions=[0.25,0.5,0.25] $",
                 fontsize=10);
 
 
@@ -404,18 +428,22 @@ The simulation below demonstrates the effect of changing the
     import repliclust
     repliclust.set_seed(1)
 
-    fig, ax = plt.subplots(figsize=(10,5), dpi=300, nrows=1, ncols=2)
+    fig, ax = plt.subplots(figsize=(10,5), dpi=300, 
+                           nrows=1, ncols=2)
 
     for i, imbalance_ratio in enumerate([1, 10]):
         archetype = repliclust.Archetype(
                         n_clusters=2, n_samples=120,
                         distributions=['normal'],
                         imbalance_ratio=imbalance_ratio)
-        X, y, _ = repliclust.DataGenerator(archetype).synthesize(quiet=True)
-        ax[i].scatter(X[:,0], X[:,1],c=y, alpha=0.5, linewidth=0.25, edgecolor='gray')
+        X, y, _ = (repliclust.DataGenerator(archetype)
+                             .synthesize(quiet=True))
+        ax[i].scatter(X[:,0], X[:,1],c=y, alpha=0.5, 
+                      linewidth=0.25, edgecolor='gray')
         plot_description = (r"$\bf{Perfect~Balance}$" if (i==0)
                                 else r"$\bf{10x~Imbalance}$")
-        ax[i].set_title(plot_description + "\n" +r"$ imbalance\_ratio $="
+        ax[i].set_title(plot_description 
+                            + "\n" +r"$ imbalance\_ratio $="
                             + str(imbalance_ratio))
         ax[i].set_xticks([]); ax[i].set_yticks([])
 
