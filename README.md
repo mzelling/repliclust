@@ -10,4 +10,6 @@ generate similar but distinct data sets, making benchmarks more
 informative and reproducible; **repliclust** builds upon SciPy and NumPy
 and is meant to complement scikit-learn.
 
+[![repliclust: Synthetic Data for Cluster Analysis](./docs/source/frontpage_figure_2.svg)](https://repliclust.org)
+
 For a full documentation, visit the project website: [https://repliclust.org](https://repliclust.org).
