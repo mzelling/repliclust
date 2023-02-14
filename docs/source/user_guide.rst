@@ -14,7 +14,7 @@ a probabilistic mixture model based on the data set archetype. This
 mixture model, in turn, samples the actual data set. The figure below
 sketches our workflow.
 
-.. image:: user_guide_img/workflow.svg
+.. image:: workflow.svg
 
 The following tutorials demonstrate how to use **repliclust**. The
 section :ref:`basic_usage` will get you started generating your own

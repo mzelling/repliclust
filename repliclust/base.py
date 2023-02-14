@@ -605,7 +605,7 @@ class DataGenerator():
     def __init__(self, archetype, n_datasets=10, 
                  quiet=False, prefix='archetype'):
         """
-        Instantiate a DataGenerator object.
+        Instantiate a :py:class:`DataGenerator` object.
         """
         if isinstance(archetype, Archetype):
             arch_name = (archetype.name if archetype.name 
@@ -637,7 +637,7 @@ class DataGenerator():
 
     def __next__(self):
         """
-        Fetch the next data set from this data generator.
+        Fetch the next data set from this :py:class:`DataGenerator`.
         """
         quiet = self._quiet
 
@@ -724,8 +724,8 @@ class DataGenerator():
     def synthesize(self, n_samples=None, quiet=False):
         """
         Synthesize a data set according to the specified archetype(s).
-        If this data generator consists of more than one archetype, this
-        function cycles through the given archetypes.
+        If this :py:class:`DataGenerator` consists of more than one
+        archetype, this function cycles through the given archetypes.
 
         Parameters
         ----------

@@ -6,13 +6,13 @@ These pages detail the **repliclust** API.
 The diagram below shows our object-oriented software architecture from a
 big picture perspective.
 
-A :py:class:`DataGenerator <repliclust.base.DataGenerator>`depends on
+A :py:class:`DataGenerator <repliclust.base.DataGenerator>` depends on
 one or several :py:class:`Archetype <repliclust.base.Archetype>`'s to
 produce synthetic data sets. Each :py:class:`Archetype <repliclust.base.Archetype>`
 generates :py:class:`MixtureModel <repliclust.base.MixtureModel>`'s
 which, in turn, sample ready-to-use synthetic data sets.
 
-.. image:: user_guide_img/architecture_diagram.svg
+.. image:: architecture_diagram.svg
 
 In the diagram, each box represents an object. A solid arrow
 *A* <-- *B* means that *B* is an attribute of *A*, while a dashed
