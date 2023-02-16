@@ -21,3 +21,4 @@ reproducible.
     install
     user_guide
     reference
+    source_code
