@@ -1,7 +1,7 @@
 Reference
 =========
 
-These pages detail the **repliclust** API. 
+These pages provide a reference for **repliclust**. 
 
 The diagram below shows our object-oriented software architecture from a
 big picture perspective.
