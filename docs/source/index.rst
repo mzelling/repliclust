@@ -15,6 +15,13 @@ Features
 - Manage cluster overlaps, shapes, and probability distributions through intuitive, high-level controls
 - Define custom dataset archetypes to power reproducible and informative benchmarks
 
+
+Reference
+---------
+
+Check out our paper `here <https://arxiv.org/abs/2303.14301>`_.
+
+
 .. toctree::
     :hidden:
 
