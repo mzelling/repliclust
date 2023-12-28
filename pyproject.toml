@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "repliclust"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="Mike Zellinger", email="mike.j.zellinger@gmail.com" },
 ]
