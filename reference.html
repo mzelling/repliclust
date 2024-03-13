@@ -1,0 +1,603 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Reference &#8212; repliclust 0.0.4 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Core Framework" href="base.html" />
+    <link rel="prev" title="Specifying an Archetype" href="specifying_an_archetype.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">repliclust 0.0.4 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="source_code.html">
+                        Source
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="source_code.html">
+                        Source
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="base.html">Core Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maxmin.html">Max-Min Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overlap.html">Cluster Overlap Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributions.html">Probability Distributions</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Reference</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">#</a></h1>
+<p>These pages provide a reference for <strong>repliclust</strong>.</p>
+<p>The diagram below shows our object-oriented software architecture from a
+big picture perspective.</p>
+<p>A <a class="reference internal" href="base.html#repliclust.base.DataGenerator" title="repliclust.base.DataGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataGenerator</span></code></a> depends on
+one or several <a class="reference internal" href="base.html#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a>’s to
+produce synthetic data sets. Each <a class="reference internal" href="base.html#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a>
+generates <a class="reference internal" href="base.html#repliclust.base.MixtureModel" title="repliclust.base.MixtureModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureModel</span></code></a>’s
+which, in turn, sample ready-to-use synthetic data sets.</p>
+<img alt="_images/architecture_diagram.svg" src="_images/architecture_diagram.svg" /><p>In the diagram, each box represents an object. A solid arrow
+<em>A</em> &lt;– <em>B</em> means that <em>B</em> is an attribute of <em>A</em>, while a dashed
+arrow <em>X</em> - -&gt; <em>Y</em> means that <em>X</em> randomly samples instances of
+<em>Y</em>. The objects of type
+<a class="reference internal" href="base.html#repliclust.base.CovarianceSampler" title="repliclust.base.CovarianceSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceSampler</span></code></a>,
+<a class="reference internal" href="base.html#repliclust.base.ClusterCenterSampler" title="repliclust.base.ClusterCenterSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterCenterSampler</span></code></a>,
+<a class="reference internal" href="base.html#repliclust.base.GroupSizeSampler" title="repliclust.base.GroupSizeSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupSizeSampler</span></code></a>,
+and
+<a class="reference internal" href="base.html#repliclust.base.DistributionMix" title="repliclust.base.DistributionMix"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributionMix</span></code></a> are the
+modular building blocks an archetype uses to sample mixture models.</p>
+<p>The API reference below allows you to look up the definitions of
+individual classes and functions in <strong>repliclust</strong>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Core Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="base.html#module-repliclust.base">repliclust.base</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.Archetype"><code class="docutils literal notranslate"><span class="pre">Archetype</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.Archetype.sample_mixture_model"><code class="docutils literal notranslate"><span class="pre">Archetype.sample_mixture_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.ClusterCenterSampler"><code class="docutils literal notranslate"><span class="pre">ClusterCenterSampler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.ClusterCenterSampler.sample_cluster_centers"><code class="docutils literal notranslate"><span class="pre">ClusterCenterSampler.sample_cluster_centers()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.CovarianceSampler"><code class="docutils literal notranslate"><span class="pre">CovarianceSampler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.CovarianceSampler.sample_covariances"><code class="docutils literal notranslate"><span class="pre">CovarianceSampler.sample_covariances()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.DataGenerator"><code class="docutils literal notranslate"><span class="pre">DataGenerator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.DataGenerator.synthesize"><code class="docutils literal notranslate"><span class="pre">DataGenerator.synthesize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.DistributionMix"><code class="docutils literal notranslate"><span class="pre">DistributionMix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.DistributionMix.assign_distributions"><code class="docutils literal notranslate"><span class="pre">DistributionMix.assign_distributions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.GroupSizeSampler"><code class="docutils literal notranslate"><span class="pre">GroupSizeSampler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.GroupSizeSampler.sample_group_sizes"><code class="docutils literal notranslate"><span class="pre">GroupSizeSampler.sample_group_sizes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.MixtureModel"><code class="docutils literal notranslate"><span class="pre">MixtureModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.MixtureModel.sample_data"><code class="docutils literal notranslate"><span class="pre">MixtureModel.sample_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.SingleClusterDistribution"><code class="docutils literal notranslate"><span class="pre">SingleClusterDistribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="base.html#repliclust.base.SingleClusterDistribution.sample_cluster"><code class="docutils literal notranslate"><span class="pre">SingleClusterDistribution.sample_cluster()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.get_supported_distributions"><code class="docutils literal notranslate"><span class="pre">get_supported_distributions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#repliclust.base.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maxmin.html">Max-Min Implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maxmin.html#module-repliclust.maxmin">repliclust.maxmin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maxmin.html#module-repliclust.maxmin.archetype">repliclust.maxmin.archetype</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype.guess_learning_rate"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype.guess_learning_rate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.parse_distribution_selection"><code class="docutils literal notranslate"><span class="pre">parse_distribution_selection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.validate_archetype_args"><code class="docutils literal notranslate"><span class="pre">validate_archetype_args()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.validate_maxmin_ratios"><code class="docutils literal notranslate"><span class="pre">validate_maxmin_ratios()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.validate_overlaps"><code class="docutils literal notranslate"><span class="pre">validate_overlaps()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.validate_reference_quantity"><code class="docutils literal notranslate"><span class="pre">validate_reference_quantity()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="maxmin.html#module-repliclust.maxmin.covariance">repliclust.maxmin.covariance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_ref"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.aspect_ref</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_maxmin"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.aspect_maxmin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.radius_maxmin"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.radius_maxmin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_axis_lengths"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.make_axis_lengths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_aspect_ratios"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.make_cluster_aspect_ratios()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_radii"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.make_cluster_radii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.sample_covariances"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.sample_covariances()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.covariance.MaxMinCovarianceSampler.validate_k"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.validate_k()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="maxmin.html#module-repliclust.maxmin.groupsizes">repliclust.maxmin.groupsizes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="maxmin.html#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.imbalance_ratio"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.imbalance_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.__init__"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.make_group_sizes"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.make_group_sizes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmin.html#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.sample_group_sizes"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.sample_group_sizes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overlap.html">Cluster Overlap Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overlap.html#module-repliclust.overlap.centers">repliclust.overlap.centers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overlap.html#repliclust.overlap.centers.ConstrainedOverlapCenters"><code class="docutils literal notranslate"><span class="pre">ConstrainedOverlapCenters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="overlap.html#repliclust.overlap.centers.ConstrainedOverlapCenters.sample_cluster_centers"><code class="docutils literal notranslate"><span class="pre">ConstrainedOverlapCenters.sample_cluster_centers()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="overlap.html#repliclust.overlap.centers.assess_obs_overlap"><code class="docutils literal notranslate"><span class="pre">assess_obs_overlap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="overlap.html#repliclust.overlap.centers.overlap2quantile_vec"><code class="docutils literal notranslate"><span class="pre">overlap2quantile_vec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="overlap.html#repliclust.overlap.centers.quantile2overlap_vec"><code class="docutils literal notranslate"><span class="pre">quantile2overlap_vec()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="distributions.html">Probability Distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="distributions.html#module-repliclust.distributions">repliclust.distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="distributions.html#repliclust.distributions.DistributionFromNumPy"><code class="docutils literal notranslate"><span class="pre">DistributionFromNumPy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributions.html#repliclust.distributions.DistributionFromPDF"><code class="docutils literal notranslate"><span class="pre">DistributionFromPDF</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributions.html#repliclust.distributions.Exponential"><code class="docutils literal notranslate"><span class="pre">Exponential</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributions.html#repliclust.distributions.FixedProportionMix"><code class="docutils literal notranslate"><span class="pre">FixedProportionMix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="distributions.html#repliclust.distributions.FixedProportionMix._distributions"><code class="docutils literal notranslate"><span class="pre">FixedProportionMix._distributions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="distributions.html#repliclust.distributions.FixedProportionMix._proportions"><code class="docutils literal notranslate"><span class="pre">FixedProportionMix._proportions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="distributions.html#repliclust.distributions.FixedProportionMix.assign_distributions"><code class="docutils literal notranslate"><span class="pre">FixedProportionMix.assign_distributions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="distributions.html#repliclust.distributions.Normal"><code class="docutils literal notranslate"><span class="pre">Normal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributions.html#repliclust.distributions.StandardT"><code class="docutils literal notranslate"><span class="pre">StandardT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributions.html#repliclust.distributions.parse_distribution"><code class="docutils literal notranslate"><span class="pre">parse_distribution()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="specifying_an_archetype.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Specifying an Archetype</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="base.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Core Framework</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/reference.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2023, repliclust.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

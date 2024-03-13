@@ -1,0 +1,871 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Specifying an Archetype &#8212; repliclust 0.0.4 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'specifying_an_archetype';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reference" href="reference.html" />
+    <link rel="prev" title="Generating Multiple Similar Datasets" href="generating_multiple_datasets.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">repliclust 0.0.4 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="source_code.html">
+                        Source
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="install.html">
+                        Install
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="source_code.html">
+                        Source
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generating_multiple_datasets.html">Generating Multiple Similar Datasets</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Specifying an Archetype</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="user_guide.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Specifying...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="specifying-an-archetype">
+<span id="id1"></span><h1>Specifying an Archetype<a class="headerlink" href="#specifying-an-archetype" title="Permalink to this heading">#</a></h1>
+<p>In this section, we explain how to customize a data set archetype to
+obtain synthetic data that suits your needs.</p>
+<section id="basic-parameters">
+<span id="id2"></span><h2>Basic Parameters<a class="headerlink" href="#basic-parameters" title="Permalink to this heading">#</a></h2>
+<p>Basic parameters of each <a class="reference internal" href="base.html#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a>
+include the desired number of clusters <cite>n_clusters</cite>,
+the number of dimensions <cite>dim</cite> of the data, the desired total number of
+data points <cite>n_samples</cite> in each synthetic
+dataset and the name of the archetype (<cite>name</cite>).</p>
+</section>
+<section id="overlaps-between-clusters">
+<h2>Overlaps Between Clusters<a class="headerlink" href="#overlaps-between-clusters" title="Permalink to this heading">#</a></h2>
+<p>We quantify the overlap between any pair of clusters as a percentage.
+Roughly, an overlap of 0.05 indicates that the outer 5% of the clusters’
+probability densities overlap.</p>
+<p>In a data set with <em>k</em> clusters, there are <em>k(k-1)/2</em> pairs of clusters.
+To quantify the desired overlap for the whole data set, you can use the
+parameters <a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_overlap</span></code></a>
+and <a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_overlap</span></code></a>.
+The latter parameter imposes an upper limit on the overlap between any
+pair of clusters. Hence, decrease <cite>max_overlap</cite> if you want to ensure
+that clusters are farther apart. On the other, <cite>min_overlap</cite> sets a
+lower limit on the overlap between a cluster and its closest neighbor.
+In other words,
+increase <cite>min_overlap</cite> if you want to avoid isolated clusters. Choose
+similar values for <cite>min_overlap</cite> and <cite>max_overlap</cite> if you would like
+to impose a consistent overlap across all synthetic data sets. However,
+keep in mind that <cite>max_overlap</cite> must always exceed <cite>min_overlap</cite>; in
+addition, when the gap between <cite>min_overlap</cite> and <cite>max_overlap</cite> is
+too small, data generation may take unacceptably long.</p>
+<p>The simulation below generates synthetic data sets for various choices
+of <cite>min_overlap</cite> and <cite>max_overlap</cite>. We discuss the results below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">repliclust</span> <span class="kn">import</span> <span class="n">set_seed</span><span class="p">,</span> <span class="n">Archetype</span><span class="p">,</span> <span class="n">DataGenerator</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">set_seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">eps</span> <span class="o">=</span> <span class="mf">0.025</span>
+
+<span class="n">overlap_settings</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;min_overlap&#39;</span><span class="p">:</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="s1">&#39;max_overlap&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">eps</span><span class="p">)</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;min_overlap&#39;</span><span class="p">:</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="s1">&#39;max_overlap&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;min_overlap&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;max_overlap&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">eps</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">overlaps</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">overlap_settings</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;$\bf{Cluster~Overlaps~around~0.1\%}$&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span>
+            <span class="k">else</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\bf{Cluster~Overlaps~&quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot;between~0.1\%~and~50\%}$&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+                  <span class="k">else</span> <span class="sa">r</span><span class="s2">&quot;$\bf{Cluster~Overlaps~around~50\%}$&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">description</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="o">+</span> <span class="s2">&quot;min_overlap&quot;</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$ \approx $&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">overlaps</span><span class="p">[</span><span class="s1">&#39;min_overlap&#39;</span><span class="p">])</span>
+                    <span class="o">+</span> <span class="s2">&quot;,  max_overlap&quot;</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$ \approx $&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">overlaps</span><span class="p">[</span><span class="s1">&#39;max_overlap&#39;</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span>
+                <span class="n">y</span><span class="o">=</span><span class="mf">1.15</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">archetype</span> <span class="o">=</span> <span class="n">Archetype</span><span class="p">(</span>
+                        <span class="n">min_overlap</span><span class="o">=</span><span class="n">overlaps</span><span class="p">[</span><span class="s1">&#39;min_overlap&#39;</span><span class="p">],</span>
+                        <span class="n">max_overlap</span><span class="o">=</span><span class="n">overlaps</span><span class="p">[</span><span class="s1">&#39;max_overlap&#39;</span><span class="p">]</span>
+                        <span class="p">)</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">archetype</span> <span class="o">=</span> <span class="p">(</span><span class="n">DataGenerator</span><span class="p">(</span><span class="n">archetype</span><span class="p">)</span>
+                        <span class="o">.</span><span class="n">synthesize</span><span class="p">(</span><span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                      <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([]);</span> <span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/3_0.svg" src="_images/3_0.svg" /><img alt="_images/3_1.svg" src="_images/3_1.svg" /><img alt="_images/3_2.svg" src="_images/3_2.svg" /><p>The plots above demonstrate the impact of varying <cite>min_overlap</cite> and
+<cite>max_overlap</cite>. The middle series of plots shows that
+the difference between <cite>max_overlap</cite> and <cite>min_overlap</cite> plays an
+important role as well.</p>
+<p>In the top row of plots, <code class="docutils literal notranslate"><span class="pre">min_overlap=0.001</span></code> and
+<code class="docutils literal notranslate"><span class="pre">max_overlap=0.0011</span></code>. The small difference between <code class="docutils literal notranslate"><span class="pre">max_overlap</span></code>
+and <code class="docutils literal notranslate"><span class="pre">min_overlap</span></code> means that we are controlling cluster overlap
+rather tightly around 0.1%. Not only must no pair of clusters overlap
+more than 0.1%, but also each cluster
+must overlap at least 0.1% with its closest neighbor. The bottom row
+paints a similar picture, except with more overlap between clusters
+(50% vs 0.1%).</p>
+<p>The middle row shows a different scenario because we leave a
+substantial gap between <code class="docutils literal notranslate"><span class="pre">min_overlap=0.001</span></code> and <code class="docutils literal notranslate"><span class="pre">max_overlap=0.5</span></code>.
+In this case, all clusters must overlap less than 50%, but we permit
+much smaller overlaps. This choice increases the variability of
+synthetic data sets because within the range of 0.001 to 0.5 we leave
+the actual overlaps to chance. Such variation may or not be helpful for
+your application.</p>
+</section>
+<section id="cluster-aspect-ratios">
+<h2>Cluster Aspect Ratios<a class="headerlink" href="#cluster-aspect-ratios" title="Permalink to this heading">#</a></h2>
+<p>Each cluster has an ellipsoidal shape that may be round like a ball, or
+long and slender like a rod. The <em>aspect ratio</em> of a cluster is the
+ratio of the length of its longest axis to the length of its shortest
+axis. In other words, a high aspect ratio indicates a long and slender
+cluster, whereas a low aspect ratio indicates a round cluster. Possible
+values for the aspect ratio range from 1 (a perfect sphere) to
+infinitely large.</p>
+<p>When generating synthetic data using <strong>repliclust</strong>, you can influence
+the cluster aspect ratios by changing the parameters
+<a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aspect_ref</span></code></a>
+and <a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aspect_maxmin</span></code></a>.
+The reference aspect ratio, <cite>aspect_ref</cite>, determines the typical aspect
+ratio for all clusters in a synthetic data set. For example, if
+<code class="docutils literal notranslate"><span class="pre">aspect_ref=3</span></code>, the typical cluster is oblong with an aspect ratio of
+three. On the other hand, the max-min ratio <cite>aspect_maxmin</cite> determines
+the variability of cluster aspect ratios within the same data set.
+More precisely, <cite>aspect_maxmin</cite> is the ratio of the highest aspect ratio
+to the lowest aspect ratio in each data set. For example, if
+<code class="docutils literal notranslate"><span class="pre">aspect_maxmin=3</span></code>, then the “longest” cluster is four
+times longer than the most “round” cluster.</p>
+<p>The simulation below demonstrates the effect of changing
+<cite>aspect_ref</cite> and <cite>aspect_maxmin</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">repliclust</span>
+<span class="n">repliclust</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">aspect_ref</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">aspect_maxmin</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]):</span>
+        <span class="n">archetype</span> <span class="o">=</span> <span class="n">repliclust</span><span class="o">.</span><span class="n">Archetype</span><span class="p">(</span>
+                        <span class="n">n_clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">750</span><span class="p">,</span>
+                        <span class="n">aspect_ref</span><span class="o">=</span><span class="n">aspect_ref</span><span class="p">,</span>
+                        <span class="n">aspect_maxmin</span><span class="o">=</span><span class="n">aspect_maxmin</span><span class="p">,</span>
+                        <span class="n">radius_maxmin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                        <span class="n">min_overlap</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span> <span class="n">max_overlap</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+                        <span class="n">distributions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;normal&#39;</span><span class="p">])</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="p">(</span><span class="n">repliclust</span><span class="o">.</span><span class="n">DataGenerator</span><span class="p">(</span><span class="n">archetype</span><span class="p">)</span>
+                             <span class="o">.</span><span class="n">synthesize</span><span class="p">(</span><span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">aspect_ref_description</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\bf{Round~Shape}$&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+                                <span class="k">else</span> <span class="sa">r</span><span class="s2">&quot;$\bf{Long~Shape}$&quot;</span><span class="p">)</span>
+        <span class="n">aspect_maxmin_description</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">r</span><span class="s2">&quot;$\bf{-~no~Variability}$&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span> <span class="sa">r</span><span class="s2">&quot;$\bf{-~3x~Variability}$&quot;</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+            <span class="n">aspect_ref_description</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+            <span class="o">+</span> <span class="n">aspect_maxmin_description</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="o">+</span><span class="sa">r</span><span class="s2">&quot;$ aspect\_ref $=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">aspect_ref</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+            <span class="o">+</span><span class="sa">r</span><span class="s2">&quot;$ aspect\_maxmin $=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">aspect_maxmin</span><span class="p">),</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([]);</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/4.svg" src="_images/4.svg" /></section>
+<section id="cluster-volumes">
+<h2>Cluster Volumes<a class="headerlink" href="#cluster-volumes" title="Permalink to this heading">#</a></h2>
+<p>The volume of a cluster is the volume spanned by the inner 75% of its
+probability mass. Since cluster volume grows rapidly in high dimensions,
+we quantify the spatial extent of a cluster in terms of its radius
+instead. The radius of an ellipsoidal cluster is the spherical radius
+of a ball with the same volume.</p>
+<p>When generating synthetic data with <strong>repliclust</strong>, you can influence
+the variability in cluster volumes by changing the
+<a class="reference internal" href="maxmin.html#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radius_maxmin</span></code></a>
+parameter. This parameter sets the ratio between the
+largest and smallest cluster radii within a data set. For example, if
+<cite>radius_maxmin</cite> is 10 and the smallest cluster has unit radius, then the
+biggest cluster has a radius of 10. Note that volumes scale
+differently from radii. In <em>dim</em> dimensions, <code class="docutils literal notranslate"><span class="pre">radius_maxmin=10</span></code>
+implies that the biggest cluster volume is <cite>10**dim</cite> times
+greater than the smallest.</p>
+<p>The simulation below demonstrates the effect of varying
+<code class="docutils literal notranslate"><span class="pre">radius_maxmin</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">repliclust</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">repliclust</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mf">3.3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+                       <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">radius_maxmin</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">]):</span>
+    <span class="n">archetype</span> <span class="o">=</span> <span class="n">repliclust</span><span class="o">.</span><span class="n">Archetype</span><span class="p">(</span>
+                    <span class="n">radius_maxmin</span><span class="o">=</span><span class="n">radius_maxmin</span><span class="p">,</span>
+                    <span class="n">max_overlap</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">min_overlap</span><span class="o">=</span><span class="mf">0.04</span>
+                    <span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="p">(</span><span class="n">repliclust</span><span class="o">.</span><span class="n">DataGenerator</span><span class="p">(</span><span class="n">archetype</span><span class="p">)</span>
+                         <span class="o">.</span><span class="n">synthesize</span><span class="p">(</span><span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;$\bf{Equal~Cluster~Volumes}$&quot;</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span>
+            <span class="k">else</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\bf{3x~Variability}$&quot;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span> <span class="sa">r</span><span class="s2">&quot;$\bf{10x~Variability}$&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                  <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([]);</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">description</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$ radius\_maxmin $&#39;</span>
+                    <span class="o">+</span> <span class="s2">&quot; = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">radius_maxmin</span><span class="p">))</span>
+</pre></div>
+</div>
+<img alt="_images/5.svg" src="_images/5.svg" /></section>
+<section id="cluster-probability-distributions">
+<h2>Cluster Probability Distributions<a class="headerlink" href="#cluster-probability-distributions" title="Permalink to this heading">#</a></h2>
+<p>Each cluster consists of data points spread around a central point
+according to a probability distribution. While a cluster’s overall
+ellipsoidal shape depends on its covariance matrix, the choice of
+probability distribution determines how quickly the density of data
+points drops with increasing
+distance from the central point. For example, the <cite>normal</cite>
+distribution spreads all data points rather tightly around the central
+point. By contrast, the <cite>exponential</cite>
+distribution spreads the probability mass further out in space, leaving
+a larger share of data points away from the cluster center.
+Going even further, heavy-tailed distributions such as the
+<cite>standard t</cite> distribution
+with <code class="docutils literal notranslate"><span class="pre">df=1</span></code> degrees of freedom give rise to <em>outliers</em>, data points
+very far from the cluster center.</p>
+<p>When generating synthetic data using <strong>repliclust</strong>, you can use the
+<code class="docutils literal notranslate"><span class="pre">distributions</span></code> parameter to customize the probability distributions
+appearing in your synthetic data sets. As an example, the scatter plots
+below visualize the differences between the normal,
+exponential, and standard t distributions.</p>
+<img alt="_images/6.svg" src="_images/6.svg" /><p>Note the vastly different scales of the
+<cite>X1</cite> and <cite>X2</cite> axes. On the left, the normal distribution keeps all
+data points within about two units of distance from the cluster center.
+On the right, the heavy-tailed standard t distribution leads to outliers
+as far as 200 units away. The exponential distribution in the middle
+strikes a compromise, with distances of up to about five units from the
+center.</p>
+<p>Besides choosing a single probability distribution, you can use multiple
+distributions. This choice leads to synthetic
+data sets in which different clusters have different probability
+distributions. In general, the parameter <code class="docutils literal notranslate"><span class="pre">distributions</span></code> is a list
+containing the names of all probability distributions, as well as their
+parameters. Not all distributions have parameters. To obtain a list of
+the probability distributions currently supported in <strong>repliclust</strong>, as
+well as their parameters, call <code class="docutils literal notranslate"><span class="pre">get_supported_distributions()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">repliclust</span> <span class="kn">import</span> <span class="n">get_supported_distributions</span>
+<span class="n">get_supported_distributions</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>{&#39;normal&#39;: {},
+&#39;standard_t&#39;: {&#39;df&#39;: 5},
+&#39;exponential&#39;: {},
+&#39;beta&#39;: {&#39;a&#39;: 2.5, &#39;b&#39;: 8.5},
+&#39;chisquare&#39;: {&#39;df&#39;: 5},
+&#39;gumbel&#39;: {},
+&#39;weibull&#39;: {&#39;a&#39;: 1.5},
+&#39;gamma&#39;: {&#39;shape&#39;: 3},
+&#39;pareto&#39;: {&#39;a&#39;: 10},
+&#39;f&#39;: {&#39;dfnum&#39;: 7, &#39;dfden&#39;: 10},
+&#39;lognormal&#39;: {&#39;sigma&#39;: 0.75}}
+</pre></div>
+</div>
+<p>It is important to
+spell the names of distributions exactly as shown above. All names are
+adapted from the <code class="docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code> module. To understand the
+meaning of the distributional parameters, see the <code class="docutils literal notranslate"><span class="pre">numpy</span></code>
+documentation. For example, click <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.gamma.html">here</a>
+to see documentation for the gamma distribution.</p>
+<p>When specifying a probability distribution with parameters, the
+corresponding entry in <code class="docutils literal notranslate"><span class="pre">distributions</span></code> should be a tuple
+<em>(name, parameters)</em>, where <em>name</em> is the name of the distribution and
+<em>parameters</em> is a dictionary of distributional parameters. For example,
+the gamma distribution has parameters <cite>shape</cite> and <cite>scale</cite>. Below
+we generate synthetic data based on an archetype with gamma-distributed
+clusters. Note that in <strong>repliclust</strong> you can only change the parameters
+listed when calling
+<a class="reference internal" href="base.html#repliclust.base.get_supported_distributions" title="repliclust.base.get_supported_distributions"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_supported_distributions()</span></code></a>,
+even though the corresponding <code class="docutils literal notranslate"><span class="pre">numpy</span></code> class might have additional
+parameters. For example, the normal and exponential distributions have
+no parameters in <strong>repliclust</strong>.</p>
+<p>The simulation below generates a synthetic data set with
+gamma-distributed clusters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">repliclust</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">repliclust</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">my_archetype</span> <span class="o">=</span> <span class="n">repliclust</span><span class="o">.</span><span class="n">Archetype</span><span class="p">(</span>
+    <span class="n">min_overlap</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_overlap</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">distributions</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;shape&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">})]</span>
+<span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="p">(</span><span class="n">repliclust</span><span class="o">.</span><span class="n">DataGenerator</span><span class="p">(</span><span class="n">my_archetype</span><span class="p">)</span>
+                     <span class="o">.</span><span class="n">synthesize</span><span class="p">(</span><span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_dpi</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([]);</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\bf{Gamma{-}Distributed~Clusters}$&quot;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$distributions=[(&#39;gamma&#39;, &quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;\{&#39;shape&#39;: 1, &#39;scale&#39;: 2.0\})]$&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/7.svg" src="_images/7.svg" /><p>When using multiple distributions, <strong>repliclust</strong>
+randomly assigns a distribution to each cluster. For example, the
+choice <code class="docutils literal notranslate"><span class="pre">distributions=['normal',</span> <span class="pre">'exponential']</span></code> makes half of the
+clusters normally distributed, and the other half exponentially
+distributed. To customize these proportions, use the parameter
+<code class="docutils literal notranslate"><span class="pre">distribution_proportions</span></code>. For example, to raise the share of
+exponentially distributed clusters to 75%, set
+<code class="docutils literal notranslate"><span class="pre">distribution_proportions=[0.25,0.75]</span></code>. The simulation below
+demonstrates such possibilities in a more complex example.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">repliclust</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">repliclust</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">distr_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span><span class="s1">&#39;exponential&#39;</span><span class="p">,</span>
+              <span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;shape&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">})]</span>
+<span class="n">distr_proportions</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.25</span><span class="p">]</span>
+
+<span class="n">my_archetype</span> <span class="o">=</span> <span class="n">repliclust</span><span class="o">.</span><span class="n">Archetype</span><span class="p">(</span>
+                    <span class="n">n_clusters</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                    <span class="n">min_overlap</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">max_overlap</span><span class="o">=</span><span class="mf">0.006</span><span class="p">,</span>
+                    <span class="n">distributions</span><span class="o">=</span><span class="n">distr_list</span><span class="p">,</span>
+                    <span class="n">distribution_proportions</span><span class="o">=</span><span class="n">distr_proportions</span>
+                    <span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="p">(</span><span class="n">repliclust</span><span class="o">.</span><span class="n">DataGenerator</span><span class="p">(</span><span class="n">my_archetype</span><span class="p">)</span>
+                     <span class="o">.</span><span class="n">synthesize</span><span class="p">(</span><span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_dpi</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([]);</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\bf{Using~Multiple~Probability~Distributions}$&quot;</span>
+            <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$ distributions=[&#39;normal&#39;, &#39;exponential&#39;,&quot;</span>
+            <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;(&#39;gamma&#39;, \{&#39;shape&#39;: 1, &#39;scale&#39;: 2.0\})] $,&quot;</span>
+            <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$ distribution\_proportions=[0.25,0.5,0.25] $&quot;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/8.svg" src="_images/8.svg" /><p>Can you spot which of the clusters above have normal, exponential, or
+gamma distributions?</p>
+</section>
+<section id="group-sizes">
+<h2>Group Sizes<a class="headerlink" href="#group-sizes" title="Permalink to this heading">#</a></h2>
+<p>The <em>group size</em> of a cluster is the number of data points in it. When
+group sizes vary significantly between clusters in the same data set, we
+speak of <em>class imbalance</em>. When generating synthetic data using
+<strong>repliclust</strong>, you can vary the class imbalance by specifying the
+<code class="docutils literal notranslate"><span class="pre">imbalance_ratio</span></code>. This parameter sets the ratio of the greatest to
+the smallest number of data points among all clusters in the same data
+set. For example, if <code class="docutils literal notranslate"><span class="pre">imbalance_ratio=10</span></code> then the cluster with the
+most data points has ten times more data points than the cluster with the
+least number of data points. By contrast, the total number of
+data points in the whole data set depends on the parameter <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>
+introduced in the <a class="reference internal" href="#basic-parameters"><span class="std std-ref">Basic Parameters</span></a> section.</p>
+<p>The simulation below demonstrates the effect of changing the
+<code class="docutils literal notranslate"><span class="pre">imbalance_ratio</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">repliclust</span>
+<span class="n">repliclust</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+                       <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">imbalance_ratio</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]):</span>
+    <span class="n">archetype</span> <span class="o">=</span> <span class="n">repliclust</span><span class="o">.</span><span class="n">Archetype</span><span class="p">(</span>
+                    <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span>
+                    <span class="n">distributions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;normal&#39;</span><span class="p">],</span>
+                    <span class="n">imbalance_ratio</span><span class="o">=</span><span class="n">imbalance_ratio</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="p">(</span><span class="n">repliclust</span><span class="o">.</span><span class="n">DataGenerator</span><span class="p">(</span><span class="n">archetype</span><span class="p">)</span>
+                         <span class="o">.</span><span class="n">synthesize</span><span class="p">(</span><span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                  <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plot_description</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\bf{Perfect~Balance}$&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="sa">r</span><span class="s2">&quot;$\bf{10x~Imbalance}$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">plot_description</span>
+                        <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span><span class="sa">r</span><span class="s2">&quot;$ imbalance\_ratio $=&quot;</span>
+                        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">imbalance_ratio</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([]);</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+</pre></div>
+</div>
+<img alt="_images/9.svg" src="_images/9.svg" /><p>In the scatter plots above, both datasets have <code class="docutils literal notranslate"><span class="pre">n_samples=120</span></code>
+data points. On the left, both clusters have the same number of data
+points (class balance). On the right, the bigger cluster has ten
+times more data points than the smaller cluster (class imbalance).</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="generating_multiple_datasets.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Generating Multiple Similar Datasets</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="reference.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-parameters">Basic Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlaps-between-clusters">Overlaps Between Clusters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-aspect-ratios">Cluster Aspect Ratios</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-volumes">Cluster Volumes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-probability-distributions">Cluster Probability Distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-sizes">Group Sizes</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/specifying_an_archetype.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2023, repliclust.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
