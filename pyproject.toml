@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "repliclust"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name="Mike Zellinger", email="mike.j.zellinger@gmail.com" },
 ]
@@ -12,9 +12,10 @@ description = "Generate synthetic data with clusters."
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-  "numpy~=1.22.0",
-  "scipy~=1.10.0",
-  "tqdm~=4.64.1",
+  "numpy",
+  "scipy",
+  "tqdm",
+  "threadpoolctl"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

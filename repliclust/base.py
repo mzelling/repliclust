@@ -411,7 +411,7 @@ class MixtureModel():
         k = self.centers.shape[0] # extract number of clusters
         dim = self.centers.shape[1] # extract number of dimensions
         X = np.full(shape=(n, dim), fill_value=np.nan)
-        y = np.full(n, fill_value=np.nan).astype(int)
+        y = np.full(n, fill_value=-1).astype(int)
 
         if (group_sizes.shape != (k,)):
             raise ValueError('group_sizes must be a vector whose length'
