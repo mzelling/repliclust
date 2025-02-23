@@ -1,0 +1,999 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Max-Min Implementation &#8212; repliclust 1.0.0. documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'maxmin';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Cluster Overlap Control" href="overlap.html" />
+    <link rel="prev" title="Core Framework" href="base.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">repliclust 1.0.0. documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="user_guide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="source_code.html">
+    Source
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://demo.repliclust.org">
+    Demo
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="user_guide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="source_code.html">
+    Source
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://demo.repliclust.org">
+    Demo
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="base.html">Core Framework</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Max-Min Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overlap.html">Cluster Overlap Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributions.html">Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distortion.html">Distortion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="viz.html">Visualization</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="reference.html" class="nav-link">Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Max-Min...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="max-min-implementation">
+<h1>Max-Min Implementation<a class="headerlink" href="#max-min-implementation" title="Permalink to this heading">#</a></h1>
+<section id="module-repliclust.maxmin">
+<span id="repliclust-maxmin"></span><h2>repliclust.maxmin<a class="headerlink" href="#module-repliclust.maxmin" title="Permalink to this heading">#</a></h2>
+<p>This module provides functionality for implementing data set archetypes
+based on max-min sampling.</p>
+</section>
+<section id="module-repliclust.maxmin.archetype">
+<span id="repliclust-maxmin-archetype"></span><h2>repliclust.maxmin.archetype<a class="headerlink" href="#module-repliclust.maxmin.archetype" title="Permalink to this heading">#</a></h2>
+<p>This module implements a archetype for mixture models. The user chooses
+the desired geometry by setting the ratios between largest and smallest
+values of various geometric parameters.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.MaxMinArchetype">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.archetype.</span></span><span class="sig-name descname"><span class="pre">MaxMinArchetype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imbalance_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distributions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['normal',</span> <span class="pre">'exponential']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_proportions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_penalty_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.MaxMinArchetype" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base.html#repliclust.base.Archetype" title="repliclust.base.Archetype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Archetype</span></code></a></p>
+<p>A dataset archetype that defines the overall geometry using max-min ratios.</p>
+<p>The user sets the ratios between largest and smallest values of various geometric parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<em>int</em>) – The desired number of clusters.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – The desired number of dimensions.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Total number of samples in the dataset.</p></li>
+<li><p><strong>max_overlap</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum allowed overlap between any two clusters, as a fraction between 0 and 1. Default is 0.05.</p></li>
+<li><p><strong>min_overlap</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum required overlap between a cluster and some other cluster, as a fraction between 0 and 1. Default is 1e-3.</p></li>
+<li><p><strong>imbalance_ratio</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio between the largest and smallest group sizes among clusters. Must be &gt;= 1. Default is 2.</p></li>
+<li><p><strong>aspect_maxmin</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio between the largest and smallest aspect ratios among clusters. Must be &gt;= 1. Default is 2.</p></li>
+<li><p><strong>radius_maxmin</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio between the largest and smallest radii among clusters. Must be &gt;= 1. Default is 3.</p></li>
+<li><p><strong>aspect_ref</strong> (<em>float</em><em>, </em><em>optional</em>) – Reference aspect ratio for clusters. Must be &gt;= 1. Default is 1.5.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the archetype. If <cite>None</cite>, a default name is assigned.</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Reference length scale for generated data. Default is 1.0.</p></li>
+<li><p><strong>packing</strong> (<em>float</em><em>, </em><em>optional</em>) – Packing density parameter affecting cluster placement. Default is 0.1.</p></li>
+<li><p><strong>distributions</strong> (<em>list</em><em> of </em><em>str</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Selection of probability distributions for the clusters. Default is <cite>[‘normal’, ‘exponential’]</cite>.</p></li>
+<li><p><strong>distribution_proportions</strong> (<em>list</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – Proportions of clusters that should have each distribution.</p></li>
+<li><p><strong>overlap_mode</strong> (<em>{'auto'</em><em>, </em><em>'lda'</em><em>, </em><em>'c2c'}</em><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Degree of precision when computing cluster overlaps: ‘lda’ is more exact</dt><dd><p>than ‘c2c’ but more computationally expensive. Default is ‘auto’, which
+switches automatically switches from ‘lda’ to ‘c2c’.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>linear_penalty_weight</strong> (<em>float</em><em>, </em><em>optional</em>) – Weight of the linear penalty in the overlap optimization. Default is 0.01.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em><em> or </em><em>'auto'</em><em>, </em><em>optional</em>) – Learning rate for overlap optimization. If ‘auto’, it is set based on the dimensionality. Default is ‘auto’.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p><strong>Glossary of geometric terms:</strong></p>
+<ul class="simple">
+<li><p><strong>Group size</strong> : Number of data points in a cluster.</p></li>
+<li><p><strong>Cluster radius</strong> : Geometric mean of the standard deviations along a cluster’s principal axes.</p></li>
+<li><p><strong>Cluster aspect ratio</strong> : Ratio between the lengths of the longest and shortest principal axes of a cluster.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<p>Create an archetype with default parameters:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">archetype</span> <span class="o">=</span> <span class="n">MaxMinArchetype</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create an archetype with specific parameters:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">archetype</span> <span class="o">=</span> <span class="n">MaxMinArchetype</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">aspect_ref</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.MaxMinArchetype.create_another_like_this">
+<span class="sig-name descname"><span class="pre">create_another_like_this</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.MaxMinArchetype.create_another_like_this" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a new archetype similar to this one with updated parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>suffix</strong> (<em>str</em><em>, </em><em>optional</em>) – Suffix to append to the new archetype’s name.</p></li>
+<li><p><strong>**new_params</strong> – Arbitrary keyword arguments representing parameters to update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new <cite>MaxMinArchetype</cite> instance with updated parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype">MaxMinArchetype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.MaxMinArchetype.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude_internal_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.MaxMinArchetype.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Get a dictionary describing the archetype’s parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing the archetype’s parameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.MaxMinArchetype.edit_params">
+<span class="sig-name descname"><span class="pre">edit_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.MaxMinArchetype.edit_params" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a modified copy of this archetype with updated parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>suffix</strong> (<em>str</em><em>, </em><em>optional</em>) – Suffix to append to the archetype’s name. If <cite>None</cite>, the suffix
+‘edited’ is used.</p></li>
+<li><p><strong>**params</strong> – Arbitrary keyword arguments representing parameters to update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new <cite>MaxMinArchetype</cite> instance with updated parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype">MaxMinArchetype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.MaxMinArchetype.from_verbal_description">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_verbal_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">openai_api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.MaxMinArchetype.from_verbal_description" title="Permalink to this definition">#</a></dt>
+<dd><p>Instantiate a <cite>MaxMinArchetype</cite> from a verbal description.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>description</strong> (<em>str</em>) – Verbal description of the desired dataset archetype.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name to assign to the new archetype. If <cite>None</cite>, a name is generated.</p></li>
+<li><p><strong>openai_api_key</strong> (<em>str</em><em>, </em><em>optional</em>) – OpenAI API key for accessing the language model. If <cite>None</cite>, the key is read from the configuration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new <cite>MaxMinArchetype</cite> instance based on the verbal description.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype">MaxMinArchetype</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the OpenAI client cannot be initialized or the archetype cannot be created.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method uses a language model to parse the verbal description and generate the archetype parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.MaxMinArchetype.guess_learning_rate">
+<span class="sig-name descname"><span class="pre">guess_learning_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.MaxMinArchetype.guess_learning_rate" title="Permalink to this definition">#</a></dt>
+<dd><p>Estimate an appropriate learning rate based on the dimensionality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> (<em>int</em>) – The dimensionality of the data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Suggested learning rate.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.MaxMinArchetype.sample_hyperparams">
+<span class="sig-name descname"><span class="pre">sample_hyperparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_per_cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples_per_cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.MaxMinArchetype.sample_hyperparams" title="Permalink to this definition">#</a></dt>
+<dd><p>Generate multiple copies of this archetype by sampling hyperparameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of archetype copies to generate. Default is 10.</p></li>
+<li><p><strong>min_n_clusters</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum number of clusters. Default is 1.</p></li>
+<li><p><strong>max_n_clusters</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of clusters. Default is 30.</p></li>
+<li><p><strong>min_samples_per_cluster</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum number of samples per cluster. Default is 10.</p></li>
+<li><p><strong>max_samples_per_cluster</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of samples per cluster. Default is 1000.</p></li>
+<li><p><strong>min_dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum dimensionality. Default is 2.</p></li>
+<li><p><strong>max_dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum dimensionality. Default is 50.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of new <cite>MaxMinArchetype</cite> instances with sampled hyperparameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#repliclust.maxmin.archetype.MaxMinArchetype" title="repliclust.maxmin.archetype.MaxMinArchetype">MaxMinArchetype</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The hyperparameters <cite>n_clusters</cite>, <cite>n_samples</cite>, and <cite>dim</cite> are sampled from Poisson distributions centered around the current archetype’s parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.parse_distribution_selection">
+<span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.archetype.</span></span><span class="sig-name descname"><span class="pre">parse_distribution_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distributions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.parse_distribution_selection" title="Permalink to this definition">#</a></dt>
+<dd><p>Parse user selection of probability distributions.</p>
+<p>Reformats the user-provided list of distributions and proportions into a format suitable for constructing a <cite>FixedProportionMix</cite> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distributions</strong> (<em>list</em><em> of </em><em>str</em><em> or </em><em>tuple</em>) – Selection of probability distributions to include in each mixture model.
+Each element is either:
+- A string representing the name of the distribution.
+- A tuple <cite>(name, params_dict)</cite>, where <cite>name</cite> is the distribution name and <cite>params_dict</cite> is a dictionary of distribution parameters.</p></li>
+<li><p><strong>proportions</strong> (<em>list</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – Proportions of clusters that should have each distribution. If <cite>None</cite>, distributions are equally weighted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list suitable for constructing a <cite>FixedProportionMix</cite> object, where each element is a tuple <cite>(name, proportion, params_dict)</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>distributions</cite> is not in the expected format.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>To print all valid distribution names, call <cite>repliclust.print_supported_distributions()</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.validate_archetype_args">
+<span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.archetype.</span></span><span class="sig-name descname"><span class="pre">validate_archetype_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.validate_archetype_args" title="Permalink to this definition">#</a></dt>
+<dd><p>Validate all provided arguments for a MaxMinArchetype.</p>
+<p>This function checks the validity of overlap parameters, max-min ratios, and reference quantities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**args</strong> – Arbitrary keyword arguments containing parameters to validate.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any of the parameters fail their respective validations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.validate_maxmin_ratios">
+<span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.archetype.</span></span><span class="sig-name descname"><span class="pre">validate_maxmin_ratios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxmin_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'aspect_maxmin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">underlying_param</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'aspect</span> <span class="pre">ratio'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.validate_maxmin_ratios" title="Permalink to this definition">#</a></dt>
+<dd><p>Check that a max-min ratio is &gt;= 1.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.validate_overlaps">
+<span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.archetype.</span></span><span class="sig-name descname"><span class="pre">validate_overlaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.validate_overlaps" title="Permalink to this definition">#</a></dt>
+<dd><p>Note that we allow max_overlap=1 and min_overlap=0, which
+should have the effect of removing one or both overlap constraints.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="repliclust.maxmin.archetype.validate_reference_quantity">
+<span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.archetype.</span></span><span class="sig-name descname"><span class="pre">validate_reference_quantity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_qty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_allowed_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'aspect_ref'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.archetype.validate_reference_quantity" title="Permalink to this definition">#</a></dt>
+<dd><p>Check that a reference value exceeds its minimum allowed value.</p>
+</dd></dl>
+
+</section>
+<section id="module-repliclust.maxmin.covariance">
+<span id="repliclust-maxmin-covariance"></span><h2>repliclust.maxmin.covariance<a class="headerlink" href="#module-repliclust.maxmin.covariance" title="Permalink to this heading">#</a></h2>
+<p>This module provides a class for sampling cluster covariances using
+the max-min approach.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.covariance.</span></span><span class="sig-name descname"><span class="pre">MaxMinCovarianceSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aspect_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_maxmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sample covariances for the clusters in a mixture model by specifying
+the max-min ratios for various geometric parameters.</p>
+<p>See documentation of class MaxMinArchetype for more information.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_ref">
+<span class="sig-name descname"><span class="pre">aspect_ref</span></span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_ref" title="Permalink to this definition">#</a></dt>
+<dd><p>Reference aspect ratio for clusters in the mixture model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, &gt;= 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_maxmin">
+<span class="sig-name descname"><span class="pre">aspect_maxmin</span></span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_maxmin" title="Permalink to this definition">#</a></dt>
+<dd><p>Max-min ratio for the aspect ratios of clusters in the mixture
+model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, &gt;= 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.radius_maxmin">
+<span class="sig-name descname"><span class="pre">radius_maxmin</span></span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.radius_maxmin" title="Permalink to this definition">#</a></dt>
+<dd><p>Max-min ratio for the radii of clusters in the mixture model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, &gt;= 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_axis_lengths">
+<span class="sig-name descname"><span class="pre">make_axis_lengths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect_ratio</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_axis_lengths" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample the lengths of all principal axes for a single cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_axes</strong> (<em>int</em>) – The number of principal axes (same as the dimensionality).</p></li>
+<li><p><strong>reference_length</strong> (<em>float</em>) – Desired geometric mean of the lengths.</p></li>
+<li><p><strong>aspect_ratio</strong> (<em>float</em>) – Desired ratio between longest and shortest lengths.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>lengths</strong> – Lengths of the principal axes for this cluster.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_aspect_ratios">
+<span class="sig-name descname"><span class="pre">make_cluster_aspect_ratios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_aspect_ratios" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample aspect ratios for all clusters.</p>
+<p>The aspect ratio of a cluster measures how oblong/ellipsoidal
+the cluster is. It is defined as the ratio between the lengths
+of the cluster’s longest and shortest principal axes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_clusters</strong> (<em>int</em>) – The number of clusters.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> – The aspect ratios for each cluster.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_radii">
+<span class="sig-name descname"><span class="pre">make_cluster_radii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_radii" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample cluster radii using pairwise max-min sampling.</p>
+<p>Sampling constrains the arithmetic mean of cluster volumes to
+equal the reference volume (namely ref_radius**dim power).
+The minimum and maximum cluster radii of the resulting sample
+average to the reference radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<em>int</em>) – The number of clusters.</p></li>
+<li><p><strong>ref_radius</strong> (<em>float</em>) – The reference radius for the clusters.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – The number of dimensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>radii</strong> – Radii for all the clusters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.sample_covariances">
+<span class="sig-name descname"><span class="pre">sample_covariances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archetype</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.sample_covariances" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the principal axes and their lengths for each cluster
+in a mixture model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>archetype</strong> (<a class="reference internal" href="base.html#repliclust.base.Archetype" title="repliclust.base.Archetype"><em>Archetype</em></a>) – Archetype for a mixture model.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>(axes_list, axis_lengths_list)</strong> – Tuple with two components. The first component, <cite>axes_list</cite>,
+is a list whose <cite>i</cite>-th element stores the principal axes
+of the <cite>i</cite>-th cluster as a matrix (each row is an
+axis). The second component, <cite>axis_lengths_list</cite>, is a
+list whose i-th element stores the lengths of the i-th
+cluster’s principal axes as a vector. In particular, for
+any cluster <cite>i</cite> and axis <cite>j</cite>, the number
+<cite>axis_lengths_list[i][j]</cite> is the length corresponding
+to the principal axis <cite>axes_list[i][j,:]</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[ndarray], List[ndarray]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.covariance.MaxMinCovarianceSampler.validate_k">
+<span class="sig-name descname"><span class="pre">validate_k</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.validate_k" title="Permalink to this definition">#</a></dt>
+<dd><p>Make sure the number of clusters is valid.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-repliclust.maxmin.groupsizes">
+<span id="repliclust-maxmin-groupsizes"></span><h2>repliclust.maxmin.groupsizes<a class="headerlink" href="#module-repliclust.maxmin.groupsizes" title="Permalink to this heading">#</a></h2>
+<p>This module provides functionality for sampling the number of data
+points in each cluster using a max-min approach.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repliclust.maxmin.groupsizes.</span></span><span class="sig-name descname"><span class="pre">MaxMinGroupSizeSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imbalance_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base.html#repliclust.base.GroupSizeSampler" title="repliclust.base.GroupSizeSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupSizeSampler</span></code></a></p>
+<p>Sample the number of data points in each cluster using pairwise
+max-min sampling.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.imbalance_ratio">
+<span class="sig-name descname"><span class="pre">imbalance_ratio</span></span><a class="headerlink" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.imbalance_ratio" title="Permalink to this definition">#</a></dt>
+<dd><p>The desired ratio between largest and smallest group size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, &gt;=1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imbalance_ratio</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.__init__" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.make_group_sizes">
+<span class="sig-name descname"><span class="pre">make_group_sizes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterdata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.make_group_sizes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.sample_group_sizes">
+<span class="sig-name descname"><span class="pre">sample_group_sizes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archetype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.sample_group_sizes" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample the number of data points for each cluster using
+pairwise max-min sampling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archetype</strong> (<em>Blueprint</em>) – Blueprint for a mixture model.</p></li>
+<li><p><strong>total</strong> (<em>int</em>) – The total number of data points (sum of group sizes).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>group_sizes</strong> – The number of data points for each cluster.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="base.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Core Framework</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="overlap.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Cluster Overlap Control</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-repliclust.maxmin">repliclust.maxmin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-repliclust.maxmin.archetype">repliclust.maxmin.archetype</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.MaxMinArchetype"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.MaxMinArchetype.create_another_like_this"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype.create_another_like_this()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.MaxMinArchetype.describe"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype.describe()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.MaxMinArchetype.edit_params"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype.edit_params()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.MaxMinArchetype.from_verbal_description"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype.from_verbal_description()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.MaxMinArchetype.guess_learning_rate"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype.guess_learning_rate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.MaxMinArchetype.sample_hyperparams"><code class="docutils literal notranslate"><span class="pre">MaxMinArchetype.sample_hyperparams()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.parse_distribution_selection"><code class="docutils literal notranslate"><span class="pre">parse_distribution_selection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.validate_archetype_args"><code class="docutils literal notranslate"><span class="pre">validate_archetype_args()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.validate_maxmin_ratios"><code class="docutils literal notranslate"><span class="pre">validate_maxmin_ratios()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.validate_overlaps"><code class="docutils literal notranslate"><span class="pre">validate_overlaps()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.archetype.validate_reference_quantity"><code class="docutils literal notranslate"><span class="pre">validate_reference_quantity()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-repliclust.maxmin.covariance">repliclust.maxmin.covariance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_ref"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.aspect_ref</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.aspect_maxmin"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.aspect_maxmin</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.radius_maxmin"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.radius_maxmin</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_axis_lengths"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.make_axis_lengths()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_aspect_ratios"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.make_cluster_aspect_ratios()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.make_cluster_radii"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.make_cluster_radii()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.sample_covariances"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.sample_covariances()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.covariance.MaxMinCovarianceSampler.validate_k"><code class="docutils literal notranslate"><span class="pre">MaxMinCovarianceSampler.validate_k()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-repliclust.maxmin.groupsizes">repliclust.maxmin.groupsizes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.imbalance_ratio"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.imbalance_ratio</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.__init__"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.make_group_sizes"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.make_group_sizes()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repliclust.maxmin.groupsizes.MaxMinGroupSizeSampler.sample_group_sizes"><code class="docutils literal notranslate"><span class="pre">MaxMinGroupSizeSampler.sample_group_sizes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/maxmin.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, repliclust.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
