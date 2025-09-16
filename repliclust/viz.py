@@ -8,7 +8,6 @@ Provides the built-in visualization features of `repliclust`.
 
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
-import umap
 
 
 def plot(X, y=None, dimensionality_reduction="tsne", dim_red_params={}, **plot_params):
@@ -81,6 +80,12 @@ def plot(X, y=None, dimensionality_reduction="tsne", dim_red_params={}, **plot_p
             tsne_model = TSNE(n_components=2, perplexity=30, **dim_red_params)
             T = tsne_model.fit_transform(X)
         elif dimensionality_reduction=="umap":
+            try:
+                import umap
+            except Exception as e:
+                raise ImportError(
+                    "UMAP plotting requires the 'umap-learn' package and compatible dependencies."
+                ) from e
             umap_model = umap.UMAP(n_neighbors=30, n_components=2, **dim_red_params)
             T = umap_model.fit_transform(X)
         else:
