@@ -10,8 +10,13 @@ become non-convex and take on more irregular shapes beyond ellipsoids.
 """
 
 import numpy as np
-import torch
-from torch import nn
+try:
+    import torch  # optional
+    from torch import nn
+except Exception:  # ImportError when torch missing
+    torch = None  # type: ignore
+    class nn:  # type: ignore
+        Module = object
 from scipy.stats import ortho_group
 
 
@@ -70,6 +75,11 @@ class NeuralNetwork(nn.Module):
 
     """
     def __init__(self, hidden_dim=64, dim=2, n_layers=50):
+        if torch is None:
+            raise ImportError(
+                "repliclust 'distort' requires the 'distort' extra:\n"
+                "  pip install repliclust[distort]"
+            )
         super().__init__()
 
         embedding = nn.Linear(dim, hidden_dim)
@@ -149,6 +159,11 @@ def distort(X, hidden_dim=128, n_layers=16, device="cuda", set_seed=None):
     >>> X_distorted = distort(X).numpy()
 
     """
+    if torch is None:
+        raise ImportError(
+            "repliclust 'distort' requires the 'distort' extra:\n"
+            "  pip install repliclust[distort]"
+        )
     if not torch.cuda.is_available():
         device = "cpu"
         print("Switched to CPU because CUDA is not available.")

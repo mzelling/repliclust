@@ -42,9 +42,29 @@ Try our demo [here](https://demo.repliclust.org)!
 pip install repliclust
 ```
 
+Optional features are split into extras to keep the core lightweight:
+
+- NLP-powered archetypes (OpenAI):
+
+```bash
+pip install "repliclust[nlp]"
+```
+
+- Neural-network distortion (PyTorch):
+
+```bash
+pip install "repliclust[distort]"
+```
+
+- Everything optional:
+
+```bash
+pip install "repliclust[all]"
+```
+
 ## Quickstart
 
-The easiest way to get started using repliclust is to create synthetic datasets from high-level descriptions in English. We build on on the OpenAI API, so to use these features you must provide an OpenAI API key. You can set it as ``OPENAI_API_KEY=<your-api-key>`` in an .env file, or pass it to individual functions as a keyword argument ``openai_api_key="<your-api-key>"``.
+The easiest way to get started using repliclust is to create synthetic datasets from high-level descriptions in English. These NLP features require the `nlp` extra and an OpenAI API key. Install with `pip install "repliclust[nlp]"`. You can set the key as ``OPENAI_API_KEY=<your-api-key>`` in an .env file, or pass it to individual functions as a keyword argument ``openai_api_key="<your-api-key>"``.
 
 + **Generating data directly**:
 
@@ -73,8 +93,9 @@ X, y = archetype.synthesize()
 + **Making cluster shapes more irregular**:
 
 ```python
+# distort() requires the 'distort' extra (PyTorch)
 X_irregular = rpl.distort(X)
-X_directional = rpl.wrap_around_sphere(X)
+X_directional = rpl.wrap_around_sphere(X)  # available in core
 ```
 
 ## Documentation

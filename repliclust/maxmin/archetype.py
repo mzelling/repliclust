@@ -5,11 +5,9 @@ values of various geometric parameters.
 """
 
 import numpy as np
-import openai
 import copy
 import json
 
-import repliclust.natural_language as nl
 from repliclust import config as CONFIG
 from repliclust.base import Archetype
 from repliclust.overlap.centers import ConstrainedOverlapCenters
@@ -469,9 +467,16 @@ class MaxMinArchetype(Archetype):
         -----
         This method uses a language model to parse the verbal description and generate the archetype parameters.
         """
+        try:
+            import repliclust.natural_language as nl  # type: ignore
+        except Exception:
+            raise ImportError(
+                "Natural-language archetype creation requires the 'nlp' extra:\n"
+                "  pip install repliclust[nlp]"
+            )
         if (nl.OPENAI_CLIENT is None) and (openai_api_key is not None):
             nl.load_openai_client(api_key=openai_api_key)
-        elif (nl.OPENAI_CLIENT is None) and (openai_api_key is None):
+        if nl.OPENAI_CLIENT is None:
             raise Exception(
                 "Failed to initialize OpenAI client." +
                 " Either put OPENAI_API_KEY=<...> into the .env file and reload the module" +
@@ -518,7 +523,7 @@ class MaxMinArchetype(Archetype):
             arch_json = json.loads(arch_json)
             arch_json["name"] = name_str if name is None else name
             return MaxMinArchetype(**arch_json)
-        except Exception as e:
+        except Exception:
             print(arch_json)
             raise Exception("Failed to process this data set archetype. Please rephrase and try again.")
         

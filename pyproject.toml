@@ -19,17 +19,36 @@ dependencies = [
   "threadpoolctl",
   "scikit-learn",
   "umap-learn",
-  "openai",
-  "python-dotenv",
-  "torch"
+  # Keep core lightweight; NLP/Torch are optional extras
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
 ]
-
 [project.urls]
 "Homepage" = "https://repliclust.org"
 "Source" = "https://github.com/mzelling/repliclust"
 "Bug Tracker" = "https://github.com/mzelling/repliclust/issues"
+
+[project.optional-dependencies]
+# NLP features: natural language → archetype via OpenAI API
+nlp = [
+  "openai>=1.0.0",
+  "python-dotenv>=1.0.0",
+]
+# Distortion features that rely on PyTorch
+distort = [
+  "torch>=2.0.0",
+]
+# Convenience extra to install everything optional
+all = [
+  "openai>=1.0.0",
+  "python-dotenv>=1.0.0",
+  "torch>=2.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]

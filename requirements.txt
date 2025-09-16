@@ -5,6 +5,3 @@ tqdm
 threadpoolctl
 scikit-learn
 umap-learn
-openai
-python-dotenv
-torch

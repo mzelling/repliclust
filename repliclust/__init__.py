@@ -27,20 +27,35 @@ geometric structure. The following modules and subpackages are available.
         Helps locate cluster centers with the desired overlap.
 """
 
-import numpy as np
-
-from dotenv import load_dotenv
 from repliclust import config
-from repliclust.base import set_seed, SUPPORTED_DISTRIBUTIONS
 from repliclust import base, overlap, maxmin, distributions
-from repliclust.base import DataGenerator, get_supported_distributions
+from repliclust.base import set_seed
 from repliclust.maxmin import MaxMinArchetype as Archetype
-from repliclust.viz import plot
-from repliclust.distortion import distort, wrap_around_sphere
+from repliclust import viz as viz
 
-load_dotenv()
-import repliclust.natural_language as nl
-from openai import OpenAI
+# Distortion is optional; import lazily in attribute access
+try:
+    from repliclust import distortion  # namespace import
+    from repliclust.distortion import distort, wrap_around_sphere  # optional: torch
+except Exception:  # ImportError or torch missing
+    def _missing_distort(*args, **kwargs):
+        raise ImportError(
+            "repliclust 'distort' requires the 'distort' extra:\n"
+            "  pip install repliclust[distort]\n"
+            "This installs PyTorch which is used for neural-network-based distortion."
+        )
+
+    def _missing_wrap(*args, **kwargs):
+        raise ImportError(
+            "repliclust 'wrap_around_sphere' is available without torch in code, "
+            "but failed to import due to a broader distortion import error."
+        )
+
+    distort = _missing_distort  # type: ignore
+    wrap_around_sphere = _missing_wrap  # type: ignore
+    distortion = None  # type: ignore
+
+# NLP features are optional; import only when used inside functions
 
 config.init_rng()
 config._seed = None
@@ -96,14 +111,24 @@ def generate(
     ... ]
     >>> data_list = generate(descriptions)
     """
-    if (nl.OPENAI_CLIENT is None) and (openai_api_key is None):
+    # Import NLP module lazily to avoid import-time side effects
+    try:
+        import repliclust.natural_language as nl  # type: ignore
+    except Exception:
+        raise ImportError(
+            "Natural-language generation requires the 'nlp' extra:\n"
+            "  pip install repliclust[nlp]\n"
+            "This installs OpenAI and python-dotenv."
+        )
+    # Ensure client is available (no print on failure)
+    if (nl.OPENAI_CLIENT is None) and (openai_api_key is not None):
+        nl.load_openai_client(api_key=openai_api_key)
+    if nl.OPENAI_CLIENT is None:
         raise Exception(
             "Failed to initialize OpenAI client." +
             " Either put OPENAI_API_KEY=<...> into the .env file" +
             " or pass openai_api_key=<...> as an argument in a function call."
         )
-    elif (nl.OPENAI_CLIENT is None) and (openai_api_key is not None):
-        nl.load_openai_client(api_key=openai_api_key)
 
     # record whether to return single data set or list of data sets
     return_simple = False
@@ -120,8 +145,6 @@ def generate(
     ]
 
     # turn archetypes into a data generator
-    data_generator = DataGenerator(archetypes, n_datasets=len(archetypes), quiet=True)
-
     # make the data
     data = [ (*archetype.synthesize(quiet=quiet), archetype) for archetype in archetypes ]
 
@@ -133,9 +156,10 @@ def generate(
 # Indicate which components to import with "from repliclust import *"
 __all__ = [
     'base',
-    'overlap'
+    'overlap',
     'maxmin',
     'distributions',
-    'distortion'
+    'distortion',
     'viz',
+    'set_seed',
 ]
