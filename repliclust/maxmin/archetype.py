@@ -5,7 +5,6 @@ values of various geometric parameters.
 """
 
 import numpy as np
-import openai
 import copy
 import json
 
@@ -469,6 +468,11 @@ class MaxMinArchetype(Archetype):
         -----
         This method uses a language model to parse the verbal description and generate the archetype parameters.
         """
+        if nl is None:
+            raise ImportError(
+                "Natural-language archetype creation requires the 'nlp' extra:\n"
+                "  pip install repliclust[nlp]"
+            )
         if (nl.OPENAI_CLIENT is None) and (openai_api_key is not None):
             nl.load_openai_client(api_key=openai_api_key)
         elif (nl.OPENAI_CLIENT is None) and (openai_api_key is None):
@@ -518,7 +522,7 @@ class MaxMinArchetype(Archetype):
             arch_json = json.loads(arch_json)
             arch_json["name"] = name_str if name is None else name
             return MaxMinArchetype(**arch_json)
-        except Exception as e:
+        except Exception:
             print(arch_json)
             raise Exception("Failed to process this data set archetype. Please rephrase and try again.")
         
