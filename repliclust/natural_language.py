@@ -15,22 +15,21 @@ except Exception:
 OPENAI_CLIENT = None
 
 def load_openai_client(api_key=None):
-    """Load the OpenAI client if the optional dependency is available."""
+    """Load the OpenAI client if the optional dependency is available.
+
+    Returns True on success, False otherwise. Does not print.
+    """
     global OPENAI_CLIENT
 
     load_dotenv()
     try:
         OPENAI_CLIENT = OpenAI(api_key=api_key)
+        return True
     except Exception:
         OPENAI_CLIENT = None
-        print(
-            "Failed to initialize OpenAI client."
-            + " Either put OPENAI_API_KEY=<...> into the .env file"
-            + " or pass openai_api_key=<...> as an argument in a function call."
-        )
+        return False
 
-# Initialize client on import (no-op if OpenAI not installed)
-load_openai_client()
+# Do not initialize client on import to avoid side effects
 
 FEW_SHOT_EXAMPLES = [
     {"input":"five oblong clusters in two dimensions","output":"{\n  \"n_clusters\": 5,\n  \"dim\": 2,\n  \"n_samples\": 500,\n  \"aspect_ref\": 3,\n  \"aspect_maxmin\": 1.5,\n}"},
