@@ -1,12 +1,21 @@
-""" This module provides utilities for constructing Archetypes from natural language. """
+"""Utilities for constructing Archetypes from natural language (optional)."""
 
-from openai import OpenAI
-from dotenv import load_dotenv
+# Optional dependencies: openai and python-dotenv
+try:
+    from openai import OpenAI  # type: ignore
+except Exception:  # ImportError when extra not installed
+    OpenAI = None  # type: ignore
+
+try:
+    from dotenv import load_dotenv  # type: ignore
+except Exception:
+    def load_dotenv():  # type: ignore
+        return False
 
 OPENAI_CLIENT = None
 
 def load_openai_client(api_key=None):
-    """ Load the OpenAI client. """
+    """Load the OpenAI client if the optional dependency is available."""
     global OPENAI_CLIENT
 
     load_dotenv()
@@ -14,10 +23,13 @@ def load_openai_client(api_key=None):
         OPENAI_CLIENT = OpenAI(api_key=api_key)
     except Exception:
         OPENAI_CLIENT = None
-        print("Failed to initialize OpenAI client." +
-            " Either put OPENAI_API_KEY=<...> into the .env file" +
-            " or pass openai_api_key=<...> as an argument in a function call.")
-        
+        print(
+            "Failed to initialize OpenAI client."
+            + " Either put OPENAI_API_KEY=<...> into the .env file"
+            + " or pass openai_api_key=<...> as an argument in a function call."
+        )
+
+# Initialize client on import (no-op if OpenAI not installed)
 load_openai_client()
 
 FEW_SHOT_EXAMPLES = [
