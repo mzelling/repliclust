@@ -55,11 +55,7 @@ except Exception:  # ImportError or torch missing
     wrap_around_sphere = _missing_wrap  # type: ignore
     distortion = None  # type: ignore
 
-# NLP features are optional; import only when used
-try:
-    import repliclust.natural_language as nl  # optional: openai, python-dotenv
-except Exception:
-    nl = None  # type: ignore
+# NLP features are optional; import only when used inside functions
 
 config.init_rng()
 config._seed = None
@@ -115,20 +111,24 @@ def generate(
     ... ]
     >>> data_list = generate(descriptions)
     """
-    if nl is None:
+    # Import NLP module lazily to avoid import-time side effects
+    try:
+        import repliclust.natural_language as nl  # type: ignore
+    except Exception:
         raise ImportError(
             "Natural-language generation requires the 'nlp' extra:\n"
             "  pip install repliclust[nlp]\n"
             "This installs OpenAI and python-dotenv."
         )
-    if (nl.OPENAI_CLIENT is None) and (openai_api_key is None):
+    # Ensure client is available (no print on failure)
+    if (nl.OPENAI_CLIENT is None) and (openai_api_key is not None):
+        nl.load_openai_client(api_key=openai_api_key)
+    if nl.OPENAI_CLIENT is None:
         raise Exception(
             "Failed to initialize OpenAI client." +
             " Either put OPENAI_API_KEY=<...> into the .env file" +
             " or pass openai_api_key=<...> as an argument in a function call."
         )
-    elif (nl.OPENAI_CLIENT is None) and (openai_api_key is not None):
-        nl.load_openai_client(api_key=openai_api_key)
 
     # record whether to return single data set or list of data sets
     return_simple = False
