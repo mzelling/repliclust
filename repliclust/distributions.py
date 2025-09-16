@@ -7,8 +7,7 @@ distributions to the clusters in a mixture model.
 import numpy as np
 from repliclust import config
 
-from repliclust import SUPPORTED_DISTRIBUTIONS
-from repliclust.utils import assemble_covariance_matrix
+from repliclust.base import SUPPORTED_DISTRIBUTIONS
 from repliclust.base import SingleClusterDistribution, DistributionMix
 
 
